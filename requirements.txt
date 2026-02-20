@@ -1,0 +1,7 @@
+# Additional Python dependencies for ISIC
+# (beyond what's included in the official Odoo image)
+
+# Redis session store
+redis>=5.0
+# LDAP authentication
+python-ldap>=3.4

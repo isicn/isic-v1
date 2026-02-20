@@ -1,0 +1,126 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  lint:
+    name: Lint & Security
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - run: pip install ruff bandit
+      - run: ruff check custom-addons/
+      - run: ruff format --check custom-addons/
+      - run: bandit -c pyproject.toml -r custom-addons/ -ll
+
+  validate:
+    name: Validate XML & YAML
+    runs-on: ubuntu-latest
+    timeout-minutes: 3
+    steps:
+      - uses: actions/checkout@v4
+      - run: sudo apt-get update && sudo apt-get install -y libxml2-utils
+      - name: Validate XML
+        run: |
+          XML_COUNT=$(find custom-addons -name "*.xml" | wc -l)
+          if [ "$XML_COUNT" -gt 0 ]; then
+            find custom-addons -name "*.xml" -print0 | xargs -0 -r xmllint --noout
+          fi
+      - name: Validate YAML
+        run: |
+          python3 -c "
+          import yaml, sys, glob
+          for f in glob.glob('docker-compose*.yml') + glob.glob('docker/docker-compose*.yml'):
+              try:
+                  yaml.safe_load(open(f))
+              except yaml.YAMLError as e:
+                  print(f'FAIL {f}: {e}'); sys.exit(1)
+          "
+
+  docker-build:
+    name: Docker Build
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: docker/setup-buildx-action@v3
+      - uses: docker/build-push-action@v6
+        with:
+          context: .
+          file: docker/Dockerfile
+          push: false
+          tags: isic-odoo:ci-test
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+
+  test:
+    name: Odoo Tests
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    if: ${{ hashFiles('custom-addons/**/*.py') != '' }}
+    services:
+      postgres:
+        image: postgres:16-alpine
+        env:
+          POSTGRES_USER: odoo
+          POSTGRES_PASSWORD: odoo
+          POSTGRES_DB: odoo_test
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U odoo -d odoo_test"
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Cache Odoo source
+        id: cache-odoo
+        uses: actions/cache@v4
+        with:
+          path: odoo-src
+          key: odoo-19-src-${{ hashFiles('.github/workflows/ci.yml') }}
+      - name: Clone Odoo 19
+        if: steps.cache-odoo.outputs.cache-hit != 'true'
+        run: git clone --depth 1 --branch master https://github.com/odoo/odoo.git odoo-src
+      - name: Install deps
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y --no-install-recommends \
+            libpq-dev libldap2-dev libsasl2-dev libssl-dev \
+            libxml2-dev libxslt1-dev libjpeg-dev libpng-dev zlib1g-dev wkhtmltopdf
+          pip install --upgrade pip wheel
+          pip install -r odoo-src/requirements.txt
+      - name: Detect modules
+        id: detect
+        run: |
+          MODULES=$(find custom-addons -maxdepth 2 -name "__manifest__.py" -exec dirname {} \; | xargs -I{} basename {} | paste -sd, -)
+          echo "modules=$MODULES" >> $GITHUB_OUTPUT
+      - name: Run tests
+        if: steps.detect.outputs.modules != ''
+        run: |
+          python3 odoo-src/odoo-bin \
+            -d odoo_test \
+            --db_host=localhost --db_port=5432 --db_user=odoo --db_password=odoo \
+            --addons-path=odoo-src/addons,custom-addons \
+            -i ${{ steps.detect.outputs.modules }} \
+            --test-enable --stop-after-init --log-level=test --no-http \
+            2>&1 | tee test-output.log
+          if grep -q "ERROR" test-output.log; then
+            echo "::error::Tests failed"; exit 1
+          fi

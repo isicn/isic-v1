@@ -1,0 +1,95 @@
+name: Deploy
+
+on:
+  workflow_dispatch:
+    inputs:
+      environment:
+        description: "Target environment"
+        required: true
+        default: staging
+        type: choice
+        options:
+          - staging
+          - production
+      image_tag:
+        description: "Image tag to deploy"
+        required: true
+        default: latest
+        type: string
+      update_modules:
+        description: "Modules to update (comma-separated)"
+        required: false
+        default: ""
+        type: string
+
+env:
+  IMAGE: ghcr.io/${{ github.repository }}
+
+jobs:
+  deploy-staging:
+    name: Deploy Staging
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    environment:
+      name: staging
+      url: https://staging.isic.ac.ma
+    steps:
+      - uses: appleboy/ssh-action@v1
+        with:
+          host: ${{ secrets.VPS4_HOST }}
+          username: ${{ secrets.VPS4_USER }}
+          key: ${{ secrets.VPS4_SSH_KEY }}
+          script_stop: false
+          script: |
+            set -e
+            echo "=== Deploying to STAGING ==="
+            docker pull ${{ env.IMAGE }}:${{ inputs.image_tag }}
+            docker tag ${{ env.IMAGE }}:${{ inputs.image_tag }} isic-odoo:latest
+            PREV=$(docker inspect --format='{{.Image}}' isic-odoo-staging 2>/dev/null || echo "none")
+            cd /opt/isic
+            docker compose -f docker/docker-compose.vps4.yml --env-file .env.vps4 up -d odoo-staging
+            sleep 30
+            HEALTH=$(docker exec isic-odoo-staging curl -sf http://localhost:8069/web/health 2>/dev/null || echo "FAIL")
+            if [ "$HEALTH" = "FAIL" ]; then
+              echo "Health check failed! Rolling back..."
+              [ "$PREV" != "none" ] && docker tag $PREV isic-odoo:latest && \
+                docker compose -f docker/docker-compose.vps4.yml --env-file .env.vps4 up -d odoo-staging && sleep 15
+              exit 1
+            fi
+            echo "Staging OK"
+
+  deploy-production:
+    name: Deploy Production
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    needs: deploy-staging
+    if: inputs.environment == 'production'
+    environment:
+      name: production
+      url: https://mon.isic.ac.ma
+    steps:
+      - uses: appleboy/ssh-action@v1
+        with:
+          host: ${{ secrets.VPS4_HOST }}
+          username: ${{ secrets.VPS4_USER }}
+          key: ${{ secrets.VPS4_SSH_KEY }}
+          script_stop: false
+          script: |
+            set -e
+            echo "=== Deploying to PRODUCTION ==="
+            docker exec isic-backup-vps /backup.sh || echo "Backup warning"
+            docker pull ${{ env.IMAGE }}:${{ inputs.image_tag }}
+            docker tag ${{ env.IMAGE }}:${{ inputs.image_tag }} isic-odoo:latest
+            PREV=$(docker inspect --format='{{.Image}}' isic-odoo-prod 2>/dev/null || echo "none")
+            cd /opt/isic
+            docker compose -f docker/docker-compose.vps4.yml --env-file .env.vps4 up -d odoo-prod
+            sleep 45
+            HEALTH=$(docker exec isic-odoo-prod curl -sf http://localhost:8069/web/health 2>/dev/null || echo "FAIL")
+            if [ "$HEALTH" = "FAIL" ]; then
+              echo "Health check failed! Rolling back..."
+              [ "$PREV" != "none" ] && docker tag $PREV isic-odoo:latest && \
+                docker compose -f docker/docker-compose.vps4.yml --env-file .env.vps4 up -d odoo-prod && sleep 20
+              exit 1
+            fi
+            docker image prune -f
+            echo "Production OK"
