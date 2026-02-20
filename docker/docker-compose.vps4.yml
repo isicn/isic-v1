@@ -42,7 +42,7 @@ services:
           memory: 512M
 
   pgbouncer-prod:
-    image: edoburu/pgbouncer:1.23.1
+    image: edoburu/pgbouncer:latest
     container_name: isic-pgbouncer-prod
     restart: always
     logging: *log-small
@@ -50,7 +50,10 @@ services:
       db-prod:
         condition: service_healthy
     environment:
-      DATABASE_URL: "postgres://${PROD_DB_USER}:${PROD_DB_PASSWORD}@db-prod:5432/${PROD_DB_NAME}"
+      DB_HOST: db-prod
+      DB_PORT: 5432
+      DB_USER: ${PROD_DB_USER}
+      DB_PASSWORD: ${PROD_DB_PASSWORD}
       POOL_MODE: session
       MAX_CLIENT_CONN: 200
       DEFAULT_POOL_SIZE: 32
@@ -79,17 +82,17 @@ services:
         max-size: "50m"
         max-file: "5"
     depends_on:
-      pgbouncer-prod:
+      db-prod:
         condition: service_healthy
       redis:
         condition: service_started
     environment:
-      DB_HOST: pgbouncer-prod
+      DB_HOST: db-prod
       DB_PORT: 5432
       DB_USER: ${PROD_DB_USER}
       DB_PASSWORD: ${PROD_DB_PASSWORD}
       DB_NAME: ${PROD_DB_NAME}
-      DB_MAXCONN: 128
+      DB_MAXCONN: 64
       HTTP_PORT: 8069
       PROXY_MODE: "True"
       WORKERS: ${PROD_WORKERS:-4}
@@ -152,7 +155,7 @@ services:
           memory: 256M
 
   pgbouncer-staging:
-    image: edoburu/pgbouncer:1.23.1
+    image: edoburu/pgbouncer:latest
     container_name: isic-pgbouncer-staging
     restart: always
     logging: *log-small
@@ -160,7 +163,10 @@ services:
       db-staging:
         condition: service_healthy
     environment:
-      DATABASE_URL: "postgres://${STAGING_DB_USER}:${STAGING_DB_PASSWORD}@db-staging:5432/${STAGING_DB_NAME}"
+      DB_HOST: db-staging
+      DB_PORT: 5432
+      DB_USER: ${STAGING_DB_USER}
+      DB_PASSWORD: ${STAGING_DB_PASSWORD}
       POOL_MODE: session
       MAX_CLIENT_CONN: 100
       DEFAULT_POOL_SIZE: 16
@@ -189,17 +195,17 @@ services:
         max-size: "50m"
         max-file: "5"
     depends_on:
-      pgbouncer-staging:
+      db-staging:
         condition: service_healthy
       redis:
         condition: service_started
     environment:
-      DB_HOST: pgbouncer-staging
+      DB_HOST: db-staging
       DB_PORT: 5432
       DB_USER: ${STAGING_DB_USER}
       DB_PASSWORD: ${STAGING_DB_PASSWORD}
       DB_NAME: ${STAGING_DB_NAME}
-      DB_MAXCONN: 64
+      DB_MAXCONN: 32
       HTTP_PORT: 8069
       PROXY_MODE: "True"
       WORKERS: ${STAGING_WORKERS:-2}

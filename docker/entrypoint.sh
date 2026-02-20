@@ -51,13 +51,17 @@ db_name = ${DB_NAME:-}
 db_maxconn = ${DB_MAXCONN:-64}
 
 ; Paths
-addons_path = /mnt/extra-addons,/usr/lib/python3/dist-packages/odoo/addons
+$(if find /mnt/extra-addons -maxdepth 2 -name "__manifest__.py" 2>/dev/null | grep -q .; then
+echo "addons_path = /mnt/extra-addons,/usr/lib/python3/dist-packages/odoo/addons"
+else
+echo "addons_path = /usr/lib/python3/dist-packages/odoo/addons"
+fi)
 data_dir = /var/lib/odoo
 
 ; Server
 http_port = ${HTTP_PORT:-8069}
 http_interface = ${HTTP_INTERFACE:-0.0.0.0}
-longpolling_port = ${LONGPOLLING_PORT:-8072}
+gevent_port = ${LONGPOLLING_PORT:-8072}
 proxy_mode = ${PROXY_MODE:-True}
 
 ; Workers
@@ -81,11 +85,13 @@ limit_time_real = ${LIMIT_TIME_REAL:-120}
 limit_request = ${LIMIT_REQUEST:-8192}
 
 ; Email
-smtp_server = ${SMTP_SERVER:-False}
-smtp_port = ${SMTP_PORT:-25}
-smtp_user = ${SMTP_USER:-False}
-smtp_password = ${SMTP_PASSWORD:-False}
-smtp_ssl = ${SMTP_SSL:-False}
+$(if [ -n "$SMTP_SERVER" ]; then
+echo "smtp_server = ${SMTP_SERVER}"
+echo "smtp_port = ${SMTP_PORT:-587}"
+echo "smtp_user = ${SMTP_USER}"
+echo "smtp_password = ${SMTP_PASSWORD}"
+echo "smtp_ssl = ${SMTP_SSL:-True}"
+fi)
 
 ; Redis (session store)
 $(if [ -n "$REDIS_HOST" ]; then
@@ -96,7 +102,9 @@ echo "session_store_redis_prefix = ${REDIS_PREFIX:-odoo_session}"
 fi)
 
 ; Development
-dev_mode = ${DEV_MODE:-False}
+$(if [ -n "$DEV_MODE" ] && [ "$DEV_MODE" != "False" ]; then
+echo "dev_mode = ${DEV_MODE}"
+fi)
 EOF
 
     log_info "Configuration generated at $config_file"
