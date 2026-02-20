@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- Override theme-color and apple-touch-icon in webclient bootstrap -->
+    <template id="webclient_bootstrap_isic"
+              inherit_id="web.webclient_bootstrap"
+              name="ISIC Webclient Bootstrap">
+        <xpath expr="//meta[@name='theme-color']" position="attributes">
+            <attribute name="content">#1B3A5C</attribute>
+        </xpath>
+        <xpath expr="//link[@rel='apple-touch-icon']" position="attributes">
+            <attribute name="href">/isic_theme/static/src/img/isic_icon_ios.png</attribute>
+        </xpath>
+    </template>
+
+    <!-- Override favicon in the base layout -->
+    <template id="layout_favicon_isic"
+              inherit_id="web.layout"
+              name="ISIC Favicon">
+        <xpath expr="//link[@rel='shortcut icon']" position="attributes">
+            <attribute name="t-att-href">x_icon or '/isic_theme/static/src/img/isic_favicon.ico'</attribute>
+        </xpath>
+    </template>
+
+    <!-- Override page title -->
+    <template id="layout_title_isic"
+              inherit_id="web.layout"
+              name="ISIC Page Title">
+        <xpath expr="//title" position="attributes">
+            <attribute name="t-esc">title or 'ISIC - Gestion Academique'</attribute>
+        </xpath>
+    </template>
+
+    <!-- Redesign login page — Premium look with gradient background -->
+    <template id="login_layout_isic"
+              inherit_id="web.login_layout"
+              name="ISIC Login Layout">
+
+        <!-- Change body class from bg-100 to o_web_login for gradient styling -->
+        <xpath expr="//t[@t-set='body_classname']" position="attributes">
+            <attribute name="t-value">'o_web_login'</attribute>
+        </xpath>
+
+        <!-- Replace the entire container with premium layout -->
+        <xpath expr="//div[hasclass('container')]" position="replace">
+            <div class="container py-4 d-flex flex-column align-items-center justify-content-center"
+                 style="min-height: 100vh;">
+
+                <!-- ISIC logo in white pill above the card -->
+                <div class="text-center mb-4">
+                    <div class="o_isic_login_logo_wrap">
+                        <img t-attf-src="/web/binary/company_logo{{ '?dbname='+db if db else '' }}"
+                             alt="ISIC Logo"
+                             class="o_isic_login_logo"/>
+                    </div>
+                </div>
+
+                <!-- Login card -->
+                <div t-attf-class="card border-0 mx-auto o_database_list {{login_card_classes}}"
+                     style="max-width: 420px; width: 100%;">
+                    <div class="card-body">
+                        <h5 class="text-center mb-4 fw-semibold" style="color: #1B3A5C;">
+                            Connexion
+                        </h5>
+                        <t t-out="0"/>
+                    </div>
+                </div>
+
+                <!-- Footer below the card -->
+                <div class="o_isic_login_footer text-center small mt-4" t-if="not disable_footer">
+                    <t t-if="not disable_database_manager">
+                        <a class="me-2" href="/web/database/manager">Manage Databases</a>
+                        <span class="me-2">|</span>
+                    </t>
+                    <span>ISIC — Institut Superieur de l'Information et de la Communication</span>
+                </div>
+            </div>
+        </xpath>
+
+    </template>
+
+</odoo>

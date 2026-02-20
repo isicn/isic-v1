@@ -19,6 +19,7 @@ ignore = ["E501", "B008", "B904", "RUF012"]
 
 [tool.ruff.lint.per-file-ignores]
 "__init__.py" = ["F401"]
+"__manifest__.py" = ["B018"]
 "**/tests/**" = ["B011"]
 
 [tool.ruff.lint.isort]

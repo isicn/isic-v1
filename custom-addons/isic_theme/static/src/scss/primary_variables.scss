@@ -1,0 +1,92 @@
+///
+/// ISIC Theme — Primary Variable Overrides
+/// Institut Superieur de l'Information et de la Communication, Rabat
+///
+
+// ============================================================================
+// ISIC Brand Colors
+// ============================================================================
+
+$o-community-color: #1B3A5C;
+$o-enterprise-color: #1B3A5C;
+$o-enterprise-action-color: #1B3A5C;
+$o-brand-odoo: #1B3A5C;
+$o-brand-primary: #1B3A5C;
+
+$o-brand-secondary: #6B7B8D;
+$o-brand-lightsecondary: #F0F2F5;
+
+$o-action: #1B3A5C;
+$o-warning: #D4A843;
+$o-main-link-color: #1B4F8C;
+
+// ============================================================================
+// Context Colors — Harmonized with ISIC palette
+// ============================================================================
+
+$o-success: #28A745;
+$o-info: #4A90B8;
+$o-danger: #DC3545;
+
+// ============================================================================
+// Component Variables — Enterprise-like polish
+// ============================================================================
+
+// Favoris en or ISIC
+$o-main-favorite-color: #D4A843;
+
+// Bordures plus douces
+$o-border-radius: 6px;
+$o-border-radius-sm: 4px;
+$o-border-radius-lg: 8px;
+
+// Navbar plus spacieuse
+$o-navbar-height: 50px;
+$o-navbar-entry-border-radius: 6px;
+$o-navbar-entry-padding-h: 0.8em;
+
+// Navbar badge (notification bubbles en or ISIC)
+$o-navbar-badge-bg: #D4A843;
+
+// Webclient background
+$o-webclient-background-color: #F0F2F5;
+
+// ============================================================================
+// Form View Width — Wider forms for modern screens (MuK-inspired)
+// ============================================================================
+
+$o-form-renderer-max-width: 1800px;
+$o-form-view-sheet-max-width: 1200px;
+
+// ============================================================================
+// Theme Text Colors Map — Used by Odoo for text-* utility classes
+// ============================================================================
+
+$o-theme-text-colors: (
+    "primary": #1B3A5C,
+    "success": #28A745,
+    "info": #4A90B8,
+    "warning": #D4A843,
+    "danger": #DC3545,
+);
+
+// ============================================================================
+// Font Stack — Prepend Inter
+// ============================================================================
+
+$o-system-fonts: (
+    "Inter",
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    Roboto,
+    "Helvetica Neue",
+    Ubuntu,
+    "Noto Sans",
+    Arial,
+    sans-serif,
+    "Apple Color Emoji",
+    "Segoe UI Emoji",
+    "Segoe UI Symbol",
+    "Noto Color Emoji"
+);

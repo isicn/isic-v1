@@ -1,0 +1,380 @@
+///
+/// ISIC Theme — Backend Styles (Enterprise-like, MuK-inspired)
+/// Loaded via web.assets_backend & web.assets_frontend
+///
+
+// ============================================================================
+// A. Font Face — Inter (self-hosted)
+// ============================================================================
+
+@font-face {
+    font-family: "Inter";
+    src: url("/isic_theme/static/src/fonts/Inter-Regular.woff2") format("woff2");
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: "Inter";
+    src: url("/isic_theme/static/src/fonts/Inter-Medium.woff2") format("woff2");
+    font-weight: 500;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: "Inter";
+    src: url("/isic_theme/static/src/fonts/Inter-SemiBold.woff2") format("woff2");
+    font-weight: 600;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: "Inter";
+    src: url("/isic_theme/static/src/fonts/Inter-Bold.woff2") format("woff2");
+    font-weight: 700;
+    font-style: normal;
+    font-display: swap;
+}
+
+// ============================================================================
+// B. Navbar — Enterprise polish
+// ============================================================================
+
+.o_main_navbar {
+    background: linear-gradient(180deg, lighten(#1B3A5C, 4%) 0%, #1B3A5C 100%);
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.15);
+    border-bottom: none !important;
+
+    .o_menu_brand {
+        font-weight: 600;
+        letter-spacing: 0.02em;
+    }
+
+    .o_menu_sections > * > .dropdown-toggle,
+    .o_menu_sections > * > a {
+        transition: background-color 0.2s ease, color 0.2s ease;
+        border-radius: 6px;
+        margin: 4px 2px;
+    }
+
+    // Notification badges in gold
+    .badge {
+        background-color: #D4A843 !important;
+        color: #fff !important;
+    }
+}
+
+// ============================================================================
+// C. Control Panel
+// ============================================================================
+
+.o_control_panel {
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.06);
+    border-bottom: none;
+
+    .breadcrumb-item {
+        font-weight: 500;
+    }
+
+    .breadcrumb-item + .breadcrumb-item::before {
+        color: #6B7B8D;
+    }
+}
+
+// ============================================================================
+// D. Form View — Sheet + input borders (MuK signature)
+// ============================================================================
+
+.o_form_sheet_bg {
+    .o_form_sheet {
+        box-shadow: 0 1px 4px rgba(0, 0, 0, 0.08);
+        border-radius: 8px;
+        border: 1px solid rgba(0, 0, 0, 0.06);
+    }
+}
+
+.o_form_statusbar {
+    border-radius: 8px 8px 0 0;
+}
+
+// MuK-inspired: subtle borders on form inputs when not focused
+.o_form_view {
+    &:not(.o_field_highlight) .o_field_widget:not(.o_field_invalid):not(.o_field_highlight) {
+        .o_input:not(:hover):not(:focus) {
+            border-color: #E5E7EB;
+        }
+    }
+
+    &:not(.o_field_highlight) .o_required_modifier.o_field_widget:not(.o_field_invalid):not(.o_field_highlight) {
+        .o_input:not(:hover):not(:focus) {
+            border-color: #CED4DA;
+        }
+    }
+}
+
+// ============================================================================
+// E. List View
+// ============================================================================
+
+.o_list_renderer {
+    .o_list_table {
+        thead th {
+            font-weight: 600;
+            font-size: 0.85em;
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+            color: #6B7B8D;
+        }
+
+        .o_data_row {
+            transition: background-color 0.15s ease;
+
+            &:hover {
+                background-color: rgba(#1B3A5C, 0.03);
+            }
+        }
+    }
+}
+
+// ============================================================================
+// F. Kanban — Hover lift
+// ============================================================================
+
+.o_kanban_record {
+    border-radius: 8px;
+    border: 1px solid rgba(0, 0, 0, 0.06);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
+    transition: box-shadow 0.2s ease, transform 0.15s ease;
+
+    &:hover {
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        transform: translateY(-1px);
+    }
+}
+
+.o_kanban_group .o_kanban_header {
+    font-weight: 600;
+}
+
+// ============================================================================
+// G. Searchbar — Rounded + focus glow
+// ============================================================================
+
+.o_searchview {
+    border-radius: 20px;
+    border: 1px solid #DEE2E6;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+
+    &:focus-within {
+        border-color: #1B3A5C;
+        box-shadow: 0 0 0 3px rgba(#1B3A5C, 0.1);
+    }
+}
+
+// ============================================================================
+// H. Notebook Tabs
+// ============================================================================
+
+.o_notebook .nav-link.active {
+    font-weight: 600;
+    border-bottom: 2px solid #1B3A5C;
+}
+
+// ============================================================================
+// I. Dropdown Menus — Rounded + shadow (MuK-inspired)
+// ============================================================================
+
+.dropdown-menu {
+    border-radius: 8px;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12);
+    border: 1px solid rgba(0, 0, 0, 0.06);
+    padding: 0.25rem;
+
+    .dropdown-item {
+        border-radius: 6px;
+        transition: background-color 0.15s ease;
+        padding: 0.5rem 0.75rem;
+    }
+}
+
+// ============================================================================
+// J. Modal Dialogs — Better shadows
+// ============================================================================
+
+.modal-content {
+    border-radius: 12px;
+    box-shadow: 0 12px 48px rgba(0, 0, 0, 0.2);
+    border: none;
+}
+
+.modal-header {
+    border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+}
+
+.modal-footer {
+    border-top: 1px solid rgba(0, 0, 0, 0.06);
+}
+
+// ============================================================================
+// K. Buttons — Transitions + shadows
+// ============================================================================
+
+.btn {
+    transition: all 0.2s ease;
+}
+
+.btn-primary {
+    --bs-btn-bg: #1B3A5C;
+    --bs-btn-border-color: #1B3A5C;
+    --bs-btn-hover-bg: #152E4A;
+    --bs-btn-hover-border-color: #152E4A;
+    --bs-btn-active-bg: #112440;
+    --bs-btn-active-border-color: #112440;
+    --bs-btn-disabled-bg: #1B3A5C;
+    --bs-btn-disabled-border-color: #1B3A5C;
+    box-shadow: 0 1px 2px rgba(27, 58, 92, 0.2);
+
+    &:hover {
+        box-shadow: 0 2px 6px rgba(27, 58, 92, 0.3);
+    }
+}
+
+.btn-secondary {
+    --bs-btn-bg: #6B7B8D;
+    --bs-btn-border-color: #6B7B8D;
+    --bs-btn-hover-bg: #5A6A7C;
+    --bs-btn-hover-border-color: #5A6A7C;
+}
+
+// ============================================================================
+// L. Stat Buttons (form header stats)
+// ============================================================================
+
+.oe_stat_button {
+    border-radius: 8px;
+    transition: background-color 0.15s ease;
+
+    &:hover {
+        background-color: rgba(#1B3A5C, 0.04);
+    }
+
+    .o_stat_value {
+        color: #1B3A5C;
+        font-weight: 700;
+    }
+}
+
+// ============================================================================
+// M. Scrollbar — Thin and subtle (MuK-inspired)
+// ============================================================================
+
+// Thin scrollbars for webkit browsers
+::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: rgba(0, 0, 0, 0.15);
+    border-radius: 3px;
+
+    &:hover {
+        background-color: rgba(0, 0, 0, 0.25);
+    }
+}
+
+::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+// Firefox thin scrollbar
+* {
+    scrollbar-width: thin;
+    scrollbar-color: rgba(0, 0, 0, 0.15) transparent;
+}
+
+// ============================================================================
+// N. Status Bar Pills
+// ============================================================================
+
+.o_form_statusbar {
+    .o_arrow_button {
+        transition: all 0.2s ease;
+    }
+}
+
+// ============================================================================
+// O. Settings Page
+// ============================================================================
+
+.o_base_settings {
+    .o_setting_box {
+        border-radius: 8px;
+        transition: background-color 0.15s ease;
+
+        &:hover {
+            background-color: rgba(#1B3A5C, 0.02);
+        }
+    }
+}
+
+// ============================================================================
+// P. Calendar View
+// ============================================================================
+
+.o_calendar_renderer {
+    .fc-event {
+        border-radius: 4px;
+        border: none;
+        box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+    }
+}
+
+// ============================================================================
+// Q. Badges (warning in gold)
+// ============================================================================
+
+.badge.text-bg-warning,
+.badge.bg-warning {
+    background-color: #D4A843 !important;
+    color: #fff !important;
+}
+
+// ============================================================================
+// R. Links
+// ============================================================================
+
+a {
+    color: #1B4F8C;
+}
+
+// ============================================================================
+// S. Loading Overlay
+// ============================================================================
+
+.o_loading_indicator {
+    background-color: #D4A843;
+}
+
+// ============================================================================
+// T. User Menu
+// ============================================================================
+
+.o_user_menu .dropdown-menu {
+    min-width: 200px;
+}
+
+// ============================================================================
+// U. Accent Utilities (for use by other ISIC modules)
+// ============================================================================
+
+.isic-accent {
+    color: #D4A843;
+}
+
+.isic-accent-bg {
+    background-color: #D4A843;
+}
