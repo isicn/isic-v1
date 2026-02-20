@@ -294,7 +294,7 @@ services:
       BACKUP_RETENTION_DAYS: ${BACKUP_RETENTION_DAYS:-7}
     volumes:
       - postgres-backup:/backup
-      - ./scripts/backup.sh:/backup.sh:ro
+      - ../scripts/backup.sh:/backup.sh:ro
     entrypoint: ["/bin/sh", "-c"]
     command:
       - |
