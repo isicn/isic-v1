@@ -31,3 +31,8 @@ coverage.xml
 filestore/
 sessions/
 CLAUDE.md
+.claude/
+*.docx
+~$*
+scripts/generate_deployment_doc.py
+scripts/generate_dev_workflow_doc.py
