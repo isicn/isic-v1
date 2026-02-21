@@ -52,6 +52,7 @@ services:
       INIT_MODULES: ${INIT_MODULES:-}
     volumes:
       - ./custom-addons:/mnt/extra-addons:ro
+      - ./docker/entrypoint.sh:/entrypoint-isic.sh:ro
       - odoo-data:/var/lib/odoo
       - odoo-logs:/var/log/odoo
     ports:

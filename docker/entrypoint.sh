@@ -51,11 +51,13 @@ db_name = ${DB_NAME:-}
 db_maxconn = ${DB_MAXCONN:-64}
 
 ; Paths
-$(if find /mnt/extra-addons -maxdepth 2 -name "__manifest__.py" 2>/dev/null | grep -q .; then
-echo "addons_path = /mnt/extra-addons,/usr/lib/python3/dist-packages/odoo/addons"
-else
-echo "addons_path = /usr/lib/python3/dist-packages/odoo/addons"
-fi)
+$(ADDONS_PATHS="/usr/lib/python3/dist-packages/odoo/addons"
+for dir in /mnt/extra-addons /mnt/extra-addons/third-party; do
+  if [ -d "$dir" ] && find "$dir" -maxdepth 2 -name "__manifest__.py" 2>/dev/null | grep -q .; then
+    ADDONS_PATHS="$dir,$ADDONS_PATHS"
+  fi
+done
+echo "addons_path = $ADDONS_PATHS")
 data_dir = /var/lib/odoo
 
 ; Server
