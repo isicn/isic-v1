@@ -39,7 +39,6 @@ jobs:
           host: ${{ secrets.VPS4_HOST }}
           username: ${{ secrets.VPS4_USER }}
           key: ${{ secrets.VPS4_SSH_KEY }}
-          script_stop: false
           script: |
             set -e
             echo "=== Deploying to STAGING ==="
@@ -73,7 +72,6 @@ jobs:
           host: ${{ secrets.VPS4_HOST }}
           username: ${{ secrets.VPS4_USER }}
           key: ${{ secrets.VPS4_SSH_KEY }}
-          script_stop: false
           script: |
             set -e
             echo "=== Deploying to PRODUCTION ==="
