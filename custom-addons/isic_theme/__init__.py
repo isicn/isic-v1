@@ -19,10 +19,12 @@ def _post_init_hook(env):
             logo_data = base64.b64encode(f.read())
         main_company = env.ref("base.main_company", raise_if_not_found=False)
         if main_company:
-            main_company.write({
-                "name": "ISIC",
-                "logo": logo_data,
-            })
+            main_company.write(
+                {
+                    "name": "ISIC",
+                    "logo": logo_data,
+                }
+            )
             _logger.info("ISIC logo set on main company")
     else:
         _logger.warning("ISIC logo not found at %s", logo_path)
