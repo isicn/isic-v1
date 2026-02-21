@@ -46,13 +46,13 @@ jobs:
             docker tag ${{ env.IMAGE }}:${{ inputs.image_tag }} isic-odoo:latest
             PREV=$(docker inspect --format='{{.Image}}' isic-odoo-staging 2>/dev/null || echo "none")
             cd /opt/isic
-            docker compose -f docker/docker-compose.vps4.yml --env-file .env.vps4 up -d odoo-staging
+            docker compose -f docker/docker-compose.vps4.yml --env-file .env.vps4 up -d -V odoo-staging
             sleep 30
             HEALTH=$(docker exec isic-odoo-staging curl -sf http://localhost:8069/web/health 2>/dev/null || echo "FAIL")
             if [ "$HEALTH" = "FAIL" ]; then
               echo "Health check failed! Rolling back..."
               [ "$PREV" != "none" ] && docker tag $PREV isic-odoo:latest && \
-                docker compose -f docker/docker-compose.vps4.yml --env-file .env.vps4 up -d odoo-staging && sleep 15
+                docker compose -f docker/docker-compose.vps4.yml --env-file .env.vps4 up -d -V odoo-staging && sleep 15
               exit 1
             fi
             echo "Staging OK"
@@ -80,13 +80,13 @@ jobs:
             docker tag ${{ env.IMAGE }}:${{ inputs.image_tag }} isic-odoo:latest
             PREV=$(docker inspect --format='{{.Image}}' isic-odoo-prod 2>/dev/null || echo "none")
             cd /opt/isic
-            docker compose -f docker/docker-compose.vps4.yml --env-file .env.vps4 up -d odoo-prod
+            docker compose -f docker/docker-compose.vps4.yml --env-file .env.vps4 up -d -V odoo-prod
             sleep 45
             HEALTH=$(docker exec isic-odoo-prod curl -sf http://localhost:8069/web/health 2>/dev/null || echo "FAIL")
             if [ "$HEALTH" = "FAIL" ]; then
               echo "Health check failed! Rolling back..."
               [ "$PREV" != "none" ] && docker tag $PREV isic-odoo:latest && \
-                docker compose -f docker/docker-compose.vps4.yml --env-file .env.vps4 up -d odoo-prod && sleep 20
+                docker compose -f docker/docker-compose.vps4.yml --env-file .env.vps4 up -d -V odoo-prod && sleep 20
               exit 1
             fi
             docker image prune -f
