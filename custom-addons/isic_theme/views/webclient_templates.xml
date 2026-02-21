@@ -27,7 +27,7 @@
               inherit_id="web.layout"
               name="ISIC Page Title">
         <xpath expr="//title" position="attributes">
-            <attribute name="t-esc">title or 'ISIC - Gestion Academique'</attribute>
+            <attribute name="t-out">title or 'ISIC - Gestion Academique'</attribute>
         </xpath>
     </template>
 

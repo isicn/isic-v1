@@ -6,14 +6,15 @@
     "author": "ISIC Rabat",
     "website": "https://isic.ac.ma",
     "license": "Other proprietary",
-    "depends": ["web"],
+    "depends": ["web", "muk_web_enterprise_theme"],
     "data": [
         "views/webclient_templates.xml",
     ],
     "assets": {
         "web._assets_primary_variables": [
             (
-                "prepend",
+                "after",
+                "muk_web_colors/static/src/scss/colors_light.scss",
                 "isic_theme/static/src/scss/primary_variables.scss",
             ),
         ],

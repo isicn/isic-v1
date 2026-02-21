@@ -1,5 +1,5 @@
 ///
-/// ISIC Theme — Backend Styles (Enterprise-like, MuK-inspired)
+/// ISIC Theme — Backend Styles
 /// Loaded via web.assets_backend & web.assets_frontend
 ///
 
@@ -48,16 +48,23 @@
     box-shadow: 0 1px 4px rgba(0, 0, 0, 0.15);
     border-bottom: none !important;
 
+    // Use CSS custom properties expected by Odoo 19 core navbar.scss
+    // This ensures hover/focus/active states work with the core selectors
+    --NavBar-entry-backgroundColor: transparent;
+    --NavBar-entry-backgroundColor--hover: rgba(255, 255, 255, 0.1);
+    --NavBar-entry-backgroundColor--focus: rgba(255, 255, 255, 0.1);
+    --NavBar-entry-backgroundColor--active: rgba(255, 255, 255, 0.15);
+    --NavBar-entry-borderColor-active: transparent;
+
     .o_menu_brand {
         font-weight: 600;
         letter-spacing: 0.02em;
     }
 
-    .o_menu_sections > * > .dropdown-toggle,
-    .o_menu_sections > * > a {
-        transition: background-color 0.2s ease, color 0.2s ease;
-        border-radius: 6px;
-        margin: 4px 2px;
+    // Smooth transitions on menu entries
+    .o_menu_sections .o_nav_entry,
+    .o_menu_sections .dropdown-toggle {
+        transition: background 0.2s ease, color 0.2s ease;
     }
 
     // Notification badges in gold
@@ -65,10 +72,16 @@
         background-color: #D4A843 !important;
         color: #fff !important;
     }
+
+    // Systray area — smooth hover
+    .o_menu_systray .o_nav_entry,
+    .o_menu_systray .dropdown-toggle {
+        transition: background 0.2s ease;
+    }
 }
 
 // ============================================================================
-// C. Control Panel
+// C. Control Panel — Subtle shadow + breadcrumb polish
 // ============================================================================
 
 .o_control_panel {
@@ -85,7 +98,7 @@
 }
 
 // ============================================================================
-// D. Form View — Sheet + input borders (MuK signature)
+// D. Form View — Sheet + statusbar
 // ============================================================================
 
 .o_form_sheet_bg {
@@ -98,25 +111,14 @@
 
 .o_form_statusbar {
     border-radius: 8px 8px 0 0;
-}
 
-// MuK-inspired: subtle borders on form inputs when not focused
-.o_form_view {
-    &:not(.o_field_highlight) .o_field_widget:not(.o_field_invalid):not(.o_field_highlight) {
-        .o_input:not(:hover):not(:focus) {
-            border-color: #E5E7EB;
-        }
-    }
-
-    &:not(.o_field_highlight) .o_required_modifier.o_field_widget:not(.o_field_invalid):not(.o_field_highlight) {
-        .o_input:not(:hover):not(:focus) {
-            border-color: #CED4DA;
-        }
+    .o_arrow_button {
+        transition: all 0.2s ease;
     }
 }
 
 // ============================================================================
-// E. List View
+// E. List View — Headers + hover rows
 // ============================================================================
 
 .o_list_renderer {
@@ -133,7 +135,7 @@
             transition: background-color 0.15s ease;
 
             &:hover {
-                background-color: rgba(#1B3A5C, 0.03);
+                background-color: rgba(27, 58, 92, 0.03);
             }
         }
     }
@@ -170,21 +172,25 @@
 
     &:focus-within {
         border-color: #1B3A5C;
-        box-shadow: 0 0 0 3px rgba(#1B3A5C, 0.1);
+        box-shadow: 0 0 0 3px rgba(27, 58, 92, 0.1);
     }
 }
 
 // ============================================================================
-// H. Notebook Tabs
+// H. Notebook Tabs (form onglets)
 // ============================================================================
 
-.o_notebook .nav-link.active {
-    font-weight: 600;
-    border-bottom: 2px solid #1B3A5C;
+.o_notebook .nav-link {
+    transition: color 0.15s ease, border-color 0.15s ease;
+
+    &.active {
+        font-weight: 600;
+        border-bottom: 2px solid #1B3A5C;
+    }
 }
 
 // ============================================================================
-// I. Dropdown Menus — Rounded + shadow (MuK-inspired)
+// I. Dropdown Menus — Rounded + shadow
 // ============================================================================
 
 .dropdown-menu {
@@ -192,6 +198,7 @@
     box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12);
     border: 1px solid rgba(0, 0, 0, 0.06);
     padding: 0.25rem;
+    overflow: hidden;
 
     .dropdown-item {
         border-radius: 6px;
@@ -201,25 +208,7 @@
 }
 
 // ============================================================================
-// J. Modal Dialogs — Better shadows
-// ============================================================================
-
-.modal-content {
-    border-radius: 12px;
-    box-shadow: 0 12px 48px rgba(0, 0, 0, 0.2);
-    border: none;
-}
-
-.modal-header {
-    border-bottom: 1px solid rgba(0, 0, 0, 0.06);
-}
-
-.modal-footer {
-    border-top: 1px solid rgba(0, 0, 0, 0.06);
-}
-
-// ============================================================================
-// K. Buttons — Transitions + shadows
+// J. Buttons — Transitions + brand colors
 // ============================================================================
 
 .btn {
@@ -250,7 +239,7 @@
 }
 
 // ============================================================================
-// L. Stat Buttons (form header stats)
+// K. Stat Buttons (form header)
 // ============================================================================
 
 .oe_stat_button {
@@ -258,7 +247,7 @@
     transition: background-color 0.15s ease;
 
     &:hover {
-        background-color: rgba(#1B3A5C, 0.04);
+        background-color: rgba(27, 58, 92, 0.04);
     }
 
     .o_stat_value {
@@ -268,10 +257,193 @@
 }
 
 // ============================================================================
-// M. Scrollbar — Thin and subtle (MuK-inspired)
+// L. MuK Sidebar — ISIC branding enhancements
 // ============================================================================
 
-// Thin scrollbars for webkit browsers
+.mk_apps_sidebar_panel {
+    // Subtle top border matching navbar
+    border-right: 1px solid rgba(255, 255, 255, 0.06);
+
+    .mk_apps_sidebar_menu > li > a {
+        border-radius: 8px;
+        margin: 2px 6px;
+        font-weight: 400;
+        transition: background-color 0.2s ease, color 0.2s ease;
+    }
+
+    // Active item — gold accent left border
+    .mk_apps_sidebar_menu > li.active > a {
+        border-left: 3px solid #D4A843;
+        font-weight: 500;
+    }
+
+    // Logo at bottom of sidebar
+    .mk_apps_sidebar_image {
+        opacity: 0.7;
+        transition: opacity 0.2s ease;
+
+        &:hover {
+            opacity: 1;
+        }
+    }
+}
+
+// ============================================================================
+// M. Home Menu / Apps Grid
+// ============================================================================
+
+.o_home_menu {
+    background: linear-gradient(135deg, #1B3A5C 0%, #0F2236 100%);
+
+    .o_app {
+        transition: transform 0.2s ease;
+
+        &:hover {
+            transform: translateY(-3px);
+        }
+
+        .o_app_icon {
+            border-radius: 12px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+            transition: box-shadow 0.2s ease;
+        }
+
+        &:hover .o_app_icon {
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.25);
+        }
+
+        .o_caption {
+            font-weight: 500;
+        }
+    }
+}
+
+// ============================================================================
+// N. Many2one / Autocomplete Dropdown
+// ============================================================================
+
+.o_field_many2one_selection .dropdown-menu,
+.o-autocomplete--dropdown-menu {
+    border-radius: 8px;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12);
+    border: 1px solid rgba(0, 0, 0, 0.08);
+
+    .o-autocomplete--dropdown-item {
+        border-radius: 4px;
+        margin: 1px 4px;
+        transition: background-color 0.15s ease;
+    }
+}
+
+// ============================================================================
+// O. Toggle Switches — ISIC blue
+// ============================================================================
+
+.form-check-input:checked {
+    background-color: #1B3A5C;
+    border-color: #1B3A5C;
+}
+
+.form-switch .form-check-input:checked {
+    background-color: #1B3A5C;
+    border-color: #1B3A5C;
+}
+
+// ============================================================================
+// P. Tags / Badges in fields
+// ============================================================================
+
+.o_field_many2many_tags .badge {
+    border-radius: 6px;
+    font-weight: 500;
+    padding: 0.35em 0.65em;
+}
+
+.badge.text-bg-warning,
+.badge.bg-warning {
+    background-color: #D4A843 !important;
+    color: #fff !important;
+}
+
+// ============================================================================
+// Q. Chatter / Mail — Thread messages
+// ============================================================================
+
+.o-mail-Message {
+    transition: background-color 0.15s ease;
+
+    &:hover {
+        background-color: rgba(27, 58, 92, 0.02);
+    }
+}
+
+.o-mail-Composer-input {
+    border-radius: 8px;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+
+    &:focus {
+        border-color: #1B3A5C;
+        box-shadow: 0 0 0 3px rgba(27, 58, 92, 0.1);
+    }
+}
+
+// ============================================================================
+// R. Action Manager — View transition
+// ============================================================================
+
+.o_action_manager > .o_action {
+    animation: isic-fadein 0.15s ease-in;
+}
+
+@keyframes isic-fadein {
+    from { opacity: 0.6; }
+    to { opacity: 1; }
+}
+
+// ============================================================================
+// S. Settings Page
+// ============================================================================
+
+.o_base_settings {
+    .o_setting_box {
+        border-radius: 8px;
+        transition: background-color 0.15s ease;
+
+        &:hover {
+            background-color: rgba(27, 58, 92, 0.02);
+        }
+    }
+}
+
+// ============================================================================
+// T. Calendar / Pivot / Graph Views
+// ============================================================================
+
+.o_calendar_renderer {
+    .fc-event {
+        border-radius: 4px;
+        border: none;
+        box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+    }
+}
+
+.o_pivot {
+    .o_pivot_header_cell_closed,
+    .o_pivot_header_cell_opened {
+        color: #1B3A5C;
+    }
+}
+
+.o_graph_renderer {
+    .o_graph_canvas_container {
+        border-radius: 8px;
+    }
+}
+
+// ============================================================================
+// U. Scrollbar — Thin and subtle
+// ============================================================================
+
 ::-webkit-scrollbar {
     width: 6px;
     height: 6px;
@@ -290,61 +462,13 @@
     background: transparent;
 }
 
-// Firefox thin scrollbar
 * {
     scrollbar-width: thin;
     scrollbar-color: rgba(0, 0, 0, 0.15) transparent;
 }
 
 // ============================================================================
-// N. Status Bar Pills
-// ============================================================================
-
-.o_form_statusbar {
-    .o_arrow_button {
-        transition: all 0.2s ease;
-    }
-}
-
-// ============================================================================
-// O. Settings Page
-// ============================================================================
-
-.o_base_settings {
-    .o_setting_box {
-        border-radius: 8px;
-        transition: background-color 0.15s ease;
-
-        &:hover {
-            background-color: rgba(#1B3A5C, 0.02);
-        }
-    }
-}
-
-// ============================================================================
-// P. Calendar View
-// ============================================================================
-
-.o_calendar_renderer {
-    .fc-event {
-        border-radius: 4px;
-        border: none;
-        box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
-    }
-}
-
-// ============================================================================
-// Q. Badges (warning in gold)
-// ============================================================================
-
-.badge.text-bg-warning,
-.badge.bg-warning {
-    background-color: #D4A843 !important;
-    color: #fff !important;
-}
-
-// ============================================================================
-// R. Links
+// V. Links
 // ============================================================================
 
 a {
@@ -352,23 +476,50 @@ a {
 }
 
 // ============================================================================
-// S. Loading Overlay
+// W. Loading Indicator + User Menu
 // ============================================================================
 
 .o_loading_indicator {
     background-color: #D4A843;
 }
 
-// ============================================================================
-// T. User Menu
-// ============================================================================
-
 .o_user_menu .dropdown-menu {
-    min-width: 200px;
+    min-width: 220px;
 }
 
 // ============================================================================
-// U. Accent Utilities (for use by other ISIC modules)
+// X. Modal Dialogs — Polish
+// ============================================================================
+
+.modal-content {
+    border-radius: 12px;
+    box-shadow: 0 12px 48px rgba(0, 0, 0, 0.2);
+    border: none;
+    overflow: hidden;
+}
+
+.modal-header {
+    border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+}
+
+.modal-footer {
+    border-top: 1px solid rgba(0, 0, 0, 0.06);
+}
+
+// ============================================================================
+// Y. Tooltip
+// ============================================================================
+
+.tooltip {
+    .tooltip-inner {
+        border-radius: 6px;
+        padding: 0.4rem 0.75rem;
+        font-size: 0.8125rem;
+    }
+}
+
+// ============================================================================
+// Z. Accent Utilities (for ISIC modules)
 // ============================================================================
 
 .isic-accent {
