@@ -115,21 +115,6 @@
     }
 }
 
-// Editable fields — subtle bottom border + focus accent
-.o_form_view .o_form_editable,
-.modal .o_form_view {
-    .o_field_widget .o_input,
-    .o_field_widget input.o_input,
-    .o_field_widget textarea.o_input {
-        border-bottom: 1px solid #dee2e6;
-        transition: border-color 0.2s ease, box-shadow 0.2s ease;
-
-        &:focus {
-            border-bottom-color: $o-action;
-            box-shadow: 0 1px 0 0 $o-action;
-        }
-    }
-}
 
 .o_form_statusbar {
     border-radius: 8px 8px 0 0;

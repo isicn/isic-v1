@@ -38,7 +38,7 @@ skip-magic-trailing-comma = false
 line-ending = "lf"
 
 [tool.bandit]
-exclude_dirs = ["tests"]
+exclude_dirs = ["tests", "custom-addons/third-party"]
 skips = ["B101"]
 
 [tool.pytest.ini_options]
