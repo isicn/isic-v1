@@ -1,7 +1,7 @@
 {
     "name": "ISIC Theme",
     "summary": "ISIC institutional branding for Odoo backend",
-    "version": "19.0.1.0.0",
+    "version": "19.0.1.1.0",
     "category": "Hidden",
     "author": "ISIC Rabat",
     "website": "https://isic.ac.ma",

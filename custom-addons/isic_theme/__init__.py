@@ -2,11 +2,14 @@ import base64
 import logging
 import os
 
+from . import models  # noqa: F401
+
 _logger = logging.getLogger(__name__)
 
 
 def _post_init_hook(env):
-    """Set ISIC logo as default company logo on module installation."""
+    """Set ISIC branding on module installation."""
+    # --- Company logo ---
     logo_path = os.path.join(
         os.path.dirname(__file__),
         "static",
@@ -30,3 +33,10 @@ def _post_init_hook(env):
             _logger.info("ISIC logo set on main company")
     else:
         _logger.warning("ISIC logo not found at %s", logo_path)
+
+    # --- Hide MuK sidebar for all users ---
+    if "sidebar_type" in env["res.users"]._fields:
+        users = env["res.users"].search([("sidebar_type", "!=", "invisible")])
+        if users:
+            users.write({"sidebar_type": "invisible"})
+            _logger.info("Sidebar set to 'invisible' for %d users", len(users))
