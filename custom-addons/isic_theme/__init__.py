@@ -2,7 +2,7 @@ import base64
 import logging
 import os
 
-from . import models  # noqa: F401
+from . import models
 
 _logger = logging.getLogger(__name__)
 
