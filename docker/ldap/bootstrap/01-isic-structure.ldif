@@ -1,0 +1,198 @@
+# =============================================
+# ISIC LDAP Structure Bootstrap
+# Domain: isic.ac.ma (dc=isic,dc=ac,dc=ma)
+# =============================================
+
+# ---------------------------------------------
+# Organizational Units
+# ---------------------------------------------
+
+# People OU - racine des utilisateurs
+dn: ou=People,dc=isic,dc=ac,dc=ma
+objectClass: organizationalUnit
+ou: People
+description: Tous les utilisateurs ISIC
+
+# Staff OU - personnel
+dn: ou=Staff,ou=People,dc=isic,dc=ac,dc=ma
+objectClass: organizationalUnit
+ou: Staff
+description: Personnel administratif et enseignant
+
+# Students OU - etudiants
+dn: ou=Students,ou=People,dc=isic,dc=ac,dc=ma
+objectClass: organizationalUnit
+ou: Students
+description: Etudiants ISIC
+
+# Groups OU
+dn: ou=Groups,dc=isic,dc=ac,dc=ma
+objectClass: organizationalUnit
+ou: Groups
+description: Groupes LDAP
+
+# Services OU - comptes de service
+dn: ou=Services,dc=isic,dc=ac,dc=ma
+objectClass: organizationalUnit
+ou: Services
+description: Comptes de service techniques
+
+# ---------------------------------------------
+# Groupes LDAP
+# ---------------------------------------------
+
+dn: cn=direction,ou=Groups,dc=isic,dc=ac,dc=ma
+objectClass: groupOfNames
+cn: direction
+description: Direction ISIC
+member: uid=directeur,ou=Staff,ou=People,dc=isic,dc=ac,dc=ma
+
+dn: cn=enseignants,ou=Groups,dc=isic,dc=ac,dc=ma
+objectClass: groupOfNames
+cn: enseignants
+description: Corps enseignant
+member: uid=prof.informatique,ou=Staff,ou=People,dc=isic,dc=ac,dc=ma
+member: uid=resp.ci,ou=Staff,ou=People,dc=isic,dc=ac,dc=ma
+
+dn: cn=scolarite,ou=Groups,dc=isic,dc=ac,dc=ma
+objectClass: groupOfNames
+cn: scolarite
+description: Personnel de scolarite
+member: uid=admin.scolarite,ou=Staff,ou=People,dc=isic,dc=ac,dc=ma
+member: uid=agent.scolarite,ou=Staff,ou=People,dc=isic,dc=ac,dc=ma
+
+dn: cn=etudiants,ou=Groups,dc=isic,dc=ac,dc=ma
+objectClass: groupOfNames
+cn: etudiants
+description: Etudiants inscrits
+member: uid=etudiant1,ou=Students,ou=People,dc=isic,dc=ac,dc=ma
+member: uid=etudiant2,ou=Students,ou=People,dc=isic,dc=ac,dc=ma
+member: uid=etudiant3,ou=Students,ou=People,dc=isic,dc=ac,dc=ma
+
+# ---------------------------------------------
+# Compte de service Odoo
+# ---------------------------------------------
+
+dn: uid=odoo_bind,ou=Services,dc=isic,dc=ac,dc=ma
+objectClass: inetOrgPerson
+objectClass: organizationalPerson
+objectClass: person
+uid: odoo_bind
+cn: Odoo LDAP Bind Account
+sn: Bind
+userPassword: odoo_bind_secret
+description: Service account for Odoo LDAP authentication
+
+# ---------------------------------------------
+# Staff - Personnel
+# ---------------------------------------------
+
+# Directeur
+dn: uid=directeur,ou=Staff,ou=People,dc=isic,dc=ac,dc=ma
+objectClass: inetOrgPerson
+objectClass: organizationalPerson
+objectClass: person
+uid: directeur
+cn: Mohammed Directeur
+sn: Directeur
+givenName: Mohammed
+mail: directeur@isic.ac.ma
+userPassword: directeur123
+title: Directeur
+employeeType: direction
+
+# Admin Scolarite
+dn: uid=admin.scolarite,ou=Staff,ou=People,dc=isic,dc=ac,dc=ma
+objectClass: inetOrgPerson
+objectClass: organizationalPerson
+objectClass: person
+uid: admin.scolarite
+cn: Fatima Admin
+sn: Admin
+givenName: Fatima
+mail: admin.scolarite@isic.ac.ma
+userPassword: admin123
+title: Administrateur Scolarite
+employeeType: staff
+
+# Agent Scolarite
+dn: uid=agent.scolarite,ou=Staff,ou=People,dc=isic,dc=ac,dc=ma
+objectClass: inetOrgPerson
+objectClass: organizationalPerson
+objectClass: person
+uid: agent.scolarite
+cn: Karim Agent
+sn: Agent
+givenName: Karim
+mail: agent.scolarite@isic.ac.ma
+userPassword: agent123
+title: Agent de Scolarite
+employeeType: staff
+
+# Responsable Filiere CI
+dn: uid=resp.ci,ou=Staff,ou=People,dc=isic,dc=ac,dc=ma
+objectClass: inetOrgPerson
+objectClass: organizationalPerson
+objectClass: person
+uid: resp.ci
+cn: Ahmed Responsable
+sn: Responsable
+givenName: Ahmed
+mail: resp.ci@isic.ac.ma
+userPassword: resp123
+title: Responsable Filiere CI
+employeeType: faculty
+
+# Professeur Informatique
+dn: uid=prof.informatique,ou=Staff,ou=People,dc=isic,dc=ac,dc=ma
+objectClass: inetOrgPerson
+objectClass: organizationalPerson
+objectClass: person
+uid: prof.informatique
+cn: Sara Prof
+sn: Prof
+givenName: Sara
+mail: prof.informatique@isic.ac.ma
+userPassword: prof123
+title: Professeur Informatique
+employeeType: faculty
+
+# ---------------------------------------------
+# Students - Etudiants
+# ---------------------------------------------
+
+dn: uid=etudiant1,ou=Students,ou=People,dc=isic,dc=ac,dc=ma
+objectClass: inetOrgPerson
+objectClass: organizationalPerson
+objectClass: person
+uid: etudiant1
+cn: Youssef Etudiant
+sn: Etudiant
+givenName: Youssef
+mail: youssef.etudiant@etu.isic.ac.ma
+userPassword: etudiant123
+employeeType: student
+
+dn: uid=etudiant2,ou=Students,ou=People,dc=isic,dc=ac,dc=ma
+objectClass: inetOrgPerson
+objectClass: organizationalPerson
+objectClass: person
+uid: etudiant2
+cn: Zineb Etudiante
+sn: Etudiante
+givenName: Zineb
+mail: zineb.etudiante@etu.isic.ac.ma
+userPassword: etudiant123
+employeeType: student
+
+dn: uid=etudiant3,ou=Students,ou=People,dc=isic,dc=ac,dc=ma
+objectClass: inetOrgPerson
+objectClass: organizationalPerson
+objectClass: person
+uid: etudiant3
+cn: Omar Etudiant
+sn: Etudiant
+givenName: Omar
+mail: omar.etudiant@etu.isic.ac.ma
+userPassword: etudiant123
+employeeType: student

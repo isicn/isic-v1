@@ -17,6 +17,7 @@ venv/
 .env.*
 !.env.template
 !.env.vps4.template
+!docker/.env.vps3.template
 docker/nginx/ssl/*.pem
 docker/nginx/ssl/*.key
 docker/nginx/ssl/*.crt

@@ -1,0 +1,183 @@
+# =============================================
+# Docker Compose - ISIC Authentication Stack (VPS-3)
+# OpenLDAP + Apereo CAS + phpLDAPadmin + Nginx
+# =============================================
+# Usage:
+#   docker compose -f docker-compose.auth-vps.yml --env-file .env.vps3 up -d
+#
+# Services:
+#   - ldap:          OpenLDAP server (internal only)
+#   - phpldapadmin:  LDAP admin UI (via nginx: ldap.isic.ac.ma)
+#   - cas:           Apereo CAS server (via nginx: auth.isic.ac.ma)
+#   - nginx:         Reverse proxy with SSL (ports 80/443)
+# =============================================
+
+name: isic-auth-vps
+
+services:
+  # ===========================================
+  # OpenLDAP Server
+  # ===========================================
+  ldap:
+    image: osixia/openldap:1.5.0
+    container_name: isic-ldap-vps
+    hostname: ldap.isic.ac.ma
+    restart: always
+    environment:
+      LDAP_LOG_LEVEL: "256"
+      LDAP_ORGANISATION: "ISIC"
+      LDAP_DOMAIN: "isic.ac.ma"
+      LDAP_BASE_DN: "dc=isic,dc=ac,dc=ma"
+      LDAP_ADMIN_PASSWORD: "${LDAP_ADMIN_PASSWORD}"
+      LDAP_CONFIG_PASSWORD: "${LDAP_CONFIG_PASSWORD}"
+      LDAP_READONLY_USER: "false"
+      LDAP_RFC2307BIS_SCHEMA: "false"
+      LDAP_BACKEND: "mdb"
+      LDAP_TLS: "false"
+      LDAP_REPLICATION: "false"
+      KEEP_EXISTING_CONFIG: "false"
+      LDAP_REMOVE_CONFIG_AFTER_SETUP: "true"
+    volumes:
+      - ldap-data:/var/lib/ldap
+      - ldap-config:/etc/ldap/slapd.d
+    ports:
+      # Port 1389 exposed on host for VPS-4 access (restrict via UFW)
+      - "1389:389"
+    networks:
+      - isic-auth-internal
+    healthcheck:
+      test: ["CMD", "ldapsearch", "-x", "-H", "ldap://localhost:389", "-b", "dc=isic,dc=ac,dc=ma", "-D", "cn=admin,dc=isic,dc=ac,dc=ma", "-w", "${LDAP_ADMIN_PASSWORD}"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+    deploy:
+      resources:
+        limits:
+          memory: 512M
+        reservations:
+          memory: 128M
+
+  # ===========================================
+  # phpLDAPadmin - Web UI for LDAP
+  # ===========================================
+  phpldapadmin:
+    image: osixia/phpldapadmin:0.9.0
+    container_name: isic-phpldapadmin-vps
+    restart: always
+    logging:
+      driver: json-file
+      options:
+        max-size: "10m"
+        max-file: "3"
+    environment:
+      PHPLDAPADMIN_LDAP_HOSTS: "ldap"
+      PHPLDAPADMIN_HTTPS: "false"
+    depends_on:
+      ldap:
+        condition: service_healthy
+    networks:
+      - isic-auth-internal
+    deploy:
+      resources:
+        limits:
+          memory: 256M
+
+  # ===========================================
+  # Apereo CAS Server
+  # ===========================================
+  cas:
+    build:
+      context: ./cas
+      dockerfile: Dockerfile
+    image: isic-cas:latest
+    container_name: isic-cas-vps
+    hostname: cas.isic.ac.ma
+    restart: always
+    logging:
+      driver: json-file
+      options:
+        max-size: "10m"
+        max-file: "3"
+    environment:
+      JAVA_OPTS: "-Xms512m -Xmx1536m"
+      CAS_STANDALONE_CONFIG_URL: "file:/etc/cas/config/cas.properties"
+      CAS_SERVER_NAME: "https://auth.isic.ac.ma"
+      LDAP_ADMIN_PASSWORD: "${LDAP_ADMIN_PASSWORD}"
+    volumes:
+      - cas-logs:/var/log/cas
+    depends_on:
+      ldap:
+        condition: service_healthy
+    networks:
+      - isic-auth-internal
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8443/cas/login"]
+      interval: 30s
+      timeout: 10s
+      retries: 10
+      start_period: 120s
+    deploy:
+      resources:
+        limits:
+          memory: 2G
+        reservations:
+          memory: 512M
+
+  # ===========================================
+  # Nginx Reverse Proxy with SSL
+  # ===========================================
+  nginx:
+    image: nginx:alpine
+    container_name: isic-nginx-auth-vps
+    restart: always
+    logging:
+      driver: json-file
+      options:
+        max-size: "10m"
+        max-file: "3"
+    depends_on:
+      - cas
+      - phpldapadmin
+    volumes:
+      - ./nginx/auth.conf:/etc/nginx/nginx.conf:ro
+      - ./nginx/ssl:/etc/nginx/ssl:ro
+      - certbot-data:/var/www/certbot:ro
+    ports:
+      - "80:80"
+      - "443:443"
+    networks:
+      - isic-auth-internal
+      - isic-auth-external
+    deploy:
+      resources:
+        limits:
+          memory: 256M
+
+# ===========================================
+# Volumes
+# ===========================================
+volumes:
+  ldap-data:
+    name: isic-ldap-data-vps
+    driver: local
+  ldap-config:
+    name: isic-ldap-config-vps
+    driver: local
+  cas-logs:
+    name: isic-cas-logs-vps
+    driver: local
+  certbot-data:
+    name: isic-certbot-auth-vps
+    driver: local
+
+# ===========================================
+# Networks
+# ===========================================
+networks:
+  isic-auth-internal:
+    name: isic-auth-internal-vps
+    driver: bridge
+    internal: true
+  isic-auth-external:
+    name: isic-auth-external-vps
+    driver: bridge

@@ -1,0 +1,11 @@
+{
+  "@class": "org.apereo.cas.services.CasRegisteredService",
+  "serviceId": "^https://.*\\.isic\\.ac\\.ma/.*",
+  "name": "Service d'Authentification Central de l'ISIC",
+  "id": 1001,
+  "description": "Service d'Authentification Central de l'ISIC",
+  "evaluationOrder": 1,
+  "attributeReleasePolicy": {
+    "@class": "org.apereo.cas.services.ReturnAllAttributeReleasePolicy"
+  }
+}

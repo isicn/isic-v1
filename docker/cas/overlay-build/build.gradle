@@ -1,0 +1,43 @@
+buildscript {
+    repositories {
+        mavenCentral()
+        gradlePluginPortal()
+        maven { url "https://repo.spring.io/milestone" }
+        maven { url "https://build.shibboleth.net/nexus/content/repositories/releases/" }
+    }
+    dependencies {
+        classpath "io.spring.gradle:dependency-management-plugin:1.1.0"
+    }
+}
+
+apply plugin: "java"
+apply plugin: "io.spring.dependency-management"
+
+repositories {
+    mavenCentral()
+    maven { url "https://repo.spring.io/milestone" }
+    maven { url "https://build.shibboleth.net/nexus/content/repositories/releases/" }
+    maven { url "https://oss.sonatype.org/content/repositories/releases/" }
+}
+
+dependencyManagement {
+    imports {
+        mavenBom "org.apereo.cas:cas-server-support-bom:${project.'cas.version'}"
+    }
+}
+
+configurations {
+    ldapDeps
+}
+
+dependencies {
+    ldapDeps "org.apereo.cas:cas-server-support-ldap:${project.'cas.version'}"
+}
+
+// Collect only the LDAP JARs that need to be added to the CAS WAR
+task collectLdapJars(type: Copy) {
+    from configurations.ldapDeps
+    into "${buildDir}/ldap-jars"
+}
+
+build.dependsOn collectLdapJars
