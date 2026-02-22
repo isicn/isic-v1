@@ -9,16 +9,20 @@
 
 $o-community-color: #1B3A5C;
 $o-enterprise-color: #1B3A5C;
-$o-enterprise-action-color: #1B3A5C;
+$o-enterprise-action-color: #2E86AB;
 $o-brand-odoo: #1B3A5C;
 $o-brand-primary: #1B3A5C;
 
 $o-brand-secondary: #6B7B8D;
 $o-brand-lightsecondary: #F0F2F5;
 
-$o-action: #1B3A5C;
+$o-action: #2E86AB;
 $o-warning: #D4A843;
 $o-main-link-color: #1B4F8C;
+
+// Action color states (teal-blue for CTA contrast with navy navbar)
+$isic-action-hover: darken(#2E86AB, 8%);
+$isic-action-active: darken(#2E86AB, 12%);
 
 // ============================================================================
 // Context Colors — Harmonized with ISIC palette

@@ -20,6 +20,7 @@
         ],
         "web.assets_backend": [
             "isic_theme/static/src/scss/backend.scss",
+            "isic_theme/static/src/css/has_rules.css",
         ],
         "web.assets_frontend": [
             "isic_theme/static/src/scss/backend.scss",

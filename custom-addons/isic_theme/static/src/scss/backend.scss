@@ -90,6 +90,12 @@
 
     .breadcrumb-item {
         font-weight: 500;
+        font-size: 1.05em;
+
+        &.active {
+            font-weight: 600;
+            color: #1B3A5C;
+        }
     }
 
     .breadcrumb-item + .breadcrumb-item::before {
@@ -109,11 +115,35 @@
     }
 }
 
+// Editable fields — subtle bottom border + focus accent
+.o_form_view .o_form_editable,
+.modal .o_form_view {
+    .o_field_widget .o_input,
+    .o_field_widget input.o_input,
+    .o_field_widget textarea.o_input {
+        border-bottom: 1px solid #dee2e6;
+        transition: border-color 0.2s ease, box-shadow 0.2s ease;
+
+        &:focus {
+            border-bottom-color: $o-action;
+            box-shadow: 0 1px 0 0 $o-action;
+        }
+    }
+}
+
 .o_form_statusbar {
     border-radius: 8px 8px 0 0;
 
     .o_arrow_button {
+        border-radius: 0;
+        font-weight: 500;
         transition: all 0.2s ease;
+
+        &.btn-primary,
+        &.o_arrow_button_current {
+            background-color: $o-action;
+            border-color: $o-action;
+        }
     }
 }
 
@@ -171,8 +201,8 @@
     transition: border-color 0.2s ease, box-shadow 0.2s ease;
 
     &:focus-within {
-        border-color: #1B3A5C;
-        box-shadow: 0 0 0 3px rgba(27, 58, 92, 0.1);
+        border-color: $o-action;
+        box-shadow: 0 0 0 3px rgba($o-action, 0.1);
     }
 }
 
@@ -185,7 +215,7 @@
 
     &.active {
         font-weight: 600;
-        border-bottom: 2px solid #1B3A5C;
+        border-bottom: 2px solid $o-action;
     }
 }
 
@@ -216,18 +246,18 @@
 }
 
 .btn-primary {
-    --bs-btn-bg: #1B3A5C;
-    --bs-btn-border-color: #1B3A5C;
-    --bs-btn-hover-bg: #152E4A;
-    --bs-btn-hover-border-color: #152E4A;
-    --bs-btn-active-bg: #112440;
-    --bs-btn-active-border-color: #112440;
-    --bs-btn-disabled-bg: #1B3A5C;
-    --bs-btn-disabled-border-color: #1B3A5C;
-    box-shadow: 0 1px 2px rgba(27, 58, 92, 0.2);
+    --bs-btn-bg: #{$o-action};
+    --bs-btn-border-color: #{$o-action};
+    --bs-btn-hover-bg: #{$isic-action-hover};
+    --bs-btn-hover-border-color: #{$isic-action-hover};
+    --bs-btn-active-bg: #{$isic-action-active};
+    --bs-btn-active-border-color: #{$isic-action-active};
+    --bs-btn-disabled-bg: #{$o-action};
+    --bs-btn-disabled-border-color: #{$o-action};
+    box-shadow: 0 1px 2px rgba($o-action, 0.2);
 
     &:hover {
-        box-shadow: 0 2px 6px rgba(27, 58, 92, 0.3);
+        box-shadow: 0 2px 6px rgba($o-action, 0.3);
     }
 }
 
@@ -247,11 +277,11 @@
     transition: background-color 0.15s ease;
 
     &:hover {
-        background-color: rgba(27, 58, 92, 0.04);
+        background-color: rgba($o-action, 0.04);
     }
 
     .o_stat_value {
-        color: #1B3A5C;
+        color: $o-action;
         font-weight: 700;
     }
 }
@@ -292,8 +322,50 @@
 // M. Home Menu / Apps Grid
 // ============================================================================
 
+// Navbar transparent when apps menu is open (like Enterprise)
+// Use string interpolation to bypass libsass :has() limitation
+// Note: navbar :has() rule for apps menu open state is in webclient_templates.xml
+// (raw CSS to bypass SCSS compiler which strips :has())
+
+// MuK dropdown apps menu — full viewport, behind transparent navbar
+.mk_app_menu.dropdown-menu {
+    align-content: center !important;
+    justify-content: center !important;
+    background: linear-gradient(135deg, #1B3A5C 0%, #0F2236 100%) !important;
+    top: 0 !important;
+    min-height: 100vh !important;
+    padding-top: 50px !important;
+    padding-bottom: 0 !important;
+
+    .o_app {
+        transition: transform 0.2s ease;
+
+        > a .mk_app_icon {
+            border-radius: 12px !important;
+            box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.2), 0 2px 8px rgba(0, 0, 0, 0.15) !important;
+        }
+
+        &:hover > a .mk_app_icon {
+            box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.2), 0 4px 16px rgba(0, 0, 0, 0.25) !important;
+        }
+
+        > a .mk_app_name {
+            font-weight: 500;
+        }
+    }
+}
+
+// Standard Odoo home view (fallback)
 .o_home_menu {
     background: linear-gradient(135deg, #1B3A5C 0%, #0F2236 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: calc(100vh - 50px);
+
+    .o_apps {
+        max-width: 900px;
+    }
 
     .o_app {
         transition: transform 0.2s ease;
@@ -336,17 +408,17 @@
 }
 
 // ============================================================================
-// O. Toggle Switches — ISIC blue
+// O. Toggle Switches — Action color
 // ============================================================================
 
 .form-check-input:checked {
-    background-color: #1B3A5C;
-    border-color: #1B3A5C;
+    background-color: $o-action;
+    border-color: $o-action;
 }
 
 .form-switch .form-check-input:checked {
-    background-color: #1B3A5C;
-    border-color: #1B3A5C;
+    background-color: $o-action;
+    border-color: $o-action;
 }
 
 // ============================================================================
@@ -382,8 +454,8 @@
     transition: border-color 0.2s ease, box-shadow 0.2s ease;
 
     &:focus {
-        border-color: #1B3A5C;
-        box-shadow: 0 0 0 3px rgba(27, 58, 92, 0.1);
+        border-color: $o-action;
+        box-shadow: 0 0 0 3px rgba($o-action, 0.1);
     }
 }
 
@@ -405,13 +477,23 @@
 // ============================================================================
 
 .o_base_settings {
-    .o_setting_box {
+    .o_setting_container .o_setting_box {
+        border: 1px solid rgba(0, 0, 0, 0.06);
         border-radius: 8px;
-        transition: background-color 0.15s ease;
+        margin-bottom: 0.5rem;
+        padding: 1rem;
+        transition: border-color 0.15s ease, background-color 0.15s ease;
 
         &:hover {
-            background-color: rgba(27, 58, 92, 0.02);
+            border-color: rgba($o-action, 0.2);
+            background-color: rgba($o-action, 0.01);
         }
+    }
+
+    .app_settings_header {
+        border-bottom: 2px solid #1B3A5C;
+        padding-bottom: 0.5rem;
+        margin-bottom: 1rem;
     }
 }
 
@@ -430,7 +512,7 @@
 .o_pivot {
     .o_pivot_header_cell_closed,
     .o_pivot_header_cell_opened {
-        color: #1B3A5C;
+        color: $o-action;
     }
 }
 
@@ -472,7 +554,11 @@
 // ============================================================================
 
 a {
-    color: #1B4F8C;
+    color: $o-action;
+
+    &:hover {
+        color: $isic-action-hover;
+    }
 }
 
 // ============================================================================

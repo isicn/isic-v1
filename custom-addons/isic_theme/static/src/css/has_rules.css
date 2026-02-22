@@ -1,0 +1,25 @@
+/*
+ * ISIC Theme — CSS :has() rules
+ * Plain CSS file to bypass Odoo's SCSS compiler which strips :has()
+ */
+
+/* Navbar transparent when apps menu dropdown is open (like Enterprise).
+ * The .mk_app_menu element only exists in the DOM when the popover is open
+ * (Odoo Dropdown uses OWL popover, element is created/destroyed on toggle).
+ * The dropdown is extended to top:0 / 100vh in backend.scss so the gradient
+ * covers the full viewport. The navbar sits on top with transparent bg. */
+body:has(.mk_app_menu) .o_main_navbar {
+    background: transparent !important;
+    background-image: none !important;
+    background-color: transparent !important;
+    box-shadow: none !important;
+    border-bottom: none !important;
+    z-index: 1060 !important;
+    position: relative;
+}
+
+body:has(.mk_app_menu) .o_main_navbar .o_menu_brand,
+body:has(.mk_app_menu) .o_main_navbar .o_menu_sections {
+    opacity: 0 !important;
+    pointer-events: none;
+}

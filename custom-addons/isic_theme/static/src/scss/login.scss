@@ -121,8 +121,8 @@
             transition: border-color 0.2s ease, box-shadow 0.2s ease;
 
             &:focus {
-                border-color: #1B3A5C;
-                box-shadow: 0 0 0 3px rgba(#1B3A5C, 0.1);
+                border-color: $o-action;
+                box-shadow: 0 0 0 3px rgba($o-action, 0.1);
             }
         }
 
