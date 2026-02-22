@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- Add Color Mode field to user preferences (full form) -->
+    <record id="view_users_form_color_scheme" model="ir.ui.view">
+        <field name="name">res.users.form.isic.color_scheme</field>
+        <field name="model">res.users</field>
+        <field name="inherit_id" ref="base.view_users_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//group[@name='other_preferences']" position="inside">
+                <field name="color_scheme" widget="radio" options="{'horizontal': true}"/>
+            </xpath>
+        </field>
+    </record>
+
+    <!-- Add Color Mode field to simplified preferences form -->
+    <record id="view_users_form_simple_color_scheme" model="ir.ui.view">
+        <field name="name">res.users.preferences.form.isic.color_scheme</field>
+        <field name="model">res.users</field>
+        <field name="inherit_id" ref="base.view_users_form_simple_modif"/>
+        <field name="arch" type="xml">
+            <xpath expr="//group[@name='other_preferences']" position="inside">
+                <field name="color_scheme" widget="radio" readonly="0" options="{'horizontal': true}"/>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>

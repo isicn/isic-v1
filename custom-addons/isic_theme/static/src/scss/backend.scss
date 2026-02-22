@@ -600,3 +600,87 @@ a {
 .isic-accent-bg {
     background-color: #D4A843;
 }
+
+// ============================================================================
+// AA. Notifications / Toasts — ISIC branding
+// ============================================================================
+
+.o_notification {
+    border-radius: 8px;
+    overflow: hidden;
+
+    .o_notification_bar {
+        width: 4px;
+    }
+
+    .o_notification_close {
+        opacity: 0.5;
+        transition: opacity 0.15s ease;
+
+        &:hover {
+            opacity: 1;
+        }
+    }
+
+    .o_notification_progress {
+        height: 2px;
+    }
+
+    .o_notification_buttons .btn {
+        border-radius: 6px;
+        font-weight: 500;
+    }
+}
+
+// ============================================================================
+// AD. Responsive — Tablet (768px)
+// ============================================================================
+
+@media (max-width: 768px) {
+    .o_control_panel .breadcrumb-item {
+        font-size: 0.9em;
+    }
+
+    .o_form_sheet_bg .o_form_sheet {
+        border-radius: 0;
+        border-left: none;
+        border-right: none;
+    }
+
+    .modal-content {
+        border-radius: 8px;
+        margin: 0.5rem;
+    }
+
+    .o_kanban_record {
+        border-radius: 6px;
+    }
+}
+
+// ============================================================================
+// AE. Responsive — Mobile (576px)
+// ============================================================================
+
+@media (max-width: 576px) {
+    .o_main_navbar .o_menu_brand {
+        font-size: 0.9rem;
+    }
+
+    .o_control_panel {
+        .breadcrumb-item {
+            font-size: 0.85em;
+        }
+    }
+
+    .o_form_statusbar {
+        border-radius: 0;
+    }
+
+    .dropdown-menu {
+        border-radius: 6px;
+    }
+
+    .o_user_menu .dropdown-menu {
+        min-width: 180px;
+    }
+}

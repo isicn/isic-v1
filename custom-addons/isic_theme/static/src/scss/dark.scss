@@ -1,0 +1,291 @@
+///
+/// ISIC Theme — Dark Mode Component Overrides
+/// Loaded via web.assets_web_dark — overrides hardcoded colors from backend.scss
+///
+
+// ============================================================================
+// 1. Navbar — Darker gradient
+// ============================================================================
+
+.o_main_navbar {
+    background: linear-gradient(180deg, #0A1628 0%, #0F1D2E 100%);
+
+    .badge {
+        background-color: #E0B84D !important;
+    }
+}
+
+// ============================================================================
+// 2. Control Panel — Dark surface
+// ============================================================================
+
+.o_control_panel {
+    .breadcrumb-item.active {
+        color: #4A7FA5;
+    }
+
+    .breadcrumb-item + .breadcrumb-item::before {
+        color: #8B9BAD;
+    }
+}
+
+// ============================================================================
+// 3. Form View — Dark sheet
+// ============================================================================
+
+.o_form_sheet_bg .o_form_sheet {
+    border-color: rgba(255, 255, 255, 0.08);
+}
+
+.o_form_statusbar .o_arrow_button {
+    &.btn-primary,
+    &.o_arrow_button_current {
+        background-color: #3BA3C7;
+        border-color: #3BA3C7;
+    }
+}
+
+// ============================================================================
+// 4. List View — Dark headers
+// ============================================================================
+
+.o_list_renderer .o_list_table {
+    thead th {
+        color: #8B9BAD;
+    }
+
+    .o_data_row:hover {
+        background-color: rgba(59, 163, 199, 0.06);
+    }
+}
+
+// ============================================================================
+// 5. Kanban — Dark cards
+// ============================================================================
+
+.o_kanban_record {
+    border-color: rgba(255, 255, 255, 0.08);
+
+    &:hover {
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    }
+}
+
+// ============================================================================
+// 6. Searchbar — Dark border
+// ============================================================================
+
+.o_searchview {
+    border-color: rgba(255, 255, 255, 0.12);
+
+    &:focus-within {
+        border-color: #3BA3C7;
+        box-shadow: 0 0 0 3px rgba(59, 163, 199, 0.15);
+    }
+}
+
+// ============================================================================
+// 7. Notebook Tabs — Dark active
+// ============================================================================
+
+.o_notebook .nav-link.active {
+    border-bottom-color: #3BA3C7;
+}
+
+// ============================================================================
+// 8. Dropdown Menus — Dark surface
+// ============================================================================
+
+.dropdown-menu {
+    border-color: rgba(255, 255, 255, 0.08);
+}
+
+// ============================================================================
+// 9. Buttons — Dark mode action color
+// ============================================================================
+
+.btn-primary {
+    --bs-btn-bg: #3BA3C7;
+    --bs-btn-border-color: #3BA3C7;
+    --bs-btn-hover-bg: #{lighten(#3BA3C7, 8%)};
+    --bs-btn-hover-border-color: #{lighten(#3BA3C7, 8%)};
+    --bs-btn-active-bg: #{lighten(#3BA3C7, 12%)};
+    --bs-btn-active-border-color: #{lighten(#3BA3C7, 12%)};
+    --bs-btn-disabled-bg: #3BA3C7;
+    --bs-btn-disabled-border-color: #3BA3C7;
+    box-shadow: 0 1px 2px rgba(59, 163, 199, 0.2);
+
+    &:hover {
+        box-shadow: 0 2px 6px rgba(59, 163, 199, 0.3);
+    }
+}
+
+.btn-secondary {
+    --bs-btn-bg: #4A5568;
+    --bs-btn-border-color: #4A5568;
+    --bs-btn-hover-bg: #5A6578;
+    --bs-btn-hover-border-color: #5A6578;
+}
+
+// ============================================================================
+// 10. Stat Buttons — Dark mode
+// ============================================================================
+
+.oe_stat_button {
+    &:hover {
+        background-color: rgba(59, 163, 199, 0.08);
+    }
+
+    .o_stat_value {
+        color: #3BA3C7;
+    }
+}
+
+// ============================================================================
+// 11. Toggle / Checkbox — Dark mode
+// ============================================================================
+
+.form-check-input:checked {
+    background-color: #3BA3C7;
+    border-color: #3BA3C7;
+}
+
+.form-switch .form-check-input:checked {
+    background-color: #3BA3C7;
+    border-color: #3BA3C7;
+}
+
+// ============================================================================
+// 12. Links — Dark mode
+// ============================================================================
+
+a {
+    color: #3BA3C7;
+
+    &:hover {
+        color: #{lighten(#3BA3C7, 10%)};
+    }
+}
+
+// ============================================================================
+// 13. MuK Sidebar — Dark mode
+// ============================================================================
+
+.mk_apps_sidebar_panel {
+    .mk_apps_sidebar_menu > li.active > a {
+        border-left-color: #E0B84D;
+    }
+}
+
+// ============================================================================
+// 14. Home Menu — Keep gradient (already dark)
+// ============================================================================
+
+.mk_app_menu.dropdown-menu {
+    background: linear-gradient(135deg, #0A1628 0%, #060D18 100%) !important;
+}
+
+.o_home_menu {
+    background: linear-gradient(135deg, #0A1628 0%, #060D18 100%);
+}
+
+// ============================================================================
+// 15. Settings — Dark mode
+// ============================================================================
+
+.o_base_settings {
+    .o_setting_container .o_setting_box {
+        border-color: rgba(255, 255, 255, 0.06);
+
+        &:hover {
+            border-color: rgba(59, 163, 199, 0.2);
+            background-color: rgba(59, 163, 199, 0.03);
+        }
+    }
+
+    .app_settings_header {
+        border-bottom-color: #4A7FA5;
+    }
+}
+
+// ============================================================================
+// 16. Chatter — Dark mode
+// ============================================================================
+
+.o-mail-Message:hover {
+    background-color: rgba(59, 163, 199, 0.04);
+}
+
+.o-mail-Composer-input:focus {
+    border-color: #3BA3C7;
+    box-shadow: 0 0 0 3px rgba(59, 163, 199, 0.15);
+}
+
+// ============================================================================
+// 17. Modal — Dark mode
+// ============================================================================
+
+.modal-header {
+    border-bottom-color: rgba(255, 255, 255, 0.06);
+}
+
+.modal-footer {
+    border-top-color: rgba(255, 255, 255, 0.06);
+}
+
+// ============================================================================
+// 18. Loading Indicator — Dark mode gold
+// ============================================================================
+
+.o_loading_indicator {
+    background-color: #E0B84D;
+}
+
+// ============================================================================
+// 19. Scrollbar — Dark mode
+// ============================================================================
+
+::-webkit-scrollbar-thumb {
+    background-color: rgba(255, 255, 255, 0.15);
+
+    &:hover {
+        background-color: rgba(255, 255, 255, 0.25);
+    }
+}
+
+* {
+    scrollbar-color: rgba(255, 255, 255, 0.15) transparent;
+}
+
+// ============================================================================
+// 20. Tags / Badges — Dark mode
+// ============================================================================
+
+.badge.text-bg-warning,
+.badge.bg-warning {
+    background-color: #E0B84D !important;
+    color: #000 !important;
+}
+
+// ============================================================================
+// 21. Calendar / Pivot — Dark mode
+// ============================================================================
+
+.o_pivot {
+    .o_pivot_header_cell_closed,
+    .o_pivot_header_cell_opened {
+        color: #3BA3C7;
+    }
+}
+
+// ============================================================================
+// 22. Accent Utilities — Dark mode
+// ============================================================================
+
+.isic-accent {
+    color: #E0B84D;
+}
+
+.isic-accent-bg {
+    background-color: #E0B84D;
+}

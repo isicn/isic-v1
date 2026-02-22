@@ -1,0 +1,54 @@
+///
+/// ISIC Theme — Dark Mode Variable Overrides
+/// Loaded via web.assets_web_dark after MuK colors_dark.scss
+///
+
+// ============================================================================
+// ISIC Brand Colors — Dark Mode
+// Colors adjusted for visibility on dark backgrounds
+// ============================================================================
+
+$o-community-color: #4A7FA5;
+$o-enterprise-color: #4A7FA5;
+$o-enterprise-action-color: #3BA3C7;
+$o-brand-odoo: #4A7FA5;
+$o-brand-primary: #4A7FA5;
+
+$o-brand-secondary: #8B9BAD;
+$o-brand-lightsecondary: #2A2A3A;
+
+$o-action: #3BA3C7;
+$o-warning: #E0B84D;
+$o-main-link-color: #5DA2D0;
+
+// Action color states
+$isic-action-hover: lighten(#3BA3C7, 8%);
+$isic-action-active: lighten(#3BA3C7, 12%);
+
+// ============================================================================
+// Context Colors — Brighter for dark backgrounds
+// ============================================================================
+
+$o-success: #1DC959;
+$o-info: #6AB5FB;
+$o-danger: #FF5757;
+
+// ============================================================================
+// Component Variables
+// ============================================================================
+
+$o-main-favorite-color: #E0B84D;
+$o-navbar-badge-bg: #E0B84D;
+$o-webclient-background-color: #1A1A2E;
+
+// ============================================================================
+// Theme Text Colors Map — Dark mode
+// ============================================================================
+
+$o-theme-text-colors: (
+    "primary": #4A7FA5,
+    "success": #1DC959,
+    "info": #6AB5FB,
+    "warning": #E0B84D,
+    "danger": #FF5757,
+);

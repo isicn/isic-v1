@@ -1,0 +1,161 @@
+///
+/// ISIC Theme — RTL (Arabic) Support
+/// Adjustments for right-to-left layout
+/// Applied when .o_rtl class is present on the webclient
+///
+
+// ============================================================================
+// 1. Font Stack — Add Arabic font family
+// ============================================================================
+
+.o_rtl {
+    font-family:
+        "Inter",
+        "Noto Sans Arabic",
+        "Segoe UI",
+        "Tahoma",
+        "Arial",
+        sans-serif;
+}
+
+// ============================================================================
+// 2. Navbar — Mirror layout
+// ============================================================================
+
+.o_rtl .o_main_navbar {
+    .o_menu_brand {
+        letter-spacing: normal; // Letter-spacing not needed for Arabic
+    }
+}
+
+// ============================================================================
+// 3. Breadcrumbs — Direction
+// ============================================================================
+
+.o_rtl .o_control_panel {
+    .breadcrumb-item + .breadcrumb-item::before {
+        content: "\f053"; // fa-chevron-left (appears as right arrow in RTL)
+        font-family: "FontAwesome";
+        font-size: 0.7em;
+    }
+}
+
+// ============================================================================
+// 4. MuK Sidebar — Mirror active border
+// ============================================================================
+
+.o_rtl .mk_apps_sidebar_panel {
+    border-right: none;
+    border-left: 1px solid rgba(255, 255, 255, 0.06);
+
+    .mk_apps_sidebar_menu > li > a {
+        margin: 2px 6px;
+    }
+
+    .mk_apps_sidebar_menu > li.active > a {
+        border-left: none;
+        border-right: 3px solid #D4A843;
+    }
+}
+
+// ============================================================================
+// 5. Form View — RTL adjustments
+// ============================================================================
+
+.o_rtl .o_form_statusbar .o_arrow_button {
+    // Arrow buttons point opposite direction in RTL
+    direction: rtl;
+}
+
+// ============================================================================
+// 6. List View — Text alignment
+// ============================================================================
+
+.o_rtl .o_list_renderer .o_list_table {
+    thead th {
+        text-align: right;
+    }
+}
+
+// ============================================================================
+// 7. Searchbar — RTL padding
+// ============================================================================
+
+.o_rtl .o_searchview {
+    direction: rtl;
+}
+
+// ============================================================================
+// 8. Notifications — RTL position
+// ============================================================================
+
+.o_rtl .o_notification {
+    .o_notification_bar {
+        border-radius: 0 8px 8px 0;
+    }
+}
+
+// ============================================================================
+// 9. Dropdown — RTL alignment
+// ============================================================================
+
+.o_rtl .dropdown-menu .dropdown-item {
+    text-align: right;
+}
+
+// ============================================================================
+// 10. Notebook Tabs — RTL
+// ============================================================================
+
+.o_rtl .o_notebook .nav-link.active {
+    border-bottom: 2px solid $o-action;
+}
+
+// ============================================================================
+// 11. Stat Buttons — RTL text direction
+// ============================================================================
+
+.o_rtl .oe_stat_button {
+    text-align: right;
+}
+
+// ============================================================================
+// 12. Home Menu (:has() rules) — RTL aware
+// ============================================================================
+
+.o_rtl .mk_app_menu.dropdown-menu {
+    direction: rtl;
+}
+
+// ============================================================================
+// 13. Login Page — RTL
+// ============================================================================
+
+.o_rtl .o_web_login {
+    direction: rtl;
+
+    .oe_login_form .form-label {
+        text-align: right;
+    }
+
+    .oe_login_form .input-group {
+        .form-control {
+            border-right: 1px solid #D1D5DB;
+            border-left: none;
+        }
+
+        .btn {
+            border-left: 1px solid #D1D5DB;
+            border-right: none;
+            border-radius: 8px 0 0 8px;
+        }
+    }
+}
+
+// ============================================================================
+// 14. Settings Page — RTL
+// ============================================================================
+
+.o_rtl .o_base_settings .app_settings_header {
+    text-align: right;
+}
