@@ -32,6 +32,7 @@ filestore/
 sessions/
 CLAUDE.md
 .claude/
+docs/
 *.docx
 ~$*
 scripts/generate_deployment_doc.py
