@@ -40,11 +40,7 @@ class TestDmsField(BaseCommon):
                 "group_ids": [(4, cls.access_group.id)],
             }
         )
-        # Manually create the template's root directory (normally done via
-        # install_mode context during module installation / demo data loading)
-        cls.env["dms.field.template"].with_context(
-            res_model=cls.template._name, res_id=cls.template.id
-        ).create_dms_directory()
+        # Root directory is now auto-created by template.create()
         cls.template.invalidate_recordset()
         cls.directory = cls.template.dms_directory_ids
         # Create a separate root directory (not the template's own) for
