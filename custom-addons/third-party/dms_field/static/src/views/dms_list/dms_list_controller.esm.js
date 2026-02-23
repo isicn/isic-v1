@@ -65,32 +65,43 @@ export function getDMSListControllerObject() {
                 if (this.model.root.resId) {
                     storage_domain = [["id", "=", this.model.root.resId]];
                 } else {
-                    storage_domain = [
+                    const records = this.model.root.records;
+                    if (records) {
+                        storage_domain = [
+                            [
+                                "id",
+                                "in",
+                                records.map((record) => {
+                                    return record.resId;
+                                }),
+                            ],
+                        ];
+                    }
+                }
+                directory_domain = [];
+            } else if (model === "dms.field.template") {
+                const storageId = this.model.root.data?.storage_id;
+                if (this.model.root.resId && storageId) {
+                    // Odoo 19: Many2one returns {id, display_name} instead of [id, name]
+                    const sid = Array.isArray(storageId)
+                        ? storageId[0]
+                        : storageId.id;
+                    storage_domain = [["id", "=", sid]];
+                } else {
+                    storage_domain = [["id", "=", 0]];
+                }
+                const dirData = this.model.root.data?.dms_directory_ids;
+                if (dirData && dirData.records) {
+                    directory_domain = [
                         [
-                            "id",
+                            "root_directory_id",
                             "in",
-                            this.model.root.records.map((record) => {
+                            dirData.records.map((record) => {
                                 return record.resId;
                             }),
                         ],
                     ];
                 }
-                directory_domain = [];
-            } else if (model === "dms.field.template") {
-                if (this.model.root.resId) {
-                    storage_domain = [["id", "=", this.model.root.data.storage_id[0]]];
-                } else {
-                    storage_domain = [["id", "=", 0]];
-                }
-                directory_domain = [
-                    [
-                        "root_directory_id",
-                        "in",
-                        this.model.root.data.dms_directory_ids.records.map((record) => {
-                            return record.resId;
-                        }),
-                    ],
-                ];
             } else {
                 storage_domain = [["field_template_ids.model", "=", model]];
                 autocompute_directory = true;

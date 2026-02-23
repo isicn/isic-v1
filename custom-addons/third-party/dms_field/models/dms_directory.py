@@ -9,10 +9,29 @@ class DmsDirectory(models.Model):
     _inherit = "dms.directory"
 
     parent_id = fields.Many2one(default=lambda self: self._default_parent())
+    field_template_id = fields.Many2one(
+        comodel_name="dms.field.template",
+        string="Field Template",
+        ondelete="cascade",
+    )
 
     @api.model
     def _default_parent(self):
         return self.env.context.get("default_parent_directory_id", False)
+
+    @api.model_create_multi
+    def create(self, vals_list):
+        for vals in vals_list:
+            if vals.get("field_template_id") and not vals.get("parent_id"):
+                template = self.env["dms.field.template"].browse(
+                    vals["field_template_id"]
+                )
+                root = template.dms_directory_ids[:1]
+                if root:
+                    vals["parent_id"] = root.id
+                    vals.setdefault("storage_id", root.storage_id.id)
+                    vals.setdefault("is_root_directory", False)
+        return super().create(vals_list)
 
     @api.constrains("res_id", "is_root_directory", "storage_id", "res_model")
     def _check_resource(self):

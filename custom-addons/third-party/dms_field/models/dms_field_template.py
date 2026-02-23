@@ -51,6 +51,12 @@ class DmsFieldTemplate(models.Model):
         help="""You can set expressions to be used for the directory name,
         e.g.: {{object.name}}""",
     )
+    subdirectory_ids = fields.One2many(
+        comodel_name="dms.directory",
+        inverse_name="field_template_id",
+        string="Subdirectories",
+        help="Subdirectories that will be automatically created for each record.",
+    )
 
     @api.depends("model_id")
     def _compute_model(self):
@@ -62,12 +68,11 @@ class DmsFieldTemplate(models.Model):
 
     @api.model_create_multi
     def create(self, vals_list):
-        """Create dms directory automatically in the creation in install mode."""
+        """Create dms directory automatically when the template is created."""
         result = super().create(vals_list)
-        if self.env.context.get("install_mode"):
-            for item in result:
-                item_ctx = item.with_context(res_model=item._name, res_id=item.id)
-                item_ctx.create_dms_directory()
+        for item in result:
+            item_ctx = item.with_context(res_model=item._name, res_id=item.id)
+            item_ctx.create_dms_directory()
         return result
 
     @api.model
@@ -171,14 +176,23 @@ class DmsFieldTemplate(models.Model):
         }
 
     def _create_child_directories(self, parent, directory):
-        # Create child directories (all leves) + files
+        """Create child directories from template subdirectory_ids."""
         directory_model = self.env["dms.directory"].sudo()
-        for child_directory in directory.child_directory_ids:
+        template = self._get_template_from_model(
+            self.env.context.get("res_model", "")
+        ).sudo()
+        # Use subdirectory_ids from the template if available
+        children = template.subdirectory_ids if template else self.env["dms.directory"]
+        if not children:
+            # Fallback: use child directories of the root directory
+            children = directory.child_directory_ids.filtered(
+                lambda d: d.res_model == "dms.field.template" or not d.res_model
+            )
+        for child_directory in children:
             child = directory_model.create(
                 self._prepare_child_directory_vals(parent, child_directory)
             )
             self._copy_files_from_directory(child_directory, child)
-            self._create_child_directories(child, child_directory)
 
     def _prepare_directory_vals(self, directory, record):
         # Groups of the new directory will be those of the template + auto-generate

@@ -39,15 +39,15 @@
                     </group>
                     <notebook position="inside">
                         <page
-                            name="dms"
-                            string="Documents"
-                            invisible="not storage_id or not model_id"
+                            name="subdirectories"
+                            string="Subdirectories"
+                            invisible="not storage_id or not model_id or not id"
                         >
-                            <field
-                                name="dms_directory_ids"
-                                mode="dms_list"
-                                invisible="not id"
-                            />
+                            <field name="subdirectory_ids">
+                                <list editable="bottom">
+                                    <field name="name" string="Subdirectory Name" />
+                                </list>
+                            </field>
                         </page>
                     </notebook>
                 </sheet>
