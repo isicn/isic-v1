@@ -1,0 +1,6 @@
+id,name,model_id/id,group_id/id,perm_read,perm_write,perm_create,perm_unlink
+
+access_annee_academique_portal,annee_academique_portal,model_isic_annee_academique,base.group_portal,1,0,0,0
+access_annee_academique_utilisateur,annee_academique_utilisateur,model_isic_annee_academique,group_utilisateur,1,0,0,0
+access_annee_academique_gestionnaire,annee_academique_gestionnaire,model_isic_annee_academique,group_gestionnaire,1,1,1,0
+access_annee_academique_direction,annee_academique_direction,model_isic_annee_academique,group_direction,1,1,1,1

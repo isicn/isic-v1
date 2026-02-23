@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <!-- ============================================================ -->
+    <!-- Privilege ISIC (groupe de groupes dans Paramètres > Groupes) -->
+    <!-- ============================================================ -->
+    <record id="privilege_isic" model="res.groups.privilege">
+        <field name="name">ISIC</field>
+    </record>
+
+    <!-- ============================================================ -->
+    <!-- Groupes de sécurité                                          -->
+    <!-- ============================================================ -->
+
+    <!-- Utilisateur interne ISIC (personnel, enseignant) -->
+    <record id="group_utilisateur" model="res.groups">
+        <field name="name">Utilisateur</field>
+        <field name="privilege_id" ref="privilege_isic" />
+        <field name="implied_ids" eval="[(4, ref('base.group_user'))]" />
+    </record>
+
+    <!-- Gestionnaire (scolarité, RH, administratif) -->
+    <record id="group_gestionnaire" model="res.groups">
+        <field name="name">Gestionnaire</field>
+        <field name="privilege_id" ref="privilege_isic" />
+        <field name="implied_ids" eval="[(4, ref('group_utilisateur'))]" />
+    </record>
+
+    <!-- Direction (directeur, secrétaire général) -->
+    <record id="group_direction" model="res.groups">
+        <field name="name">Direction</field>
+        <field name="privilege_id" ref="privilege_isic" />
+        <field name="implied_ids" eval="[(4, ref('group_gestionnaire'))]" />
+        <field
+            name="user_ids"
+            eval="[(4, ref('base.user_root')), (4, ref('base.user_admin'))]"
+        />
+    </record>
+
+    <!-- Étudiant (portail) -->
+    <record id="group_etudiant" model="res.groups">
+        <field name="name">Étudiant</field>
+        <field name="implied_ids" eval="[(4, ref('base.group_portal'))]" />
+    </record>
+
+    <!-- ============================================================ -->
+    <!-- Règles multi-société                                         -->
+    <!-- ============================================================ -->
+    <record id="rule_annee_academique_multi_company" model="ir.rule">
+        <field name="name">Année académique multi-société</field>
+        <field name="model_id" ref="model_isic_annee_academique" />
+        <field name="global" eval="True" />
+        <field
+            name="domain_force"
+        >['|',('company_id','=',False),('company_id','in',company_ids)]</field>
+    </record>
+</odoo>
