@@ -112,7 +112,10 @@
         <field name="model">dms.directory</field>
         <field name="arch" type="xml">
             <search>
-                <field name="complete_name" />
+                <field
+                    name="complete_name"
+                    filter_domain="['|', ('name', 'ilike', self), ('complete_name', 'ilike', self)]"
+                />
                 <filter
                     string="My Directories"
                     name="filter_user"

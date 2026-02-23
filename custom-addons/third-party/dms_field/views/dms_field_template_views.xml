@@ -40,12 +40,12 @@
                     <notebook position="inside">
                         <page
                             name="subdirectories"
-                            string="Subdirectories"
+                            string="Sous-répertoires"
                             invisible="not storage_id or not model_id or not id"
                         >
                             <field name="subdirectory_ids">
                                 <list editable="bottom">
-                                    <field name="name" string="Subdirectory Name" />
+                                    <field name="name" string="Nom du sous-répertoire" />
                                 </list>
                             </field>
                         </page>

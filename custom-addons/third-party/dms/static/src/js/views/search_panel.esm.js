@@ -30,12 +30,20 @@ patch(SearchModel.prototype, {
         }
 
         // When no category is selected on dms.directory, filter for root directories
+        // BUT skip this constraint when the user has an active text search so that
+        // nested directories matching the query can appear in results.
         if (domain.length === 0 && this.resModel === "dms.directory") {
-            for (const category of this.categories) {
-                if (category.id === excludedCategoryId) {
-                    continue;
+            const hasFieldSearch = this.query && this.query.some((facet) => {
+                const item = this.searchItems[facet.searchItemId];
+                return item && item.type === "field";
+            });
+            if (!hasFieldSearch) {
+                for (const category of this.categories) {
+                    if (category.id === excludedCategoryId) {
+                        continue;
+                    }
+                    domain.push([category.fieldName, "=", false]);
                 }
-                domain.push([category.fieldName, "=", false]);
             }
         }
 
