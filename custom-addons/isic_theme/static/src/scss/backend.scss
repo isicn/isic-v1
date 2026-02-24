@@ -170,6 +170,13 @@
         box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
         transform: translateY(-1px);
     }
+
+    &.o_kanban_ghost {
+        border: none;
+        box-shadow: none;
+        height: 0 !important;
+        min-height: 0 !important;
+    }
 }
 
 .o_kanban_group .o_kanban_header {
@@ -425,6 +432,28 @@
 // ============================================================================
 // Q. Chatter / Mail — Thread messages
 // ============================================================================
+
+// Hide MuK chatter "Internal" button (splits External/Internal/Note → External/Note)
+.o-mail-Chatter-sendInternal {
+    display: none !important;
+}
+
+// "External" button — indigo inspired by apps background gradient
+.o-mail-Chatter-sendMessage.btn-danger {
+    background-color: #6366F1 !important;
+    border-color: #6366F1 !important;
+
+    &:hover,
+    &:focus {
+        background-color: #4F46E5 !important;
+        border-color: #4F46E5 !important;
+    }
+
+    &:active {
+        background-color: #4338CA !important;
+        border-color: #4338CA !important;
+    }
+}
 
 .o-mail-Message {
     transition: background-color 0.15s ease;
