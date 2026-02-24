@@ -90,7 +90,7 @@
         <field name="model">dms.file</field>
         <field name="inherit_id" ref="dms.search_dms_file" />
         <field name="arch" type="xml">
-            <xpath expr="//field[@name='directory_id']" position="after">
+            <xpath expr="//field[@name='name']" position="after">
                 <field name="document_type_id" />
                 <field name="reference" />
             </xpath>
