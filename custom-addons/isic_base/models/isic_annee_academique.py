@@ -91,3 +91,11 @@ class IsicAnneeAcademique(models.Model):
 
     def action_reset_draft(self):
         self.write({"state": "draft"})
+
+    @api.model
+    def _get_current(self):
+        """Retourne l'année académique en cours pour la société courante."""
+        return self.search(
+            [("state", "=", "open"), ("company_id", "=", self.env.company.id)],
+            limit=1,
+        )
