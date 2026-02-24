@@ -56,10 +56,17 @@
     </record>
 
     <menuitem
+        id="menu_ged_configuration"
+        name="Configuration"
+        parent="menu_ged_root"
+        sequence="90"
+        groups="isic_base.group_direction"
+    />
+    <menuitem
         id="menu_isic_document_type"
         name="Types de documents"
-        parent="isic_base.menu_isic_configuration"
+        parent="menu_ged_configuration"
         action="action_isic_document_type"
-        sequence="20"
+        sequence="10"
     />
 </odoo>

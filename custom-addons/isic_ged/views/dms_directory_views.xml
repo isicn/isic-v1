@@ -40,7 +40,7 @@
     <menuitem
         id="menu_isic_directories"
         name="Répertoires"
-        parent="isic_base.menu_isic_root"
+        parent="menu_ged_root"
         action="action_isic_ged_directories"
         sequence="20"
     />

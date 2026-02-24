@@ -21,6 +21,20 @@
                             <field name="isic_code_etablissement" placeholder="ISIC" />
                         </setting>
                     </block>
+                    <block title="Année académique">
+                        <setting
+                            string="Années académiques"
+                            help="Gérer les années académiques (ouverture, clôture, inscriptions)"
+                        >
+                            <button
+                                type="action"
+                                name="%(action_isic_annee_academique)d"
+                                string="Gérer les années académiques"
+                                class="btn-link"
+                                icon="oi-arrow-right"
+                            />
+                        </setting>
+                    </block>
                 </app>
             </xpath>
         </field>

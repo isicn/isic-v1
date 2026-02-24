@@ -111,6 +111,16 @@
     <!-- ============================================================ -->
     <!-- Action + Menu                                                -->
     <!-- ============================================================ -->
+    <!-- ============================================================ -->
+    <!-- Menus                                                        -->
+    <!-- ============================================================ -->
+    <menuitem
+        id="menu_ged_root"
+        name="GED"
+        sequence="15"
+        web_icon="isic_ged,static/description/icon.png"
+    />
+
     <record id="action_isic_ged_documents" model="ir.actions.act_window">
         <field name="name">Documents</field>
         <field name="res_model">dms.file</field>
@@ -121,8 +131,15 @@
     <menuitem
         id="menu_isic_documents"
         name="Documents"
-        parent="isic_base.menu_isic_root"
+        parent="menu_ged_root"
         action="action_isic_ged_documents"
         sequence="10"
     />
+
+    <!-- ============================================================ -->
+    <!-- Hide native DMS menus (users use ISIC GED instead)           -->
+    <!-- ============================================================ -->
+    <record id="dms.main_menu_dms" model="ir.ui.menu">
+        <field name="active" eval="False" />
+    </record>
 </odoo>

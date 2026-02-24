@@ -12,11 +12,11 @@
         "security/ir.model.access.csv",
         "data/isic_document_type_data.xml",
         "data/isic_dms_data.xml",
-        "views/isic_document_type_views.xml",
         "views/dms_file_views.xml",
         "views/dms_directory_views.xml",
+        "views/isic_document_type_views.xml",
     ],
     "post_init_hook": "_post_init_hook",
     "installable": True,
-    "application": False,
+    "application": True,
 }
