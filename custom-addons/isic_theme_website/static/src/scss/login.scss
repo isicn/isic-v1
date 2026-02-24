@@ -1,0 +1,310 @@
+// ==========================================================================
+// ISIC Login — Website Override
+// Split layout: Left branding panel + Right login form
+// Pure CSS — zero JavaScript
+// ==========================================================================
+
+// ---- Palette ----
+$isic-navy: #1B3A5C;
+$isic-navy-dark: #0F2236;
+$isic-gold: #D4A843;
+
+// ==========================================================================
+// 1. Hide website chrome (header + footer)
+// ==========================================================================
+
+body:has(.oe_website_login_container) {
+    // Reset isic_theme's .o_web_login flex layout (would break the grid)
+    display: block !important;
+    background-image: none !important;
+    overflow-x: hidden;
+
+    & > #wrapwrap > header,
+    header#top,
+    .o_header_standard,
+    nav.navbar {
+        display: none !important;
+    }
+
+    #footer,
+    & > #wrapwrap > footer,
+    footer {
+        display: none !important;
+    }
+
+    #wrapwrap {
+        background: $isic-navy !important;
+        min-height: 100vh;
+        overflow: visible !important;
+    }
+}
+
+// ==========================================================================
+// 2. Split layout via CSS Grid on <main>
+// ==========================================================================
+
+body:has(.oe_website_login_container) #wrapwrap > main {
+    display: grid;
+    grid-template-columns: 42% 1fr;
+    min-height: 100vh;
+    position: relative;
+
+    // ---- Left panel — ISIC Branding ----
+    &::before {
+        content: "";
+        grid-column: 1;
+        grid-row: 1 / -1;
+        background:
+            // Logo — large, no container, directly on dark bg
+            url("/web/binary/company_logo") center 40% / 220px auto no-repeat,
+            // Soft glow behind logo for depth
+            radial-gradient(ellipse 280px 200px at center 40%, rgba(255, 255, 255, 0.06) 0%, transparent 70%),
+            // Subtle gold accent — bottom-left
+            radial-gradient(ellipse 350px 350px at 15% 85%, rgba(212, 168, 67, 0.12) 0%, transparent 70%),
+            // Subtle blue accent — top-right
+            radial-gradient(ellipse 280px 280px at 85% 15%, rgba(100, 160, 230, 0.08) 0%, transparent 70%),
+            // Navy gradient base
+            linear-gradient(160deg, $isic-navy 0%, #14344E 50%, $isic-navy-dark 100%);
+    }
+
+    // ---- Tagline text overlay (positioned in left panel area) ----
+    &::after {
+        content: "Plateforme de Gestion Acad\00e9mique\a Institut Sup\00e9rieur de l\2019Information\a et de la Communication";
+        position: absolute;
+        left: 0;
+        bottom: 10%;
+        width: 42%;
+        text-align: center;
+        color: rgba(255, 255, 255, 0.45);
+        font-size: 0.82rem;
+        letter-spacing: 0.03em;
+        line-height: 1.7;
+        white-space: pre-line;
+        pointer-events: none;
+    }
+
+    // All direct children of main → right column
+    > * {
+        grid-column: 2;
+    }
+}
+
+// ==========================================================================
+// 3. Right panel — Login container
+// ==========================================================================
+
+.oe_website_login_container {
+    display: flex !important;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    padding: 2rem 3rem;
+    background: #F8FAFB;
+    max-width: none !important;
+    width: auto !important;
+
+    // Reset Bootstrap .container sizing
+    > .container {
+        max-width: 420px;
+        padding: 0;
+        width: 100%;
+    }
+
+    // ---- Card ----
+    .card {
+        border: 1px solid #E8ECF0 !important;
+        border-radius: 12px !important;
+        background: #fff !important;
+        box-shadow: 0 2px 16px rgba(0, 0, 0, 0.06) !important;
+    }
+
+    .card-body {
+        padding: 2.25rem 2rem !important;
+    }
+
+    // ---- Hide built-in logo (it's in the left panel) ----
+    .card-body > .text-center.border-bottom {
+        display: none !important;
+    }
+
+    // Hide isic_theme logo wrap if present
+    .o_isic_login_logo_wrap {
+        display: none !important;
+    }
+
+    // Hide isic_theme footer text if present
+    .o_isic_login_footer {
+        display: none !important;
+    }
+
+    // ---- Title ----
+    h3,
+    h5,
+    .card-title {
+        color: $isic-navy !important;
+        font-weight: 700 !important;
+        font-size: 1.3rem !important;
+        text-align: center;
+        margin-bottom: 1.5rem !important;
+        border: none !important;
+        position: relative;
+
+        &::after {
+            content: "";
+            display: block;
+            width: 36px;
+            height: 3px;
+            background: linear-gradient(90deg, $isic-gold, #E8C36A);
+            border-radius: 2px;
+            margin: 0.5rem auto 0;
+        }
+    }
+
+    // ---- Labels ----
+    label {
+        font-weight: 600;
+        color: #2C3E50;
+        font-size: 0.85rem;
+        letter-spacing: 0.01em;
+    }
+
+    // ---- Inputs ----
+    .form-control,
+    input[type="text"],
+    input[type="email"],
+    input[type="password"] {
+        border: 1.5px solid #E2E8F0 !important;
+        border-radius: 8px !important;
+        padding: 0.625rem 0.875rem !important;
+        font-size: 0.95rem;
+        transition: border-color 0.2s ease, box-shadow 0.2s ease;
+        background: #F8FAFB;
+
+        &:focus {
+            border-color: $isic-navy !important;
+            background: #fff;
+            box-shadow: 0 0 0 3px rgba(27, 58, 92, 0.08) !important;
+            outline: none;
+        }
+
+        &::placeholder {
+            color: #A8B4C0;
+        }
+    }
+
+    // ---- Primary button ----
+    .btn-primary,
+    button[type="submit"] {
+        background: linear-gradient(135deg, $isic-navy 0%, #24496E 100%) !important;
+        border: none !important;
+        border-radius: 8px !important;
+        padding: 0.7rem 1.5rem !important;
+        font-weight: 600;
+        font-size: 0.95rem;
+        width: 100%;
+        transition: all 0.2s ease;
+        box-shadow: 0 2px 8px rgba(27, 58, 92, 0.2);
+
+        &:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 16px rgba(27, 58, 92, 0.3) !important;
+        }
+
+        &:active {
+            transform: translateY(0);
+        }
+    }
+
+    // ---- Secondary buttons ----
+    .btn-secondary,
+    .btn-outline-secondary {
+        border-radius: 8px !important;
+        font-weight: 500;
+    }
+
+    // ---- Separator ----
+    .o_login_auth_separator,
+    .text-muted {
+        color: #A0AEC0 !important;
+        font-size: 0.85rem;
+    }
+
+    // ---- Links ----
+    a:not(.btn) {
+        color: $isic-navy;
+        font-weight: 500;
+        text-decoration: none;
+        transition: color 0.2s ease;
+
+        &:hover {
+            color: $isic-gold;
+        }
+    }
+
+    .float-end a,
+    .text-end a {
+        color: $isic-gold !important;
+        font-size: 0.85rem;
+    }
+
+    // ---- Card footer links ----
+    .card-body > .text-center.border-top {
+        border-color: #E8ECF0 !important;
+
+        a {
+            color: #8896A4;
+            font-size: 0.8rem;
+
+            &:hover {
+                color: $isic-navy;
+            }
+        }
+    }
+
+    // ---- Alerts ----
+    .alert {
+        border-radius: 8px;
+        border: none;
+        font-size: 0.875rem;
+    }
+
+    .alert-danger {
+        background: #FEF2F2;
+        color: #991B1B;
+    }
+
+    .alert-success {
+        background: #F0FDF4;
+        color: #166534;
+    }
+}
+
+// ==========================================================================
+// 4. Mobile responsive — single column
+// ==========================================================================
+
+@media (max-width: 768px) {
+    body:has(.oe_website_login_container) #wrapwrap > main {
+        grid-template-columns: 1fr;
+
+        &::before,
+        &::after {
+            display: none;
+        }
+    }
+
+    .oe_website_login_container {
+        background: linear-gradient(160deg, $isic-navy 0%, $isic-navy-dark 100%) !important;
+        padding: 1.5rem !important;
+
+        // Show built-in logo on mobile (left panel is hidden)
+        .card-body > .text-center.border-bottom {
+            display: block !important;
+        }
+
+        .card {
+            max-width: 95%;
+        }
+    }
+}
