@@ -11,11 +11,11 @@
             position: relative;
         }
 
-        // Lock icon — top-right corner instead of next to avatar
+        // Lock icon — bottom-right corner, opposite to avatar
         .o_dms_file_kanban_lock {
             position: absolute;
-            top: 4px;
-            right: 4px;
+            bottom: 4px;
+            right: 8px;
 
             .fa {
                 font-size: 14px;
