@@ -8,6 +8,19 @@
         .oe_kanban_content.row {
             height: 100%;
             align-content: space-between;
+            position: relative;
+        }
+
+        // Lock icon — top-right corner instead of next to avatar
+        .o_dms_file_kanban_lock {
+            position: absolute;
+            top: 4px;
+            right: 4px;
+
+            .fa {
+                font-size: 14px;
+                color: #6B7B8D;
+            }
         }
     }
 }
