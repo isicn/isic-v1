@@ -100,27 +100,27 @@ body:has(.oe_website_login_container) #wrapwrap > main {
     justify-content: center;
     min-height: 100vh;
     padding: 2rem 3rem;
-    background: #F8FAFB;
+    background: #fff;
     max-width: none !important;
     width: auto !important;
 
     // Reset Bootstrap .container sizing
     > .container {
-        max-width: 420px;
+        max-width: 440px;
         padding: 0;
         width: 100%;
     }
 
-    // ---- Card ----
+    // ---- Card — invisible (flat white, no border/shadow) ----
     .card {
-        border: 1px solid #E8ECF0 !important;
-        border-radius: 12px !important;
+        border: none !important;
+        border-radius: 0 !important;
         background: #fff !important;
-        box-shadow: 0 2px 16px rgba(0, 0, 0, 0.06) !important;
+        box-shadow: none !important;
     }
 
     .card-body {
-        padding: 2.25rem 2rem !important;
+        padding: 2.5rem 1.5rem !important;
     }
 
     // ---- Hide built-in logo (it's in the left panel) ----
@@ -138,35 +138,49 @@ body:has(.oe_website_login_container) #wrapwrap > main {
         display: none !important;
     }
 
-    // ---- Title ----
+    // ---- Title "Connexion" ----
     h3,
     h5,
     .card-title {
         color: $isic-navy !important;
         font-weight: 700 !important;
-        font-size: 1.3rem !important;
+        font-size: 1.5rem !important;
         text-align: center;
-        margin-bottom: 1.5rem !important;
+        margin-bottom: 1.75rem !important;
         border: none !important;
         position: relative;
 
         &::after {
             content: "";
             display: block;
-            width: 36px;
-            height: 3px;
+            width: 42px;
+            height: 3.5px;
             background: linear-gradient(90deg, $isic-gold, #E8C36A);
             border-radius: 2px;
-            margin: 0.5rem auto 0;
+            margin: 0.6rem auto 0;
         }
     }
 
     // ---- Labels ----
-    label {
-        font-weight: 600;
-        color: #2C3E50;
-        font-size: 0.85rem;
-        letter-spacing: 0.01em;
+    label,
+    .form-label {
+        font-weight: 700 !important;
+        color: $isic-navy !important;
+        font-size: 1rem !important;
+    }
+
+    // ---- "Choisissez un utilisateur" + "Reset Password" links ----
+    .o_user_switch_btn,
+    .field-login .btn-link,
+    .o_caps_lock_warning .btn-link {
+        color: $isic-navy !important;
+        font-weight: 600 !important;
+        font-size: 0.82rem !important;
+        text-decoration: none !important;
+
+        &:hover {
+            color: $isic-gold !important;
+        }
     }
 
     // ---- Inputs ----
@@ -174,78 +188,119 @@ body:has(.oe_website_login_container) #wrapwrap > main {
     input[type="text"],
     input[type="email"],
     input[type="password"] {
-        border: 1.5px solid #E2E8F0 !important;
-        border-radius: 8px !important;
-        padding: 0.625rem 0.875rem !important;
-        font-size: 0.95rem;
+        border: 1.5px solid #D0D5DC !important;
+        border-radius: 14px !important;
+        padding: 0.8rem 1.1rem !important;
+        font-size: 1rem;
         transition: border-color 0.2s ease, box-shadow 0.2s ease;
-        background: #F8FAFB;
+        background: #fff;
+        height: auto !important;
 
         &:focus {
-            border-color: $isic-navy !important;
+            border-color: #3B7CC2 !important;
             background: #fff;
-            box-shadow: 0 0 0 3px rgba(27, 58, 92, 0.08) !important;
+            box-shadow: 0 0 0 3px rgba(59, 124, 194, 0.15) !important;
             outline: none;
         }
 
         &::placeholder {
-            color: #A8B4C0;
+            color: #B0BAC5;
+            font-weight: 400;
         }
     }
 
-    // ---- Primary button ----
+    // ---- Password input group (input + eye button) ----
+    .input-group {
+        .form-control {
+            border-right: none !important;
+            border-radius: 14px 0 0 14px !important;
+        }
+
+        .btn,
+        .o_show_password {
+            border: 1.5px solid #D0D5DC !important;
+            border-left: none !important;
+            border-radius: 0 14px 14px 0 !important;
+            background: #fff !important;
+            color: #8896A4;
+            padding: 0.8rem 1rem;
+
+            &:hover {
+                color: $isic-navy;
+                background: #F8FAFB !important;
+            }
+        }
+    }
+
+    // ---- Field spacing ----
+    .mb-3,
+    .field-login,
+    .o_caps_lock_warning {
+        margin-bottom: 1.5rem !important;
+    }
+
+    // ---- Primary button — large pill ----
+    .oe_login_buttons {
+        padding-top: 0.75rem !important;
+    }
+
     .btn-primary,
     button[type="submit"] {
-        background: linear-gradient(135deg, $isic-navy 0%, #24496E 100%) !important;
+        background: $isic-navy !important;
         border: none !important;
-        border-radius: 8px !important;
-        padding: 0.7rem 1.5rem !important;
-        font-weight: 600;
-        font-size: 0.95rem;
+        border-radius: 16px !important;
+        padding: 1rem 1.5rem !important;
+        font-weight: 700;
+        font-size: 1.15rem;
+        letter-spacing: 0.01em;
         width: 100%;
         transition: all 0.2s ease;
-        box-shadow: 0 2px 8px rgba(27, 58, 92, 0.2);
+        box-shadow: 0 4px 12px rgba(27, 58, 92, 0.25);
 
         &:hover {
+            background: #152E4A !important;
             transform: translateY(-1px);
-            box-shadow: 0 4px 16px rgba(27, 58, 92, 0.3) !important;
+            box-shadow: 0 6px 20px rgba(27, 58, 92, 0.35) !important;
         }
 
         &:active {
             transform: translateY(0);
+            box-shadow: 0 2px 8px rgba(27, 58, 92, 0.2) !important;
         }
     }
 
-    // ---- Secondary buttons ----
-    .btn-secondary,
-    .btn-outline-secondary {
-        border-radius: 8px !important;
-        font-weight: 500;
-    }
-
-    // ---- Separator ----
-    .o_login_auth_separator,
-    .text-muted {
+    // ---- "- or -" separator ----
+    .o_login_auth em,
+    .o_login_auth_separator {
         color: #A0AEC0 !important;
         font-size: 0.85rem;
     }
 
-    // ---- Links ----
-    a:not(.btn) {
+    // ---- Passkey / list-group buttons ----
+    .o_login_auth .list-group-item {
+        border: 1.5px solid #D0D5DC !important;
+        border-radius: 14px !important;
+        font-weight: 600;
         color: $isic-navy;
-        font-weight: 500;
+        padding: 0.7rem 1rem !important;
+        transition: all 0.2s ease;
+
+        &:hover {
+            background: #F8FAFB;
+            border-color: $isic-navy !important;
+        }
+    }
+
+    // ---- Links ----
+    a:not(.btn):not(.list-group-item):not(.o_user_switch_btn) {
+        color: $isic-navy;
+        font-weight: 600;
         text-decoration: none;
         transition: color 0.2s ease;
 
         &:hover {
             color: $isic-gold;
         }
-    }
-
-    .float-end a,
-    .text-end a {
-        color: $isic-gold !important;
-        font-size: 0.85rem;
     }
 
     // ---- Card footer links ----
@@ -264,9 +319,9 @@ body:has(.oe_website_login_container) #wrapwrap > main {
 
     // ---- Alerts ----
     .alert {
-        border-radius: 8px;
+        border-radius: 12px;
         border: none;
-        font-size: 0.875rem;
+        font-size: 0.9rem;
     }
 
     .alert-danger {
