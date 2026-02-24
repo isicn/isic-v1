@@ -1,0 +1,22 @@
+{
+    "name": "ISIC - GED",
+    "summary": "Gestion électronique des documents ISIC",
+    "version": "19.0.1.0.0",
+    "category": "Education",
+    "author": "ISIC Rabat",
+    "website": "https://isic.ac.ma",
+    "license": "Other proprietary",
+    "depends": ["isic_base", "dms", "dms_field"],
+    "data": [
+        "security/security.xml",
+        "security/ir.model.access.csv",
+        "data/isic_document_type_data.xml",
+        "data/isic_dms_data.xml",
+        "views/isic_document_type_views.xml",
+        "views/dms_file_views.xml",
+        "views/dms_directory_views.xml",
+    ],
+    "post_init_hook": "_post_init_hook",
+    "installable": True,
+    "application": False,
+}

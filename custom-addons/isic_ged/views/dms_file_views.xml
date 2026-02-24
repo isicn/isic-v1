@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <!-- ============================================================ -->
+    <!-- Form: add GED fields + workflow buttons                      -->
+    <!-- ============================================================ -->
+    <record id="view_dms_file_form_ged" model="ir.ui.view">
+        <field name="name">dms.file.form.inherit.isic_ged</field>
+        <field name="model">dms.file</field>
+        <field name="inherit_id" ref="dms.view_dms_file_form" />
+        <field name="arch" type="xml">
+            <!-- Workflow buttons in header -->
+            <xpath expr="//header" position="inside">
+                <button
+                    name="action_validate"
+                    string="Valider"
+                    type="object"
+                    class="btn-primary"
+                    invisible="ged_state != 'draft'"
+                    groups="isic_base.group_gestionnaire"
+                />
+                <button
+                    name="action_archive_ged"
+                    string="Archiver"
+                    type="object"
+                    class="btn-primary"
+                    invisible="ged_state != 'validated'"
+                    groups="isic_base.group_gestionnaire"
+                />
+                <button
+                    name="action_reset_draft"
+                    string="Remettre en brouillon"
+                    type="object"
+                    invisible="ged_state == 'draft'"
+                    groups="isic_base.group_direction"
+                />
+                <field
+                    name="ged_state"
+                    widget="statusbar"
+                    statusbar_visible="draft,validated,archived"
+                />
+            </xpath>
+            <!-- GED metadata group after settings -->
+            <xpath expr="//group[@name='settings']" position="after">
+                <group name="ged_metadata" string="Métadonnées GED">
+                    <group>
+                        <field name="document_type_id" />
+                        <field name="reference" />
+                    </group>
+                    <group>
+                        <field name="date_document" />
+                        <field name="annee_academique_id" />
+                    </group>
+                </group>
+                <group name="ged_validation" string="Validation" invisible="ged_state == 'draft'">
+                    <group>
+                        <field name="valideur_id" />
+                        <field name="date_validation" />
+                    </group>
+                </group>
+            </xpath>
+        </field>
+    </record>
+
+    <!-- ============================================================ -->
+    <!-- List: add GED columns                                        -->
+    <!-- ============================================================ -->
+    <record id="view_dms_file_list_ged" model="ir.ui.view">
+        <field name="name">dms.file.list.inherit.isic_ged</field>
+        <field name="model">dms.file</field>
+        <field name="inherit_id" ref="dms.view_dms_file_tree" />
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='mimetype']" position="after">
+                <field name="document_type_id" optional="show" />
+                <field name="reference" optional="show" />
+                <field name="date_document" optional="hide" />
+                <field name="ged_state" widget="badge"
+                    decoration-info="ged_state == 'draft'"
+                    decoration-success="ged_state == 'validated'"
+                    decoration-muted="ged_state == 'archived'"
+                    optional="show" />
+            </xpath>
+        </field>
+    </record>
+
+    <!-- ============================================================ -->
+    <!-- Search: add GED filters                                      -->
+    <!-- ============================================================ -->
+    <record id="search_dms_file_ged" model="ir.ui.view">
+        <field name="name">dms.file.search.inherit.isic_ged</field>
+        <field name="model">dms.file</field>
+        <field name="inherit_id" ref="dms.search_dms_file" />
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='directory_id']" position="after">
+                <field name="document_type_id" />
+                <field name="reference" />
+            </xpath>
+            <xpath expr="//filter[@name='filter_user']" position="before">
+                <filter name="filter_ged_draft" string="Brouillon" domain="[('ged_state','=','draft')]" />
+                <filter name="filter_ged_validated" string="Validés" domain="[('ged_state','=','validated')]" />
+                <filter name="filter_ged_archived" string="Archivés" domain="[('ged_state','=','archived')]" />
+                <separator />
+            </xpath>
+            <xpath expr="//filter[@name='group_category']" position="after">
+                <filter name="group_document_type" string="Type de document" context="{'group_by': 'document_type_id'}" />
+                <filter name="group_ged_state" string="État GED" context="{'group_by': 'ged_state'}" />
+                <filter name="group_annee" string="Année académique" context="{'group_by': 'annee_academique_id'}" />
+            </xpath>
+        </field>
+    </record>
+
+    <!-- ============================================================ -->
+    <!-- Action + Menu                                                -->
+    <!-- ============================================================ -->
+    <record id="action_isic_ged_documents" model="ir.actions.act_window">
+        <field name="name">Documents</field>
+        <field name="res_model">dms.file</field>
+        <field name="view_mode">list,kanban,form</field>
+        <field name="context">{'default_ged_state': 'draft'}</field>
+    </record>
+
+    <menuitem
+        id="menu_isic_documents"
+        name="Documents"
+        parent="isic_base.menu_isic_root"
+        action="action_isic_ged_documents"
+        sequence="10"
+    />
+</odoo>

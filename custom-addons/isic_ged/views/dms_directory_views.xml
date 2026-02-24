@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <!-- ============================================================ -->
+    <!-- Form: add annee_academique_id                                -->
+    <!-- ============================================================ -->
+    <record id="view_dms_directory_form_ged" model="ir.ui.view">
+        <field name="name">dms.directory.form.inherit.isic_ged</field>
+        <field name="model">dms.directory</field>
+        <field name="inherit_id" ref="dms.view_dms_directory_form" />
+        <field name="arch" type="xml">
+            <xpath expr="//group[@name='data']/group[2]/field[@name='category_id']" position="before">
+                <field name="annee_academique_id" />
+            </xpath>
+        </field>
+    </record>
+
+    <!-- ============================================================ -->
+    <!-- Search: add annee filter                                     -->
+    <!-- ============================================================ -->
+    <record id="search_dms_directory_ged" model="ir.ui.view">
+        <field name="name">dms.directory.search.inherit.isic_ged</field>
+        <field name="model">dms.directory</field>
+        <field name="inherit_id" ref="dms.search_dms_directory" />
+        <field name="arch" type="xml">
+            <xpath expr="//filter[@name='group_category']" position="after">
+                <filter name="group_annee" string="Année académique" context="{'group_by': 'annee_academique_id'}" />
+            </xpath>
+        </field>
+    </record>
+
+    <!-- ============================================================ -->
+    <!-- Menu: Répertoires sous ISIC                                  -->
+    <!-- ============================================================ -->
+    <record id="action_isic_ged_directories" model="ir.actions.act_window">
+        <field name="name">Répertoires</field>
+        <field name="res_model">dms.directory</field>
+        <field name="view_mode">list,kanban,form</field>
+    </record>
+
+    <menuitem
+        id="menu_isic_directories"
+        name="Répertoires"
+        parent="isic_base.menu_isic_root"
+        action="action_isic_ged_directories"
+        sequence="20"
+    />
+</odoo>

@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <!-- isic.document.type has no company_id — types are global, no rule needed -->
+</odoo>

@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo noupdate="1">
+    <!-- ============================================================ -->
+    <!-- Storage GED ISIC                                             -->
+    <!-- ============================================================ -->
+    <record id="storage_ged_isic" model="dms.storage">
+        <field name="name">GED ISIC</field>
+        <field name="save_type">database</field>
+    </record>
+
+    <!-- ============================================================ -->
+    <!-- Catégories DMS = services ISIC                               -->
+    <!-- ============================================================ -->
+    <record id="category_direction" model="dms.category">
+        <field name="name">Direction</field>
+    </record>
+    <record id="category_scolarite" model="dms.category">
+        <field name="name">Scolarité</field>
+    </record>
+    <record id="category_rh" model="dms.category">
+        <field name="name">Ressources Humaines</field>
+    </record>
+    <record id="category_finances" model="dms.category">
+        <field name="name">Affaires financières</field>
+    </record>
+    <record id="category_communication" model="dms.category">
+        <field name="name">Communication</field>
+    </record>
+    <record id="category_informatique" model="dms.category">
+        <field name="name">Informatique</field>
+    </record>
+    <record id="category_recherche" model="dms.category">
+        <field name="name">Recherche et coopération</field>
+    </record>
+
+    <!-- ============================================================ -->
+    <!-- Tags                                                         -->
+    <!-- ============================================================ -->
+    <record id="tag_urgent" model="dms.tag">
+        <field name="name">Urgent</field>
+        <field name="color">1</field>
+    </record>
+    <record id="tag_confidentiel" model="dms.tag">
+        <field name="name">Confidentiel</field>
+        <field name="color">4</field>
+    </record>
+    <record id="tag_a_signer" model="dms.tag">
+        <field name="name">À signer</field>
+        <field name="color">2</field>
+    </record>
+    <record id="tag_original" model="dms.tag">
+        <field name="name">Original</field>
+        <field name="color">10</field>
+    </record>
+    <record id="tag_copie" model="dms.tag">
+        <field name="name">Copie</field>
+        <field name="color">5</field>
+    </record>
+
+    <!-- ============================================================ -->
+    <!-- Groupes d'accès DMS mappés vers groupes ISIC                 -->
+    <!-- ============================================================ -->
+    <record id="access_group_utilisateur" model="dms.access.group">
+        <field name="name">ISIC Utilisateurs</field>
+        <field name="group_ids" eval="[(4, ref('isic_base.group_utilisateur'))]" />
+        <field name="perm_create" eval="False" />
+        <field name="perm_write" eval="False" />
+        <field name="perm_unlink" eval="False" />
+    </record>
+    <record id="access_group_gestionnaire" model="dms.access.group">
+        <field name="name">ISIC Gestionnaires</field>
+        <field name="group_ids" eval="[(4, ref('isic_base.group_gestionnaire'))]" />
+        <field name="perm_create" eval="True" />
+        <field name="perm_write" eval="True" />
+        <field name="perm_unlink" eval="False" />
+    </record>
+    <record id="access_group_direction" model="dms.access.group">
+        <field name="name">ISIC Direction</field>
+        <field name="group_ids" eval="[(4, ref('isic_base.group_direction'))]" />
+        <field name="perm_create" eval="True" />
+        <field name="perm_write" eval="True" />
+        <field name="perm_unlink" eval="True" />
+    </record>
+</odoo>

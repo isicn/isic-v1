@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo noupdate="1">
+    <record id="type_pv" model="isic.document.type">
+        <field name="name">Procès-verbal</field>
+        <field name="code">PV</field>
+        <field name="validation_required" eval="True" />
+        <field name="sequence">1</field>
+    </record>
+    <record id="type_nds" model="isic.document.type">
+        <field name="name">Note de service</field>
+        <field name="code">NDS</field>
+        <field name="validation_required" eval="True" />
+        <field name="sequence">2</field>
+    </record>
+    <record id="type_cir" model="isic.document.type">
+        <field name="name">Circulaire</field>
+        <field name="code">CIR</field>
+        <field name="validation_required" eval="True" />
+        <field name="sequence">3</field>
+    </record>
+    <record id="type_dec" model="isic.document.type">
+        <field name="name">Décision</field>
+        <field name="code">DEC</field>
+        <field name="validation_required" eval="True" />
+        <field name="sequence">4</field>
+    </record>
+    <record id="type_att" model="isic.document.type">
+        <field name="name">Attestation</field>
+        <field name="code">ATT</field>
+        <field name="validation_required" eval="False" />
+        <field name="sequence">5</field>
+    </record>
+    <record id="type_rap" model="isic.document.type">
+        <field name="name">Rapport</field>
+        <field name="code">RAP</field>
+        <field name="validation_required" eval="False" />
+        <field name="sequence">6</field>
+    </record>
+    <record id="type_cr" model="isic.document.type">
+        <field name="name">Compte rendu</field>
+        <field name="code">CR</field>
+        <field name="validation_required" eval="False" />
+        <field name="sequence">7</field>
+    </record>
+    <record id="type_conv" model="isic.document.type">
+        <field name="name">Convention</field>
+        <field name="code">CONV</field>
+        <field name="validation_required" eval="True" />
+        <field name="sequence">8</field>
+    </record>
+    <record id="type_cor_e" model="isic.document.type">
+        <field name="name">Courrier entrant</field>
+        <field name="code">COR_E</field>
+        <field name="validation_required" eval="False" />
+        <field name="sequence">9</field>
+    </record>
+    <record id="type_cor_s" model="isic.document.type">
+        <field name="name">Courrier sortant</field>
+        <field name="code">COR_S</field>
+        <field name="validation_required" eval="True" />
+        <field name="sequence">10</field>
+    </record>
+    <record id="type_div" model="isic.document.type">
+        <field name="name">Divers</field>
+        <field name="code">DIV</field>
+        <field name="validation_required" eval="False" />
+        <field name="sequence">99</field>
+    </record>
+</odoo>
