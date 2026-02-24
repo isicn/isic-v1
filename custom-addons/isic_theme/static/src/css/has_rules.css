@@ -23,3 +23,14 @@ body:has(.mk_app_menu) .o_main_navbar .o_menu_sections {
     opacity: 0 !important;
     pointer-events: none;
 }
+
+/* Force all navbar text/icons to white when apps menu is open */
+body:has(.mk_app_menu) .o_main_navbar .o_menu_systray .o_nav_entry,
+body:has(.mk_app_menu) .o_main_navbar .o_menu_systray .dropdown-toggle,
+body:has(.mk_app_menu) .o_main_navbar .o_navbar_apps_menu .dropdown-toggle,
+body:has(.mk_app_menu) .o_main_navbar .o_menu_systray,
+body:has(.mk_app_menu) .o_main_navbar .badge,
+body:has(.mk_app_menu) .o_main_navbar span,
+body:has(.mk_app_menu) .o_main_navbar i {
+    color: #fff !important;
+}

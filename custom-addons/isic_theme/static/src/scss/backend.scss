@@ -44,39 +44,76 @@
 // ============================================================================
 
 .o_main_navbar {
-    background: linear-gradient(180deg, lighten(#1B3A5C, 4%) 0%, #1B3A5C 100%);
-    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.15);
+    background: #fff !important;
+    box-shadow: none;
     border-bottom: none !important;
+    color: #4A4A4A !important;
 
-    // Use CSS custom properties expected by Odoo 19 core navbar.scss
-    // This ensures hover/focus/active states work with the core selectors
+    // CSS custom properties for light navbar
     --NavBar-entry-backgroundColor: transparent;
-    --NavBar-entry-backgroundColor--hover: rgba(255, 255, 255, 0.1);
-    --NavBar-entry-backgroundColor--focus: rgba(255, 255, 255, 0.1);
-    --NavBar-entry-backgroundColor--active: rgba(255, 255, 255, 0.15);
+    --NavBar-entry-backgroundColor--hover: rgba(0, 0, 0, 0.04);
+    --NavBar-entry-backgroundColor--focus: rgba(0, 0, 0, 0.04);
+    --NavBar-entry-backgroundColor--active: rgba(0, 0, 0, 0.06);
     --NavBar-entry-borderColor-active: transparent;
 
+    // All navbar text must be dark on white
+    .o_menu_brand,
+    .o_nav_entry,
+    .dropdown-toggle,
+    .o_menu_toggle {
+        color: #1B3A5C !important;
+    }
+
     .o_menu_brand {
-        font-weight: 600;
+        font-weight: 700;
         letter-spacing: 0.02em;
     }
 
-    // Smooth transitions on menu entries
-    .o_menu_sections .o_nav_entry,
-    .o_menu_sections .dropdown-toggle {
-        transition: background 0.2s ease, color 0.2s ease;
+    // Menu entries — compact like Enterprise (fw-normal, tight padding)
+    .o_menu_sections {
+        align-items: center !important;
+
+        .o_nav_entry,
+        .dropdown-toggle,
+        > .o-dropdown > .dropdown-toggle {
+            padding: 0.25rem 0.55rem !important;
+            font-size: 0.875rem !important;
+            font-weight: 400 !important;
+            line-height: 1.5 !important;
+            height: auto !important;
+            border-radius: 4px !important;
+            background: transparent !important;
+            transition: background 0.15s ease;
+
+            &:hover {
+                background: rgba(0, 0, 0, 0.05) !important;
+            }
+
+            // Active / open state
+            &.active,
+            &.show {
+                background: rgba(0, 0, 0, 0.08) !important;
+                font-weight: 400 !important;
+            }
+        }
     }
 
-    // Notification badges in gold
+    // Notification badges — action color on white navbar
     .badge {
-        background-color: #D4A843 !important;
+        background-color: $o-action !important;
         color: #fff !important;
     }
 
-    // Systray area — smooth hover
+    // Systray icons — dark on white
     .o_menu_systray .o_nav_entry,
     .o_menu_systray .dropdown-toggle {
+        color: #4A4A4A !important;
         transition: background 0.2s ease;
+    }
+
+    // Apps menu grid icon — dark
+    .o_navbar_apps_menu .dropdown-toggle {
+        color: #4A4A4A !important;
     }
 }
 
@@ -85,8 +122,9 @@
 // ============================================================================
 
 .o_control_panel {
-    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.06);
-    border-bottom: none;
+    box-shadow: none;
+    border-top: none !important;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
 
     .breadcrumb-item {
         font-weight: 500;
@@ -184,18 +222,23 @@
 }
 
 // ============================================================================
-// G. Searchbar — Rounded + focus glow
+// G. Searchbar — Enterprise flat style
 // ============================================================================
 
 .o_searchview {
-    border-radius: 20px;
+    border-radius: 4px;
     border: 1px solid #DEE2E6;
+    border-right: none;
     transition: border-color 0.2s ease, box-shadow 0.2s ease;
 
     &:focus-within {
-        border-color: $o-action;
-        box-shadow: 0 0 0 3px rgba($o-action, 0.1);
+        border-color: #A8A8A8;
+        box-shadow: none;
     }
+}
+
+.o_searchview_dropdown_toggler {
+    border-radius: 0 4px 4px 0;
 }
 
 // ============================================================================
@@ -212,20 +255,32 @@
 }
 
 // ============================================================================
-// I. Dropdown Menus — Rounded + shadow
+// I. Dropdown Menus — Enterprise compact style
 // ============================================================================
 
 .dropdown-menu {
-    border-radius: 8px;
-    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12);
-    border: 1px solid rgba(0, 0, 0, 0.06);
-    padding: 0.25rem;
+    border-radius: 6px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    border: 1px solid rgba(0, 0, 0, 0.08);
+    padding: 0.15rem 0;
     overflow: hidden;
 
     .dropdown-item {
-        border-radius: 6px;
-        transition: background-color 0.15s ease;
-        padding: 0.5rem 0.75rem;
+        border-radius: 0;
+        padding: 0.25rem 1.25rem;
+        font-size: 0.875rem;
+        transition: background-color 0.1s ease;
+
+        &:hover,
+        &:focus,
+        &.focus {
+            background-color: rgba(0, 0, 0, 0.08);
+        }
+    }
+
+    .dropdown-header {
+        padding: 0.25rem 1.25rem;
+        font-size: 0.75rem;
     }
 }
 
@@ -237,6 +292,22 @@
     transition: all 0.2s ease;
 }
 
+// "New" button in control panel — outline style (like Enterprise)
+.o_control_panel .btn-primary,
+.o_form_statusbar .o_statusbar_buttons .btn-primary {
+    --bs-btn-bg: transparent;
+    --bs-btn-color: #{$o-action};
+    --bs-btn-border-color: #{$o-action};
+    --bs-btn-hover-bg: #{$o-action};
+    --bs-btn-hover-color: #fff;
+    --bs-btn-hover-border-color: #{$o-action};
+    --bs-btn-active-bg: #{$isic-action-active};
+    --bs-btn-active-color: #fff;
+    --bs-btn-active-border-color: #{$isic-action-active};
+    box-shadow: none;
+}
+
+// Other primary buttons (dialogs, forms) — filled style
 .btn-primary {
     --bs-btn-bg: #{$o-action};
     --bs-btn-border-color: #{$o-action};
@@ -246,11 +317,6 @@
     --bs-btn-active-border-color: #{$isic-action-active};
     --bs-btn-disabled-bg: #{$o-action};
     --bs-btn-disabled-border-color: #{$o-action};
-    box-shadow: 0 1px 2px rgba($o-action, 0.2);
-
-    &:hover {
-        box-shadow: 0 2px 6px rgba($o-action, 0.3);
-    }
 }
 
 .btn-secondary {

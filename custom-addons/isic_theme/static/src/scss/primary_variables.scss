@@ -44,10 +44,10 @@ $o-border-radius: 6px;
 $o-border-radius-sm: 4px;
 $o-border-radius-lg: 8px;
 
-// Navbar plus spacieuse
-$o-navbar-height: 50px;
-$o-navbar-entry-border-radius: 6px;
-$o-navbar-entry-padding-h: 0.8em;
+// Navbar — compact like Enterprise
+$o-navbar-height: 46px;
+$o-navbar-entry-border-radius: 4px;
+$o-navbar-entry-padding-h: 0.5em;
 
 // Navbar badge (notification bubbles en or ISIC)
 $o-navbar-badge-bg: #D4A843;
