@@ -20,7 +20,7 @@
                 />
                 <button
                     name="action_archive_ged"
-                    string="Archiver"
+                    string="Classer"
                     type="object"
                     class="btn-primary"
                     invisible="ged_state != 'validated'"
@@ -97,7 +97,7 @@
             <xpath expr="//filter[@name='filter_user']" position="before">
                 <filter name="filter_ged_draft" string="Brouillon" domain="[('ged_state','=','draft')]" />
                 <filter name="filter_ged_validated" string="Validés" domain="[('ged_state','=','validated')]" />
-                <filter name="filter_ged_archived" string="Archivés" domain="[('ged_state','=','archived')]" />
+                <filter name="filter_ged_archived" string="Classés" domain="[('ged_state','=','archived')]" />
                 <separator />
             </xpath>
             <xpath expr="//filter[@name='group_category']" position="after">

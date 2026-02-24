@@ -16,6 +16,11 @@
         "views/dms_directory_views.xml",
         "views/isic_document_type_views.xml",
     ],
+    "assets": {
+        "web.assets_backend": [
+            "isic_ged/static/src/scss/kanban.scss",
+        ],
+    },
     "post_init_hook": "_post_init_hook",
     "installable": True,
     "application": True,

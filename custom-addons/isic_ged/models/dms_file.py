@@ -23,7 +23,7 @@ class DmsFile(models.Model):
         [
             ("draft", "Brouillon"),
             ("validated", "Validé"),
-            ("archived", "Archivé"),
+            ("archived", "Classé"),
         ],
         string="État GED",
         default="draft",
@@ -69,7 +69,7 @@ class DmsFile(models.Model):
     def action_archive_ged(self):
         for rec in self:
             if rec.document_type_id.validation_required and rec.ged_state != "validated":
-                raise UserError("Ce type de document nécessite une validation avant archivage.")
+                raise UserError("Ce type de document nécessite une validation avant classement.")
             rec.write({"ged_state": "archived"})
 
     def action_reset_draft(self):
