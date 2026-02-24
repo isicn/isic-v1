@@ -732,6 +732,25 @@ a {
 // ============================================================================
 
 @media (max-width: 768px) {
+    .o_main_navbar {
+        // Keep white navbar on tablet
+        background: #fff !important;
+
+        // Burger menu icon — dark on white
+        .o_mobile_menu_toggle {
+            color: #4A4A4A !important;
+        }
+
+        // Menu sections become vertical — larger touch targets
+        .o_menu_sections {
+            .o_nav_entry,
+            .dropdown-toggle {
+                padding: 0.5rem 0.75rem !important;
+                font-size: 0.875rem !important;
+            }
+        }
+    }
+
     .o_control_panel .breadcrumb-item {
         font-size: 0.9em;
     }
@@ -750,6 +769,11 @@ a {
     .o_kanban_record {
         border-radius: 6px;
     }
+
+    // Searchbar full width on tablet
+    .o_searchview {
+        border-radius: 4px;
+    }
 }
 
 // ============================================================================
@@ -757,13 +781,47 @@ a {
 // ============================================================================
 
 @media (max-width: 576px) {
-    .o_main_navbar .o_menu_brand {
-        font-size: 0.9rem;
+    .o_main_navbar {
+        background: #fff !important;
+
+        .o_menu_brand {
+            font-size: 0.85rem;
+            color: #1B3A5C !important;
+        }
+
+        // Burger menu avatar + status
+        .o_mobile_menu_toggle {
+            color: #4A4A4A !important;
+        }
+
+        // Systray icons — ensure dark on white
+        .o_menu_systray .o_nav_entry,
+        .o_menu_systray .dropdown-toggle {
+            color: #4A4A4A !important;
+        }
+
+        // Mobile menu overlay — touch-friendly items
+        .o_menu_sections {
+            background: #fff !important;
+
+            .o_nav_entry,
+            .dropdown-toggle {
+                padding: 0.6rem 1rem !important;
+                font-size: 0.9rem !important;
+                color: #1B3A5C !important;
+                border-bottom: 1px solid rgba(0, 0, 0, 0.04);
+            }
+        }
     }
 
     .o_control_panel {
         .breadcrumb-item {
             font-size: 0.85em;
+        }
+
+        // Outline button — ensure visible on mobile
+        .btn-primary {
+            padding: 0.35rem 0.75rem;
         }
     }
 
@@ -773,9 +831,19 @@ a {
 
     .dropdown-menu {
         border-radius: 6px;
+
+        .dropdown-item {
+            padding: 0.4rem 1rem;
+        }
     }
 
     .o_user_menu .dropdown-menu {
         min-width: 180px;
+    }
+
+    // Chatter — stack buttons on mobile
+    .o-mail-Chatter-sendMessage,
+    .o-mail-Chatter-logNote {
+        font-size: 0.8rem;
     }
 }

@@ -106,8 +106,8 @@ body:has(.oe_website_login_container) #wrapwrap > main {
 
     // Reset Bootstrap .container sizing
     > .container {
-        max-width: 440px;
-        padding: 0;
+        max-width: 520px;
+        padding: 0 1rem;
         width: 100%;
     }
 
@@ -117,10 +117,11 @@ body:has(.oe_website_login_container) #wrapwrap > main {
         border-radius: 0 !important;
         background: #fff !important;
         box-shadow: none !important;
+        max-width: none !important;
     }
 
     .card-body {
-        padding: 2.5rem 1.5rem !important;
+        padding: 2.5rem 1rem !important;
     }
 
     // ---- Hide built-in logo (it's in the left panel) ----

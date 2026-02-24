@@ -6,7 +6,7 @@
     "author": "ISIC Rabat",
     "website": "https://isic.ac.ma",
     "license": "Other proprietary",
-    "depends": ["web", "muk_web_theme"],
+    "depends": ["web", "website", "muk_web_theme"],
     "data": [
         "views/webclient_templates.xml",
         "views/res_users_views.xml",
