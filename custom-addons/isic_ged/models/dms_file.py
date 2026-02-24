@@ -5,6 +5,15 @@ from odoo.exceptions import UserError
 class DmsFile(models.Model):
     _inherit = "dms.file"
 
+    def _check_access_dms_record(self, operation):
+        """Fix: include archived records in access check to allow unarchive."""
+        if any(self._ids) and not self.env.su:
+            Rule = self.env["ir.rule"]
+            domain = Rule._compute_domain(self._name, operation)
+            items = self.with_context(active_test=False).search(domain)
+            if any(x_id not in items.ids for x_id in self.ids):
+                raise Rule._make_access_error(operation, (self - items))
+
     document_type_id = fields.Many2one(
         "isic.document.type",
         string="Type de document",
