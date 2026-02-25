@@ -119,6 +119,7 @@ services:
       - odoo-prod-logs:/var/log/odoo
     networks:
       - isic-internal
+      - isic-external
     deploy:
       resources:
         limits:
@@ -231,6 +232,7 @@ services:
       - odoo-staging-logs:/var/log/odoo
     networks:
       - isic-internal
+      - isic-external
     deploy:
       resources:
         limits:
