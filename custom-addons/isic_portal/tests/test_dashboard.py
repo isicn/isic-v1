@@ -109,3 +109,43 @@ class TestPortalDashboard(TransactionCase):
                 self.assertIn("icon", kpi)
                 self.assertIn("color", kpi)
                 self.assertIsInstance(kpi["value"], int)
+
+    # ------------------------------------------------------------------
+    # Chart tests
+    # ------------------------------------------------------------------
+
+    def test_charts_returned(self):
+        """retrieve_dashboard includes a charts list with at least 2 entries."""
+        data = self.Dashboard.retrieve_dashboard()
+        self.assertIn("charts", data)
+        self.assertIsInstance(data["charts"], list)
+        self.assertGreaterEqual(len(data["charts"]), 2)
+
+    def test_chart_structure(self):
+        """Each chart dict has title, type, and data with labels/datasets."""
+        data = self.Dashboard.retrieve_dashboard()
+        for chart in data["charts"]:
+            self.assertIn("title", chart)
+            self.assertIn("type", chart)
+            self.assertIn("data", chart)
+            self.assertIn("labels", chart["data"])
+            self.assertIn("datasets", chart["data"])
+
+    def test_direction_sees_line_chart(self):
+        """Direction user sees the 'Évolution des demandes' line chart."""
+        data = self.Dashboard.with_user(self.user_direction).retrieve_dashboard()
+        chart_titles = [c["title"] for c in data["charts"]]
+        self.assertIn("Évolution des demandes", chart_titles)
+
+    def test_enseignant_no_line_chart(self):
+        """Regular enseignant does not see the line chart."""
+        data = self.Dashboard.with_user(self.user_enseignant).retrieve_dashboard()
+        chart_titles = [c["title"] for c in data["charts"]]
+        self.assertNotIn("Évolution des demandes", chart_titles)
+
+    def test_chart_doughnut_has_five_states(self):
+        """The doughnut chart has 5 state labels."""
+        data = self.Dashboard.retrieve_dashboard()
+        doughnut = next(c for c in data["charts"] if c["type"] == "doughnut")
+        self.assertEqual(len(doughnut["data"]["labels"]), 5)
+        self.assertEqual(len(doughnut["data"]["datasets"][0]["data"]), 5)

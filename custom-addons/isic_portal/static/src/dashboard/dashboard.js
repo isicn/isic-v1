@@ -1,13 +1,15 @@
 /** @odoo-module */
 
 import { Component, onWillStart, useState } from "@odoo/owl";
+import { loadBundle } from "@web/core/assets";
 import { registry } from "@web/core/registry";
 import { useService } from "@web/core/utils/hooks";
+import { DashboardChart } from "./chart/dashboard_chart";
 import { KpiCard } from "./kpi_card/kpi_card";
 
 export class IsicDashboard extends Component {
     static template = "isic_portal.Dashboard";
-    static components = { KpiCard };
+    static components = { KpiCard, DashboardChart };
 
     setup() {
         this.orm = useService("orm");
@@ -18,6 +20,7 @@ export class IsicDashboard extends Component {
         });
 
         onWillStart(async () => {
+            await loadBundle("web.chartjs_lib");
             await this.loadDashboard();
         });
     }

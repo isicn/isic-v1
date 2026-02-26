@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<templates xml:space="preserve">
+    <t t-name="isic_portal.DashboardChart">
+        <div class="isic-chart">
+            <h5 class="isic-chart__title"><t t-out="props.title" /></h5>
+            <div class="isic-chart__container">
+                <canvas t-ref="canvas" />
+            </div>
+        </div>
+    </t>
+</templates>

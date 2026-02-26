@@ -1,44 +1,68 @@
 // === ISIC Portal Dashboard ===
 
 .isic-dashboard {
-    padding: 24px;
-    max-width: 1400px;
-    margin: 0 auto;
-    min-height: 100%;
+    padding: 16px 24px;
     background-color: var(--o-webclient-background-color, #f0f2f5);
 }
 
 // Header
 .isic-dashboard__header {
-    margin-bottom: 32px;
-    padding: 24px;
+    margin-bottom: 16px;
+    padding: 16px 24px;
     background: white;
     border-radius: 12px;
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
 }
 
 .isic-dashboard__title {
-    font-size: 1.5rem;
+    font-size: 1.3rem;
     font-weight: 600;
     color: var(--o-brand-primary, #1b3a5c);
 }
 
 .isic-dashboard__subtitle {
-    font-size: 0.9rem;
-    margin-top: 4px;
+    font-size: 0.85rem;
+    margin-top: 2px;
+}
+
+// Charts grid
+.isic-dashboard__charts {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+    margin-bottom: 16px;
+}
+
+.isic-chart {
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+    padding: 12px 14px;
+}
+
+.isic-chart__title {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: #495057;
+    margin-bottom: 8px;
+}
+
+.isic-chart__container {
+    position: relative;
+    height: 160px;
 }
 
 // Sections
 .isic-dashboard__section {
-    margin-bottom: 28px;
+    margin-bottom: 16px;
 }
 
 .isic-dashboard__section-title {
-    font-size: 1.1rem;
+    font-size: 1rem;
     font-weight: 600;
     color: #495057;
-    margin-bottom: 16px;
-    padding-bottom: 8px;
+    margin-bottom: 10px;
+    padding-bottom: 6px;
     border-bottom: 2px solid #e9ecef;
 
     .fa {
@@ -49,16 +73,16 @@
 // KPI grid
 .isic-dashboard__kpis {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-    gap: 16px;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 12px;
 }
 
 // KPI Card
 .isic-kpi-card {
     display: flex;
     align-items: center;
-    gap: 16px;
-    padding: 20px;
+    gap: 12px;
+    padding: 14px 16px;
     background: white;
     border-radius: 10px;
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
@@ -77,23 +101,23 @@
 
 .isic-kpi-card__icon {
     flex-shrink: 0;
-    width: 48px;
-    height: 48px;
+    width: 40px;
+    height: 40px;
     display: flex;
     align-items: center;
     justify-content: center;
     border-radius: 10px;
-    font-size: 1.3rem;
+    font-size: 1.1rem;
 }
 
 .isic-kpi-card__value {
-    font-size: 1.6rem;
+    font-size: 1.4rem;
     font-weight: 700;
     line-height: 1.2;
 }
 
 .isic-kpi-card__label {
-    font-size: 0.82rem;
+    font-size: 0.78rem;
     color: #6c757d;
     line-height: 1.3;
 }
@@ -142,6 +166,10 @@ $kpi-colors: (
 
     .isic-dashboard__header {
         padding: 16px;
+    }
+
+    .isic-dashboard__charts {
+        grid-template-columns: 1fr;
     }
 
     .isic-dashboard__kpis {

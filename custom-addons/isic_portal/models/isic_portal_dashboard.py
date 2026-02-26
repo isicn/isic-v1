@@ -1,4 +1,7 @@
 import logging
+from datetime import date
+
+from dateutil.relativedelta import relativedelta
 
 from odoo import api, models
 
@@ -31,6 +34,9 @@ class IsicPortalDashboard(models.AbstractModel):
         # Sections available for all internal users
         data["sections"].extend(self._section_ged(annee))
         data["sections"].extend(self._section_approbation())
+
+        # Charts
+        data["charts"] = self._get_charts(annee)
 
         return data
 
@@ -204,3 +210,127 @@ class IsicPortalDashboard(models.AbstractModel):
                 "kpis": kpis,
             },
         ]
+
+    # ------------------------------------------------------------------
+    # Charts
+    # ------------------------------------------------------------------
+
+    @api.model
+    def _get_charts(self, annee):
+        """Build chart data list based on user groups."""
+        charts = [
+            self._chart_demandes_by_state(),
+            self._chart_docs_by_month(),
+        ]
+        user = self.env.user
+        if user.has_group("isic_base.group_isic_direction") or user.has_group("isic_base.group_isic_scolarite"):
+            charts.append(self._chart_demandes_by_month())
+        return charts
+
+    @api.model
+    def _chart_demandes_by_state(self):
+        """Doughnut: demandes par état."""
+        Demande = self.env["isic.approbation.demande"]
+        states = [
+            ("draft", "Brouillon"),
+            ("submitted", "Soumise"),
+            ("approved", "Approuvée"),
+            ("rejected", "Refusée"),
+            ("cancelled", "Annulée"),
+        ]
+        colors = ["#0dcaf0", "#fd7e14", "#198754", "#dc3545", "#6c757d"]
+        labels, values = [], []
+        for code, label in states:
+            labels.append(label)
+            values.append(Demande.search_count([("state", "=", code)]))
+        return {
+            "title": "Demandes par état",
+            "type": "doughnut",
+            "data": {
+                "labels": labels,
+                "datasets": [{"data": values, "backgroundColor": colors}],
+            },
+        }
+
+    @api.model
+    def _chart_docs_by_month(self):
+        """Bar: documents GED créés par mois (6 derniers mois)."""
+        labels, values = self._aggregate_by_month("dms.file", 6)
+        return {
+            "title": "Documents par mois",
+            "type": "bar",
+            "data": {
+                "labels": labels,
+                "datasets": [
+                    {
+                        "label": "Documents",
+                        "data": values,
+                        "backgroundColor": "#1B3A5C",
+                    }
+                ],
+            },
+        }
+
+    @api.model
+    def _chart_demandes_by_month(self):
+        """Line: évolution des demandes par mois (6 derniers mois)."""
+        labels, values = self._aggregate_by_month("isic.approbation.demande", 6)
+        return {
+            "title": "Évolution des demandes",
+            "type": "line",
+            "data": {
+                "labels": labels,
+                "datasets": [
+                    {
+                        "label": "Demandes",
+                        "data": values,
+                        "borderColor": "#D4A843",
+                        "backgroundColor": "rgba(212, 168, 67, 0.15)",
+                        "fill": True,
+                    }
+                ],
+            },
+        }
+
+    @api.model
+    def _aggregate_by_month(self, model_name, months):
+        """Return (labels, values) for record counts grouped by month.
+
+        Covers the last ``months`` months including the current one.
+        Missing months are filled with 0.
+        """
+        today = date.today()
+        first_day = today.replace(day=1) - relativedelta(months=months - 1)
+
+        Model = self.env[model_name]
+        domain = [("create_date", ">=", first_day.isoformat())]
+        groups = Model._read_group(domain, groupby=["create_date:month"], aggregates=["__count"])
+
+        # Build {(year, month): count} from _read_group results
+        # create_date:month returns datetime.datetime truncated to 1st of month
+        counts = {}
+        for dt_val, count in groups:
+            if dt_val:
+                counts[(dt_val.year, dt_val.month)] = count
+
+        month_names = [
+            "",
+            "jan.",
+            "fév.",
+            "mars",
+            "avr.",
+            "mai",
+            "juin",
+            "juil.",
+            "août",
+            "sep.",
+            "oct.",
+            "nov.",
+            "déc.",
+        ]
+        labels, values = [], []
+        for i in range(months):
+            d = first_day + relativedelta(months=i)
+            labels.append(f"{month_names[d.month]} {d.year}")
+            values.append(counts.get((d.year, d.month), 0))
+        return labels, values
