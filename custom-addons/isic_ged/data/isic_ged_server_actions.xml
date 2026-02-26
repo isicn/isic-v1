@@ -8,7 +8,7 @@
         <field name="model_id" ref="dms.model_dms_file" />
         <field name="binding_model_id" ref="dms.model_dms_file" />
         <field name="binding_view_types">list</field>
-        <field name="groups_id" eval="[(4, ref('isic_base.group_isic_scolarite'))]" />
+        <field name="group_ids" eval="[(4, ref('isic_base.group_isic_scolarite'))]" />
         <field name="state">code</field>
         <field name="code">records.filtered(lambda r: r.ged_state == 'draft').action_validate()</field>
     </record>
