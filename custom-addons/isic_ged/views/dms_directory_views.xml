@@ -22,8 +22,36 @@
         <field name="model">dms.directory</field>
         <field name="inherit_id" ref="dms.search_dms_directory" />
         <field name="arch" type="xml">
+            <!-- "Mes dossiers" filter: directories where user has write permission -->
+            <xpath expr="//filter[@name='filter_user']" position="after">
+                <filter name="filter_my_dirs" string="Mes dossiers"
+                    domain="[('permission_write','=',True)]" />
+                <separator />
+            </xpath>
             <xpath expr="//filter[@name='group_category']" position="after">
                 <filter name="group_annee" string="Année académique" context="{'group_by': 'annee_academique_id'}" />
+            </xpath>
+        </field>
+    </record>
+
+    <!-- ============================================================ -->
+    <!-- Kanban: add human_size to directory cards                    -->
+    <!-- ============================================================ -->
+    <record id="view_dms_directory_kanban_ged" model="ir.ui.view">
+        <field name="name">dms.directory.kanban.inherit.isic_ged</field>
+        <field name="model">dms.directory</field>
+        <field name="inherit_id" ref="dms.view_dms_directory_kanban" />
+        <field name="arch" type="xml">
+            <!-- Load human_size field in kanban -->
+            <xpath expr="//kanban/field[@name='count_files']" position="after">
+                <field name="human_size" />
+            </xpath>
+            <!-- Show size after write_date in card body -->
+            <xpath expr="//div[hasclass('col-8')]/field[@name='write_date']" position="after">
+                <span t-if="record.human_size.value" class="text-muted small">
+                    <i class="fa fa-database" title="Taille" />
+                    <t t-out="record.human_size.value" />
+                </span>
             </xpath>
         </field>
     </record>

@@ -12,9 +12,13 @@
         "security/ir.model.access.csv",
         "data/isic_document_type_data.xml",
         "data/isic_dms_data.xml",
+        "data/isic_ged_server_actions.xml",
         "views/dms_file_views.xml",
         "views/dms_directory_views.xml",
         "views/isic_document_type_views.xml",
+    ],
+    "demo": [
+        "demo/isic_ged_demo.xml",
     ],
     "assets": {
         "web.assets_backend": [

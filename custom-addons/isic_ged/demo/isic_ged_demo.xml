@@ -1,0 +1,229 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <!-- ============================================================ -->
+    <!-- Academic year for demo data                                  -->
+    <!-- ============================================================ -->
+    <record id="demo_annee_2025" model="isic.annee.academique">
+        <field name="code">2025-2026-DEMO</field>
+        <field name="date_start">2025-09-01</field>
+        <field name="date_end">2026-07-31</field>
+        <field name="state">draft</field>
+    </record>
+    <!-- Open the year via action to respect _check_single_open constraint.
+         If another year is already open for the same company, this will
+         close it first (standard Odoo behavior) or raise — which is
+         acceptable for demo data that targets fresh databases. -->
+    <function model="isic.annee.academique" name="action_ouvrir">
+        <value eval="[ref('demo_annee_2025')]" />
+    </function>
+
+    <!-- ============================================================ -->
+    <!-- Demo files — Direction                                       -->
+    <!-- ============================================================ -->
+    <record id="demo_file_01" model="dms.file">
+        <field name="name">NS-Direction-2025-001.pdf</field>
+        <field name="directory_id" ref="dir_direction_notes" />
+        <field name="document_type_id" ref="type_nds" />
+        <field name="reference">NS-2025-001</field>
+        <field name="date_document">2025-10-15</field>
+        <field name="annee_academique_id" ref="demo_annee_2025" />
+        <field name="ged_state">validated</field>
+        <field name="content" type="base64">JVBERi0xLjQgZGVtbw==</field>
+    </record>
+
+    <record id="demo_file_02" model="dms.file">
+        <field name="name">NS-Direction-2025-002.pdf</field>
+        <field name="directory_id" ref="dir_direction_notes" />
+        <field name="document_type_id" ref="type_nds" />
+        <field name="reference">NS-2025-002</field>
+        <field name="date_document">2025-11-20</field>
+        <field name="annee_academique_id" ref="demo_annee_2025" />
+        <field name="ged_state">draft</field>
+        <field name="content" type="base64">JVBERi0xLjQgZGVtbw==</field>
+    </record>
+
+    <record id="demo_file_03" model="dms.file">
+        <field name="name">Decision-Conseil-2025.pdf</field>
+        <field name="directory_id" ref="dir_direction_decisions" />
+        <field name="document_type_id" ref="type_dec" />
+        <field name="reference">DEC-2025-001</field>
+        <field name="date_document">2025-09-30</field>
+        <field name="annee_academique_id" ref="demo_annee_2025" />
+        <field name="ged_state">validated</field>
+        <field name="content" type="base64">JVBERi0xLjQgZGVtbw==</field>
+    </record>
+
+    <record id="demo_file_04" model="dms.file">
+        <field name="name">Rapport-Activites-2024.pdf</field>
+        <field name="directory_id" ref="dir_direction_rapports" />
+        <field name="document_type_id" ref="type_rap" />
+        <field name="reference">RAP-2024-001</field>
+        <field name="date_document">2024-12-20</field>
+        <field name="annee_academique_id" ref="demo_annee_2025" />
+        <field name="ged_state">archived</field>
+        <field name="content" type="base64">JVBERi0xLjQgZGVtbw==</field>
+    </record>
+
+    <record id="demo_file_05" model="dms.file">
+        <field name="name">Courrier-Ministere-2025.pdf</field>
+        <field name="directory_id" ref="dir_direction" />
+        <field name="document_type_id" ref="type_cor_e" />
+        <field name="reference">COR-E-2025-007</field>
+        <field name="date_document">2025-11-05</field>
+        <field name="annee_academique_id" ref="demo_annee_2025" />
+        <field name="ged_state">validated</field>
+        <field name="content" type="base64">JVBERi0xLjQgZGVtbw==</field>
+    </record>
+
+    <!-- ============================================================ -->
+    <!-- Demo files — Enseignement                                    -->
+    <!-- ============================================================ -->
+    <record id="demo_file_06" model="dms.file">
+        <field name="name">PV-Conseil-Etablissement.pdf</field>
+        <field name="directory_id" ref="dir_enseignement_pv" />
+        <field name="document_type_id" ref="type_pv" />
+        <field name="reference">PV-2025-001</field>
+        <field name="date_document">2025-10-10</field>
+        <field name="annee_academique_id" ref="demo_annee_2025" />
+        <field name="ged_state">validated</field>
+        <field name="content" type="base64">JVBERi0xLjQgZGVtbw==</field>
+    </record>
+
+    <record id="demo_file_07" model="dms.file">
+        <field name="name">PV-Departement-Info.pdf</field>
+        <field name="directory_id" ref="dir_enseignement_pv" />
+        <field name="document_type_id" ref="type_pv" />
+        <field name="reference">PV-2025-002</field>
+        <field name="date_document">2025-11-28</field>
+        <field name="annee_academique_id" ref="demo_annee_2025" />
+        <field name="ged_state">draft</field>
+        <field name="content" type="base64">JVBERi0xLjQgZGVtbw==</field>
+    </record>
+
+    <record id="demo_file_08" model="dms.file">
+        <field name="name">Cours-Python-Avance.pdf</field>
+        <field name="directory_id" ref="dir_enseignement_cours" />
+        <field name="document_type_id" ref="type_div" />
+        <field name="date_document">2025-10-01</field>
+        <field name="annee_academique_id" ref="demo_annee_2025" />
+        <field name="ged_state">draft</field>
+        <field name="content" type="base64">JVBERi0xLjQgZGVtbw==</field>
+    </record>
+
+    <record id="demo_file_09" model="dms.file">
+        <field name="name">EDT-S2-2025.pdf</field>
+        <field name="directory_id" ref="dir_enseignement_edt" />
+        <field name="document_type_id" ref="type_div" />
+        <field name="reference">EDT-2025-S2</field>
+        <field name="date_document">2026-01-15</field>
+        <field name="annee_academique_id" ref="demo_annee_2025" />
+        <field name="ged_state">validated</field>
+        <field name="content" type="base64">JVBERi0xLjQgZGVtbw==</field>
+    </record>
+
+    <!-- ============================================================ -->
+    <!-- Demo files — Scolarite                                       -->
+    <!-- ============================================================ -->
+    <record id="demo_file_10" model="dms.file">
+        <field name="name">Inscription-2025-Liste.pdf</field>
+        <field name="directory_id" ref="dir_scolarite_inscriptions" />
+        <field name="document_type_id" ref="type_att" />
+        <field name="reference">ATT-2025-042</field>
+        <field name="date_document">2025-09-15</field>
+        <field name="annee_academique_id" ref="demo_annee_2025" />
+        <field name="ged_state">validated</field>
+        <field name="content" type="base64">JVBERi0xLjQgZGVtbw==</field>
+    </record>
+
+    <record id="demo_file_11" model="dms.file">
+        <field name="name">Attestation-Reussite.pdf</field>
+        <field name="directory_id" ref="dir_scolarite_attestations" />
+        <field name="document_type_id" ref="type_att" />
+        <field name="reference">ATT-2025-043</field>
+        <field name="date_document">2025-12-01</field>
+        <field name="annee_academique_id" ref="demo_annee_2025" />
+        <field name="ged_state">draft</field>
+        <field name="content" type="base64">JVBERi0xLjQgZGVtbw==</field>
+    </record>
+
+    <record id="demo_file_12" model="dms.file">
+        <field name="name">Examen-S1-Resultats.pdf</field>
+        <field name="directory_id" ref="dir_scolarite_examens" />
+        <field name="document_type_id" ref="type_pv" />
+        <field name="reference">PV-2025-EX01</field>
+        <field name="date_document">2025-06-30</field>
+        <field name="annee_academique_id" ref="demo_annee_2025" />
+        <field name="ged_state">archived</field>
+        <field name="content" type="base64">JVBERi0xLjQgZGVtbw==</field>
+    </record>
+
+    <record id="demo_file_13" model="dms.file">
+        <field name="name">CR-Reunion-Scolarite.pdf</field>
+        <field name="directory_id" ref="dir_scolarite" />
+        <field name="document_type_id" ref="type_cr" />
+        <field name="reference">CR-2025-005</field>
+        <field name="date_document">2025-11-10</field>
+        <field name="annee_academique_id" ref="demo_annee_2025" />
+        <field name="ged_state">validated</field>
+        <field name="content" type="base64">JVBERi0xLjQgZGVtbw==</field>
+    </record>
+
+    <record id="demo_file_14" model="dms.file">
+        <field name="name">Circulaire-Examens-2025.pdf</field>
+        <field name="directory_id" ref="dir_scolarite" />
+        <field name="document_type_id" ref="type_cir" />
+        <field name="reference">CIR-2025-003</field>
+        <field name="date_document">2025-05-15</field>
+        <field name="annee_academique_id" ref="demo_annee_2025" />
+        <field name="ged_state">archived</field>
+        <field name="content" type="base64">JVBERi0xLjQgZGVtbw==</field>
+    </record>
+
+    <!-- ============================================================ -->
+    <!-- Demo files — Stages                                          -->
+    <!-- ============================================================ -->
+    <record id="demo_file_15" model="dms.file">
+        <field name="name">Convention-Stage-2025.pdf</field>
+        <field name="directory_id" ref="dir_stages_conventions" />
+        <field name="document_type_id" ref="type_conv" />
+        <field name="reference">CONV-2025-001</field>
+        <field name="date_document">2025-10-20</field>
+        <field name="annee_academique_id" ref="demo_annee_2025" />
+        <field name="ged_state">validated</field>
+        <field name="content" type="base64">JVBERi0xLjQgZGVtbw==</field>
+    </record>
+
+    <record id="demo_file_16" model="dms.file">
+        <field name="name">Rapport-Stage-Etudiant1.pdf</field>
+        <field name="directory_id" ref="dir_stages_rapports" />
+        <field name="document_type_id" ref="type_rap" />
+        <field name="reference">STG-2025-001</field>
+        <field name="date_document">2025-12-15</field>
+        <field name="annee_academique_id" ref="demo_annee_2025" />
+        <field name="ged_state">draft</field>
+        <field name="content" type="base64">JVBERi0xLjQgZGVtbw==</field>
+    </record>
+
+    <!-- ============================================================ -->
+    <!-- Demo files — Documents partages                              -->
+    <!-- ============================================================ -->
+    <record id="demo_file_17" model="dms.file">
+        <field name="name">Formulaire-Demande-Attestation.pdf</field>
+        <field name="directory_id" ref="dir_partage_formulaires" />
+        <field name="document_type_id" ref="type_div" />
+        <field name="date_document">2025-09-01</field>
+        <field name="annee_academique_id" ref="demo_annee_2025" />
+        <field name="ged_state">validated</field>
+        <field name="content" type="base64">JVBERi0xLjQgZGVtbw==</field>
+    </record>
+
+    <record id="demo_file_18" model="dms.file">
+        <field name="name">Modele-Rapport-Stage.docx</field>
+        <field name="directory_id" ref="dir_partage_modeles" />
+        <field name="document_type_id" ref="type_div" />
+        <field name="date_document">2025-09-01</field>
+        <field name="annee_academique_id" ref="demo_annee_2025" />
+        <field name="ged_state">validated</field>
+        <field name="content" type="base64">JVBERi0xLjQgZGVtbw==</field>
+    </record>
+</odoo>

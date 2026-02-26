@@ -96,14 +96,43 @@
             </xpath>
             <xpath expr="//filter[@name='filter_user']" position="before">
                 <filter name="filter_ged_draft" string="Brouillon" domain="[('ged_state','=','draft')]" />
+                <filter name="filter_to_validate" string="À valider"
+                    domain="[('ged_state','=','draft'),('document_type_id.validation_required','=',True)]" />
                 <filter name="filter_ged_validated" string="Validés" domain="[('ged_state','=','validated')]" />
                 <filter name="filter_ged_archived" string="Classés" domain="[('ged_state','=','archived')]" />
+                <separator />
+                <filter name="filter_this_year" string="Cette année"
+                    domain="[('annee_academique_id.state','=','open')]" />
                 <separator />
             </xpath>
             <xpath expr="//filter[@name='group_category']" position="after">
                 <filter name="group_document_type" string="Type de document" context="{'group_by': 'document_type_id'}" />
                 <filter name="group_ged_state" string="État GED" context="{'group_by': 'ged_state'}" />
                 <filter name="group_annee" string="Année académique" context="{'group_by': 'annee_academique_id'}" />
+                <filter name="group_date_document" string="Date du document" context="{'group_by': 'date_document:month'}" />
+            </xpath>
+        </field>
+    </record>
+
+    <!-- ============================================================ -->
+    <!-- Kanban: add GED state badge                                 -->
+    <!-- ============================================================ -->
+    <record id="view_dms_file_kanban_ged" model="ir.ui.view">
+        <field name="name">dms.file.kanban.inherit.isic_ged</field>
+        <field name="model">dms.file</field>
+        <field name="inherit_id" ref="dms.view_dms_file_kanban" />
+        <field name="arch" type="xml">
+            <!-- Load ged_state field in kanban -->
+            <xpath expr="//kanban/field[@name='name']" position="after">
+                <field name="ged_state" />
+                <field name="document_type_id" />
+            </xpath>
+            <!-- Add state badge after write_date in card -->
+            <xpath expr="//div[hasclass('col-9')]/field[@name='write_date']" position="after">
+                <span t-if="record.ged_state.raw_value"
+                    t-attf-class="badge rounded-pill #{record.ged_state.raw_value == 'draft' ? 'text-bg-info' : record.ged_state.raw_value == 'validated' ? 'text-bg-success' : 'text-bg-secondary'}">
+                    <t t-out="record.ged_state.value" />
+                </span>
             </xpath>
         </field>
     </record>
