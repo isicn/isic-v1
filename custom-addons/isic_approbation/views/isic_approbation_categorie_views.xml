@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <!-- ============================================================ -->
+    <!-- Form                                                         -->
+    <!-- ============================================================ -->
+    <record id="isic_approbation_categorie_view_form" model="ir.ui.view">
+        <field name="name">isic.approbation.categorie.form</field>
+        <field name="model">isic.approbation.categorie</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button name="%(isic_approbation_demande_action)d"
+                            type="action"
+                            class="oe_stat_button"
+                            icon="fa-file-text-o"
+                            context="{'search_default_categorie_id': id}">
+                            <field name="demande_count" widget="statinfo" string="Demandes" />
+                        </button>
+                    </div>
+                    <widget name="web_ribbon" title="Archivé" bg_color="text-bg-danger"
+                        invisible="active" />
+                    <div class="oe_title">
+                        <label for="name" string="Catégorie" />
+                        <h1>
+                            <field name="name" placeholder="Nom de la catégorie" />
+                        </h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="code" />
+                            <field name="icon" placeholder="fa-question-circle" />
+                            <field name="color" widget="color_picker" />
+                            <field name="sequence" />
+                        </group>
+                        <group>
+                            <field name="approbation_requise" />
+                            <field name="nombre_niveaux" />
+                            <field name="delai_traitement" />
+                            <field name="active" invisible="1" />
+                        </group>
+                    </group>
+                    <group string="Restrictions d'accès">
+                        <field name="groupe_demandeur_ids" widget="many2many_tags"
+                            placeholder="Tous les utilisateurs internes" />
+                    </group>
+                    <group>
+                        <field name="description" placeholder="Description de cette catégorie..." />
+                    </group>
+                </sheet>
+                <chatter />
+            </form>
+        </field>
+    </record>
+
+    <!-- ============================================================ -->
+    <!-- List                                                         -->
+    <!-- ============================================================ -->
+    <record id="isic_approbation_categorie_view_list" model="ir.ui.view">
+        <field name="name">isic.approbation.categorie.list</field>
+        <field name="model">isic.approbation.categorie</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="sequence" widget="handle" />
+                <field name="code" />
+                <field name="name" />
+                <field name="approbation_requise" />
+                <field name="nombre_niveaux" />
+                <field name="delai_traitement" />
+                <field name="demande_count" string="Demandes" />
+            </list>
+        </field>
+    </record>
+
+    <!-- ============================================================ -->
+    <!-- Action                                                       -->
+    <!-- ============================================================ -->
+    <record id="isic_approbation_categorie_action" model="ir.actions.act_window">
+        <field name="name">Catégories</field>
+        <field name="res_model">isic.approbation.categorie</field>
+        <field name="view_mode">list,form</field>
+    </record>
+</odoo>

@@ -1,0 +1,25 @@
+{
+    "name": "ISIC - Approbation",
+    "summary": "Workflows d'approbation multi-niveaux pour les demandes internes ISIC",
+    "version": "19.0.1.0.0",
+    "category": "Education",
+    "author": "ISIC Rabat",
+    "website": "https://isic.ac.ma",
+    "license": "Other proprietary",
+    "depends": ["isic_base", "base_tier_validation"],
+    "data": [
+        "security/security.xml",
+        "security/ir.model.access.csv",
+        "data/isic_approbation_activity_data.xml",
+        "data/isic_approbation_categorie_data.xml",
+        "data/isic_approbation_tier_data.xml",
+        "views/isic_approbation_demande_views.xml",
+        "views/isic_approbation_categorie_views.xml",
+        "views/isic_approbation_menus.xml",
+    ],
+    "demo": [
+        "demo/isic_approbation_demo.xml",
+    ],
+    "installable": True,
+    "application": True,
+}

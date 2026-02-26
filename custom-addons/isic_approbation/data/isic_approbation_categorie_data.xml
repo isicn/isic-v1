@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data noupdate="1">
+
+        <!-- ============================================================ -->
+        <!-- Catégories de demandes pré-configurées                      -->
+        <!-- ============================================================ -->
+        <record id="categorie_conge" model="isic.approbation.categorie">
+            <field name="name">Demande de congé</field>
+            <field name="code">CONGE</field>
+            <field name="icon">fa-calendar-minus-o</field>
+            <field name="color">1</field>
+            <field name="sequence">10</field>
+            <field name="approbation_requise" eval="True" />
+            <field name="nombre_niveaux">2</field>
+            <field name="delai_traitement">5</field>
+            <field name="description">Demande de congé annuel, congé exceptionnel ou absence autorisée.</field>
+        </record>
+
+        <record id="categorie_mission" model="isic.approbation.categorie">
+            <field name="name">Ordre de mission</field>
+            <field name="code">MISSION</field>
+            <field name="icon">fa-plane</field>
+            <field name="color">2</field>
+            <field name="sequence">20</field>
+            <field name="approbation_requise" eval="True" />
+            <field name="nombre_niveaux">2</field>
+            <field name="delai_traitement">5</field>
+            <field name="description">Ordre de mission nationale ou internationale.</field>
+        </record>
+
+        <record id="categorie_attestation" model="isic.approbation.categorie">
+            <field name="name">Demande d'attestation</field>
+            <field name="code">ATT</field>
+            <field name="icon">fa-file-text-o</field>
+            <field name="color">10</field>
+            <field name="sequence">30</field>
+            <field name="approbation_requise" eval="True" />
+            <field name="nombre_niveaux">1</field>
+            <field name="delai_traitement">3</field>
+            <field name="description">Demande d'attestation de travail, de scolarité ou autre certificat.</field>
+        </record>
+
+        <record id="categorie_materiel" model="isic.approbation.categorie">
+            <field name="name">Demande de matériel</field>
+            <field name="code">MATERIEL</field>
+            <field name="icon">fa-desktop</field>
+            <field name="color">4</field>
+            <field name="sequence">40</field>
+            <field name="approbation_requise" eval="True" />
+            <field name="nombre_niveaux">2</field>
+            <field name="delai_traitement">10</field>
+            <field name="description">Demande de fournitures, équipement informatique ou matériel pédagogique.</field>
+        </record>
+
+        <record id="categorie_acces" model="isic.approbation.categorie">
+            <field name="name">Demande d'accès</field>
+            <field name="code">ACCES</field>
+            <field name="icon">fa-key</field>
+            <field name="color">5</field>
+            <field name="sequence">50</field>
+            <field name="approbation_requise" eval="True" />
+            <field name="nombre_niveaux">1</field>
+            <field name="delai_traitement">2</field>
+            <field name="description">Demande d'accès à un local, système informatique ou ressource.</field>
+        </record>
+
+        <record id="categorie_divers" model="isic.approbation.categorie">
+            <field name="name">Autre demande</field>
+            <field name="code">DIVERS</field>
+            <field name="icon">fa-question-circle</field>
+            <field name="color">0</field>
+            <field name="sequence">99</field>
+            <field name="approbation_requise" eval="True" />
+            <field name="nombre_niveaux">1</field>
+            <field name="delai_traitement">5</field>
+            <field name="description">Demande diverse ne rentrant dans aucune catégorie spécifique.</field>
+        </record>
+
+    </data>
+</odoo>

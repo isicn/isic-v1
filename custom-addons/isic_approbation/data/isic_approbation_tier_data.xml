@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data noupdate="1">
+
+        <!-- ============================================================ -->
+        <!-- Circuits d'approbation (tier.definition)                    -->
+        <!-- ============================================================ -->
+
+        <!-- === CONGÉ : Département → Secrétariat Général === -->
+        <record id="tier_conge_l1" model="tier.definition">
+            <field name="name">Congé - Chef de département</field>
+            <field name="model_id" ref="model_isic_approbation_demande" />
+            <field name="review_type">group</field>
+            <field name="reviewer_group_id" ref="isic_base.group_isic_departement" />
+            <field name="definition_domain">[('categorie_id.code', '=', 'CONGE')]</field>
+            <field name="sequence">10</field>
+            <field name="approve_sequence" eval="True" />
+            <field name="notify_on_create" eval="True" />
+            <field name="has_comment" eval="True" />
+        </record>
+
+        <record id="tier_conge_l2" model="tier.definition">
+            <field name="name">Congé - Secrétaire général</field>
+            <field name="model_id" ref="model_isic_approbation_demande" />
+            <field name="review_type">group</field>
+            <field name="reviewer_group_id" ref="isic_base.group_isic_secretariat" />
+            <field name="definition_domain">[('categorie_id.code', '=', 'CONGE')]</field>
+            <field name="sequence">20</field>
+            <field name="approve_sequence" eval="True" />
+            <field name="notify_on_pending" eval="True" />
+            <field name="has_comment" eval="True" />
+        </record>
+
+        <!-- === MISSION : Département → Secrétariat Général === -->
+        <record id="tier_mission_l1" model="tier.definition">
+            <field name="name">Mission - Chef de département</field>
+            <field name="model_id" ref="model_isic_approbation_demande" />
+            <field name="review_type">group</field>
+            <field name="reviewer_group_id" ref="isic_base.group_isic_departement" />
+            <field name="definition_domain">[('categorie_id.code', '=', 'MISSION')]</field>
+            <field name="sequence">10</field>
+            <field name="approve_sequence" eval="True" />
+            <field name="notify_on_create" eval="True" />
+            <field name="has_comment" eval="True" />
+        </record>
+
+        <record id="tier_mission_l2" model="tier.definition">
+            <field name="name">Mission - Secrétaire général</field>
+            <field name="model_id" ref="model_isic_approbation_demande" />
+            <field name="review_type">group</field>
+            <field name="reviewer_group_id" ref="isic_base.group_isic_secretariat" />
+            <field name="definition_domain">[('categorie_id.code', '=', 'MISSION')]</field>
+            <field name="sequence">20</field>
+            <field name="approve_sequence" eval="True" />
+            <field name="notify_on_pending" eval="True" />
+            <field name="has_comment" eval="True" />
+        </record>
+
+        <!-- === ATTESTATION : Scolarité === -->
+        <record id="tier_attestation_l1" model="tier.definition">
+            <field name="name">Attestation - Service scolarité</field>
+            <field name="model_id" ref="model_isic_approbation_demande" />
+            <field name="review_type">group</field>
+            <field name="reviewer_group_id" ref="isic_base.group_isic_scolarite" />
+            <field name="definition_domain">[('categorie_id.code', '=', 'ATT')]</field>
+            <field name="sequence">10</field>
+            <field name="notify_on_create" eval="True" />
+        </record>
+
+        <!-- === MATÉRIEL : Département → Service Technique === -->
+        <record id="tier_materiel_l1" model="tier.definition">
+            <field name="name">Matériel - Chef de département</field>
+            <field name="model_id" ref="model_isic_approbation_demande" />
+            <field name="review_type">group</field>
+            <field name="reviewer_group_id" ref="isic_base.group_isic_departement" />
+            <field name="definition_domain">[('categorie_id.code', '=', 'MATERIEL')]</field>
+            <field name="sequence">10</field>
+            <field name="approve_sequence" eval="True" />
+            <field name="notify_on_create" eval="True" />
+        </record>
+
+        <record id="tier_materiel_l2" model="tier.definition">
+            <field name="name">Matériel - Service technique</field>
+            <field name="model_id" ref="model_isic_approbation_demande" />
+            <field name="review_type">group</field>
+            <field name="reviewer_group_id" ref="isic_base.group_isic_technique" />
+            <field name="definition_domain">[('categorie_id.code', '=', 'MATERIEL')]</field>
+            <field name="sequence">20</field>
+            <field name="approve_sequence" eval="True" />
+            <field name="notify_on_pending" eval="True" />
+        </record>
+
+        <!-- === ACCÈS : Service Technique === -->
+        <record id="tier_acces_l1" model="tier.definition">
+            <field name="name">Accès - Service technique</field>
+            <field name="model_id" ref="model_isic_approbation_demande" />
+            <field name="review_type">group</field>
+            <field name="reviewer_group_id" ref="isic_base.group_isic_technique" />
+            <field name="definition_domain">[('categorie_id.code', '=', 'ACCES')]</field>
+            <field name="sequence">10</field>
+            <field name="notify_on_create" eval="True" />
+        </record>
+
+        <!-- === DIVERS : Département === -->
+        <record id="tier_divers_l1" model="tier.definition">
+            <field name="name">Divers - Chef de département</field>
+            <field name="model_id" ref="model_isic_approbation_demande" />
+            <field name="review_type">group</field>
+            <field name="reviewer_group_id" ref="isic_base.group_isic_departement" />
+            <field name="definition_domain">[('categorie_id.code', '=', 'DIVERS')]</field>
+            <field name="sequence">10</field>
+            <field name="notify_on_create" eval="True" />
+        </record>
+
+    </data>
+</odoo>

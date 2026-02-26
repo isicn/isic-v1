@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <!-- ============================================================ -->
+    <!-- Demandes de démonstration                                    -->
+    <!-- ============================================================ -->
+
+    <!-- Congé — brouillon -->
+    <record id="demo_demande_conge_01" model="isic.approbation.demande">
+        <field name="name">DEM/CONGE/2026/0001</field>
+        <field name="categorie_id" ref="categorie_conge" />
+        <field name="state">draft</field>
+        <field name="date_demande">2026-02-15</field>
+        <field name="date_debut">2026-03-01</field>
+        <field name="date_fin">2026-03-05</field>
+        <field name="motif">Congé annuel — semaine de repos</field>
+        <field name="priorite">0</field>
+    </record>
+
+    <!-- Mission — brouillon -->
+    <record id="demo_demande_mission_01" model="isic.approbation.demande">
+        <field name="name">DEM/MISSION/2026/0001</field>
+        <field name="categorie_id" ref="categorie_mission" />
+        <field name="state">draft</field>
+        <field name="date_demande">2026-02-20</field>
+        <field name="date_debut">2026-04-10</field>
+        <field name="date_fin">2026-04-12</field>
+        <field name="motif">Participation au colloque international sur les médias numériques à Casablanca</field>
+        <field name="priorite">1</field>
+    </record>
+
+    <!-- Attestation — brouillon -->
+    <record id="demo_demande_att_01" model="isic.approbation.demande">
+        <field name="name">DEM/ATT/2026/0001</field>
+        <field name="categorie_id" ref="categorie_attestation" />
+        <field name="state">draft</field>
+        <field name="date_demande">2026-02-10</field>
+        <field name="motif">Demande d'attestation de travail pour dossier administratif</field>
+        <field name="priorite">0</field>
+    </record>
+
+    <!-- Matériel — brouillon -->
+    <record id="demo_demande_materiel_01" model="isic.approbation.demande">
+        <field name="name">DEM/MATERIEL/2026/0001</field>
+        <field name="categorie_id" ref="categorie_materiel" />
+        <field name="state">draft</field>
+        <field name="date_demande">2026-01-25</field>
+        <field name="motif">Besoin d'un vidéoprojecteur pour la salle de cours B12</field>
+        <field name="priorite">0</field>
+    </record>
+
+    <!-- Accès — brouillon -->
+    <record id="demo_demande_acces_01" model="isic.approbation.demande">
+        <field name="name">DEM/ACCES/2026/0001</field>
+        <field name="categorie_id" ref="categorie_acces" />
+        <field name="state">draft</field>
+        <field name="date_demande">2026-02-18</field>
+        <field name="motif">Accès au studio d'enregistrement pour projet de fin d'études</field>
+        <field name="priorite">1</field>
+    </record>
+
+    <!-- Divers — brouillon -->
+    <record id="demo_demande_divers_01" model="isic.approbation.demande">
+        <field name="name">DEM/DIVERS/2026/0001</field>
+        <field name="categorie_id" ref="categorie_divers" />
+        <field name="state">draft</field>
+        <field name="date_demande">2026-02-22</field>
+        <field name="motif">Demande de réservation de la salle de conférence pour le 15 mars</field>
+        <field name="priorite">0</field>
+    </record>
+</odoo>

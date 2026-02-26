@@ -1,0 +1,272 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <!-- ============================================================ -->
+    <!-- Form                                                         -->
+    <!-- ============================================================ -->
+    <record id="isic_approbation_demande_view_form" model="ir.ui.view">
+        <field name="name">isic.approbation.demande.form</field>
+        <field name="model">isic.approbation.demande</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <button name="action_submit"
+                        string="Soumettre"
+                        type="object"
+                        class="btn-primary"
+                        invisible="state != 'draft'" />
+                    <button name="action_cancel"
+                        string="Annuler"
+                        type="object"
+                        invisible="state in ('approved', 'cancelled')"
+                        confirm="Êtes-vous sûr de vouloir annuler cette demande ?" />
+                    <button name="action_reset_draft"
+                        string="Remettre en brouillon"
+                        type="object"
+                        invisible="state not in ('rejected', 'cancelled')"
+                        groups="isic_base.group_isic_direction" />
+                    <field name="state" widget="statusbar"
+                        statusbar_visible="draft,submitted,approved" />
+                </header>
+                <sheet>
+                    <!-- Tier validation alerts -->
+                    <field name="validation_status" invisible="1" />
+                    <field name="review_ids" invisible="1" />
+                    <field name="can_review" invisible="1" />
+                    <field name="need_validation" invisible="1" />
+                    <div class="alert alert-warning mb-0" role="alert"
+                        invisible="validation_status != 'pending' or state != 'submitted'">
+                        <i class="fa fa-lg fa-info-circle" title="En attente" />
+                        Cette demande est en attente de validation.
+                        <button name="validate_tier"
+                            string="Approuver"
+                            invisible="not can_review"
+                            type="object"
+                            class="btn-sm btn-success ms-2"
+                            icon="fa-thumbs-up" />
+                        <button name="reject_tier"
+                            string="Refuser"
+                            invisible="not can_review"
+                            type="object"
+                            class="btn-sm btn-danger ms-1"
+                            icon="fa-thumbs-down" />
+                        <br />
+                        <field name="next_review" readonly="1" />
+                    </div>
+                    <div class="alert alert-success mb-0" role="alert"
+                        invisible="state != 'approved'">
+                        <i class="fa fa-lg fa-check-circle" title="Approuvée" />
+                        Demande <b>approuvée</b>.
+                    </div>
+                    <div class="alert alert-danger mb-0" role="alert"
+                        invisible="state != 'rejected'">
+                        <i class="fa fa-lg fa-times-circle" title="Refusée" />
+                        Demande <b>refusée</b>.
+                    </div>
+
+                    <div class="oe_title">
+                        <label for="name" string="Référence" />
+                        <h1>
+                            <field name="name" />
+                        </h1>
+                    </div>
+                    <group>
+                        <group name="info_left">
+                            <field name="categorie_id"
+                                readonly="state != 'draft'" />
+                            <field name="demandeur_id" />
+                            <field name="priorite"
+                                widget="priority" />
+                            <field name="annee_academique_id" />
+                        </group>
+                        <group name="info_right">
+                            <field name="date_demande"
+                                readonly="state != 'draft'" />
+                            <field name="date_debut"
+                                readonly="state != 'draft'" />
+                            <field name="date_fin"
+                                readonly="state != 'draft'" />
+                        </group>
+                    </group>
+                    <group>
+                        <field name="motif"
+                            readonly="state != 'draft'"
+                            placeholder="Décrivez votre demande..." />
+                    </group>
+                    <group>
+                        <field name="observations"
+                            placeholder="Observations complémentaires..." />
+                    </group>
+                    <group>
+                        <field name="piece_jointe" filename="nom_fichier" />
+                        <field name="nom_fichier" invisible="1" />
+                    </group>
+
+                    <!-- Décision -->
+                    <group string="Décision"
+                        invisible="state not in ('approved', 'rejected')">
+                        <group>
+                            <field name="date_decision" />
+                        </group>
+                        <group>
+                            <field name="motif_refus"
+                                invisible="state != 'rejected'" />
+                        </group>
+                    </group>
+
+                    <!-- Tier reviews -->
+                    <group string="Circuit d'approbation"
+                        invisible="not review_ids">
+                        <field name="review_ids" widget="tier_validation"
+                            class="w-100" nolabel="1">
+                            <list>
+                                <field name="name" />
+                                <field name="sequence" string="Niveau" />
+                                <field name="status" />
+                                <field name="todo_by" />
+                                <field name="done_by" />
+                                <field name="reviewed_date" />
+                                <field name="comment" />
+                            </list>
+                        </field>
+                    </group>
+                </sheet>
+                <chatter />
+            </form>
+        </field>
+    </record>
+
+    <!-- ============================================================ -->
+    <!-- List                                                         -->
+    <!-- ============================================================ -->
+    <record id="isic_approbation_demande_view_list" model="ir.ui.view">
+        <field name="name">isic.approbation.demande.list</field>
+        <field name="model">isic.approbation.demande</field>
+        <field name="arch" type="xml">
+            <list default_order="create_date desc"
+                decoration-info="state == 'draft'"
+                decoration-warning="state == 'submitted'"
+                decoration-success="state == 'approved'"
+                decoration-danger="state == 'rejected'"
+                decoration-muted="state == 'cancelled'">
+                <field name="name" />
+                <field name="categorie_id" />
+                <field name="demandeur_id" widget="many2one_avatar_user" />
+                <field name="date_demande" />
+                <field name="priorite" widget="priority" />
+                <field name="state" widget="badge"
+                    decoration-info="state == 'draft'"
+                    decoration-warning="state == 'submitted'"
+                    decoration-success="state == 'approved'"
+                    decoration-danger="state == 'rejected'"
+                    decoration-muted="state == 'cancelled'" />
+                <field name="validation_status" optional="hide" />
+            </list>
+        </field>
+    </record>
+
+    <!-- ============================================================ -->
+    <!-- Kanban                                                       -->
+    <!-- ============================================================ -->
+    <record id="isic_approbation_demande_view_kanban" model="ir.ui.view">
+        <field name="name">isic.approbation.demande.kanban</field>
+        <field name="model">isic.approbation.demande</field>
+        <field name="arch" type="xml">
+            <kanban default_group_by="state" class="o_kanban_small_column">
+                <field name="name" />
+                <field name="categorie_id" />
+                <field name="demandeur_id" />
+                <field name="state" />
+                <field name="priorite" />
+                <templates>
+                    <t t-name="card">
+                        <div class="d-flex justify-content-between">
+                            <strong>
+                                <field name="name" />
+                            </strong>
+                            <field name="priorite" widget="priority" />
+                        </div>
+                        <field name="categorie_id" />
+                        <div class="text-muted">
+                            <field name="demandeur_id" widget="many2one_avatar_user" />
+                        </div>
+                        <div>
+                            <field name="state" widget="label_selection"
+                                options="{'classes': {
+                                    'draft': 'info',
+                                    'submitted': 'warning',
+                                    'approved': 'success',
+                                    'rejected': 'danger',
+                                    'cancelled': 'secondary'
+                                }}" />
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+
+    <!-- ============================================================ -->
+    <!-- Search                                                       -->
+    <!-- ============================================================ -->
+    <record id="isic_approbation_demande_view_search" model="ir.ui.view">
+        <field name="name">isic.approbation.demande.search</field>
+        <field name="model">isic.approbation.demande</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="name" />
+                <field name="categorie_id" />
+                <field name="demandeur_id" />
+                <separator />
+                <filter name="filter_my_requests" string="Mes demandes"
+                    domain="[('demandeur_id', '=', uid)]" />
+                <filter name="filter_to_approve" string="À approuver"
+                    domain="[('reviewer_ids', 'in', uid), ('state', '=', 'submitted')]" />
+                <separator />
+                <filter name="filter_draft" string="Brouillon"
+                    domain="[('state', '=', 'draft')]" />
+                <filter name="filter_submitted" string="Soumises"
+                    domain="[('state', '=', 'submitted')]" />
+                <filter name="filter_approved" string="Approuvées"
+                    domain="[('state', '=', 'approved')]" />
+                <filter name="filter_rejected" string="Refusées"
+                    domain="[('state', '=', 'rejected')]" />
+                <separator />
+                <filter name="filter_urgent" string="Urgentes"
+                    domain="[('priorite', 'in', ['1', '2'])]" />
+                <separator />
+                <filter name="group_categorie" string="Catégorie"
+                    context="{'group_by': 'categorie_id'}" />
+                <filter name="group_state" string="État"
+                    context="{'group_by': 'state'}" />
+                <filter name="group_demandeur" string="Demandeur"
+                    context="{'group_by': 'demandeur_id'}" />
+                <filter name="group_date" string="Date"
+                    context="{'group_by': 'date_demande:month'}" />
+            </search>
+        </field>
+    </record>
+
+    <!-- ============================================================ -->
+    <!-- Actions                                                      -->
+    <!-- ============================================================ -->
+    <record id="isic_approbation_demande_action" model="ir.actions.act_window">
+        <field name="name">Demandes</field>
+        <field name="res_model">isic.approbation.demande</field>
+        <field name="view_mode">list,kanban,form</field>
+        <field name="context">{'default_state': 'draft'}</field>
+    </record>
+
+    <record id="isic_approbation_demande_action_my" model="ir.actions.act_window">
+        <field name="name">Mes demandes</field>
+        <field name="res_model">isic.approbation.demande</field>
+        <field name="view_mode">list,kanban,form</field>
+        <field name="context">{'search_default_filter_my_requests': 1}</field>
+    </record>
+
+    <record id="isic_approbation_demande_action_approve" model="ir.actions.act_window">
+        <field name="name">À approuver</field>
+        <field name="res_model">isic.approbation.demande</field>
+        <field name="view_mode">list,kanban,form</field>
+        <field name="context">{'search_default_filter_to_approve': 1}</field>
+    </record>
+</odoo>

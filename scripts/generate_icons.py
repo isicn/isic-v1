@@ -637,6 +637,7 @@ def main():
         "stage": draw_stage,
         "partenariat": draw_partenariat,
         "isic_approvals": draw_isic_approvals,
+        "isic_approbation": draw_isic_approvals,
         "auth_cas": draw_auth_cas,
         "openclaw_connector": draw_openclaw_connector,
         "library_management": draw_library_management,

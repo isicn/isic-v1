@@ -1,0 +1,7 @@
+id,name,model_id/id,group_id/id,perm_read,perm_write,perm_create,perm_unlink
+
+access_categorie_user,categorie.user,model_isic_approbation_categorie,base.group_user,1,0,0,0
+access_categorie_direction,categorie.direction,model_isic_approbation_categorie,isic_base.group_isic_direction,1,1,1,1
+
+access_demande_user,demande.user,model_isic_approbation_demande,base.group_user,1,1,1,0
+access_demande_direction,demande.direction,model_isic_approbation_demande,isic_base.group_isic_direction,1,1,1,1
