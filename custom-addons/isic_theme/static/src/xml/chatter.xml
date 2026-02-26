@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<templates xml:space="preserve">
+
+    <t t-name="isic_theme.Chatter"
+       t-inherit="mail.Chatter"
+       t-inherit-mode="extension">
+        <xpath expr="//button[hasclass('o-mail-Chatter-sendMessage')]/span" position="replace">
+            <span class="d-none d-sm-inline">Envoyer message</span>
+        </xpath>
+    </t>
+
+</templates>
