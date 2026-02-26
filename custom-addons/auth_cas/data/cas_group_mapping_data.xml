@@ -163,6 +163,15 @@
             <field name="notes">LDAP secretariat-general → Secrétaire Général</field>
         </record>
 
+        <record id="cas_mapping_memberof_admin_scolarite" model="auth.cas.group.mapping">
+            <field name="sequence">54</field>
+            <field name="cas_attribute">memberOf</field>
+            <field name="cas_value">cn=admin-scolarite,ou=Groups,dc=isic,dc=ac,dc=ma</field>
+            <field name="odoo_group_id" ref="isic_base.group_isic_admin_scolarite"/>
+            <field name="is_internal_user">True</field>
+            <field name="notes">LDAP admin-scolarite → Administrateur Scolarité</field>
+        </record>
+
         <record id="cas_mapping_memberof_scolarite" model="auth.cas.group.mapping">
             <field name="sequence">55</field>
             <field name="cas_attribute">memberOf</field>
@@ -233,6 +242,15 @@
             <field name="odoo_group_id" ref="isic_base.group_isic_departement"/>
             <field name="is_internal_user">True</field>
             <field name="notes">LDAP departements → Chef de Département</field>
+        </record>
+
+        <record id="cas_mapping_memberof_resp_filiere" model="auth.cas.group.mapping">
+            <field name="sequence">63</field>
+            <field name="cas_attribute">memberOf</field>
+            <field name="cas_value">cn=responsable-filiere,ou=Groups,dc=isic,dc=ac,dc=ma</field>
+            <field name="odoo_group_id" ref="isic_base.group_isic_responsable_filiere"/>
+            <field name="is_internal_user">True</field>
+            <field name="notes">LDAP responsable-filiere → Responsable de Filière</field>
         </record>
 
         <record id="cas_mapping_memberof_enseignants" model="auth.cas.group.mapping">
