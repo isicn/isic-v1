@@ -112,9 +112,9 @@ class IsicApprobationDemande(models.Model):
                     rec.name = seq.next_by_id()
                 else:
                     rec.name = self.env["ir.sequence"].next_by_code("isic.approbation.demande") or "/"
-            rec.state = "submitted"
             if rec.categorie_id.approbation_requise:
                 rec.request_validation()
+            rec.state = "submitted"
 
     def action_approve(self):
         """Marque la demande comme approuvée."""
