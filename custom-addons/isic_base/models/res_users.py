@@ -1,4 +1,4 @@
-from odoo import api, fields, models, SUPERUSER_ID
+from odoo import SUPERUSER_ID, api, fields, models
 
 
 class ResUsers(models.Model):
