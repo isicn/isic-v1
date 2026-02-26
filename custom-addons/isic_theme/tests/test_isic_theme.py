@@ -16,9 +16,7 @@ class TestIsicThemeHook(TransactionCase):
 
     def test_post_init_hook_hides_sidebar(self):
         """sidebar_type is set to 'invisible' for all users."""
-        users_with_sidebar = self.env["res.users"].search(
-            [("sidebar_type", "!=", "invisible")]
-        )
+        users_with_sidebar = self.env["res.users"].search([("sidebar_type", "!=", "invisible")])
         self.assertFalse(users_with_sidebar)
 
 

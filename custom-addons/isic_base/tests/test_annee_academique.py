@@ -301,7 +301,5 @@ class TestAnneeAcademiqueAccess(TransactionCase):
             }
         )
         # Scolarite user belongs to main company only
-        visible = self.AnneeAcademique.with_user(self.scolarite_user).search(
-            [("id", "=", annee_c2.id)]
-        )
+        visible = self.AnneeAcademique.with_user(self.scolarite_user).search([("id", "=", annee_c2.id)])
         self.assertFalse(visible)

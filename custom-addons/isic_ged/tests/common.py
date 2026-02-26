@@ -11,9 +11,7 @@ class IsicGedCase(TransactionCase):
     def setUpClass(cls):
         super().setUpClass()
         # Storage
-        cls.storage = cls.env["dms.storage"].create(
-            {"name": "Test GED Storage", "save_type": "database"}
-        )
+        cls.storage = cls.env["dms.storage"].create({"name": "Test GED Storage", "save_type": "database"})
         # Access group with full perms for test user
         cls.access_group = cls.env["dms.access.group"].create(
             {
