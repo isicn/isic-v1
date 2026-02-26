@@ -231,7 +231,7 @@ class CASAuthController(http.Controller):
             # Namespace CAS
             ns = {"cas": "http://www.yale.edu/tp/cas"}
 
-            root = ET.fromstring(xml_text)
+            root = ET.fromstring(xml_text)  # nosec B314 — trusted CAS server response over HTTPS
 
             # Chercher authenticationSuccess
             success = root.find(".//cas:authenticationSuccess", ns)
