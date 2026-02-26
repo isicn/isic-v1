@@ -73,9 +73,7 @@ class TestCASGroupMappingResolve(CASTestCase):
             odoo_group_id=self.group_enseignant.id,
             is_internal_user=True,
         )
-        group_ids, is_internal = self.CASMapping.resolve_groups_from_cas(
-            {"employeeType": "faculty"}
-        )
+        group_ids, is_internal = self.CASMapping.resolve_groups_from_cas({"employeeType": "faculty"})
         self.assertIn(self.group_enseignant.id, group_ids)
         self.assertTrue(is_internal)
 

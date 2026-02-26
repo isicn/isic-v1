@@ -116,14 +116,18 @@ class TestCASSigninUpdate(CASTestCase):
 
     def test_cas_update_existing_by_oauth_uid(self):
         """Finds existing user by oauth_uid."""
-        user = self.env["res.users"].sudo().create(
-            {
-                "name": "Existing OAuth",
-                "login": "existing.oauth",
-                "oauth_provider_id": self.cas_provider.id,
-                "oauth_uid": "existing.oauth",
-                "cas_uid": "existing.oauth",
-            }
+        user = (
+            self.env["res.users"]
+            .sudo()
+            .create(
+                {
+                    "name": "Existing OAuth",
+                    "login": "existing.oauth",
+                    "oauth_provider_id": self.cas_provider.id,
+                    "oauth_uid": "existing.oauth",
+                    "cas_uid": "existing.oauth",
+                }
+            )
         )
         validation = {
             "user": "existing.oauth",
@@ -137,11 +141,15 @@ class TestCASSigninUpdate(CASTestCase):
 
     def test_cas_update_existing_by_login(self):
         """Finds existing user by login matching cas_uid."""
-        user = self.env["res.users"].sudo().create(
-            {
-                "name": "Login Match",
-                "login": "login.match",
-            }
+        user = (
+            self.env["res.users"]
+            .sudo()
+            .create(
+                {
+                    "name": "Login Match",
+                    "login": "login.match",
+                }
+            )
         )
         validation = {
             "user": "login.match",
@@ -155,12 +163,16 @@ class TestCASSigninUpdate(CASTestCase):
 
     def test_cas_update_existing_by_email(self):
         """Finds existing user by email when login doesn't match."""
-        user = self.env["res.users"].sudo().create(
-            {
-                "name": "Email Match",
-                "login": "email.match",
-                "email": "email.match@isic.ac.ma",
-            }
+        user = (
+            self.env["res.users"]
+            .sudo()
+            .create(
+                {
+                    "name": "Email Match",
+                    "login": "email.match",
+                    "email": "email.match@isic.ac.ma",
+                }
+            )
         )
         validation = {
             "user": "different_uid",
@@ -174,14 +186,18 @@ class TestCASSigninUpdate(CASTestCase):
 
     def test_cas_update_syncs_groups(self):
         """Groups are synced on update."""
-        user = self.env["res.users"].sudo().create(
-            {
-                "name": "Sync Groups",
-                "login": "sync.groups",
-                "oauth_provider_id": self.cas_provider.id,
-                "oauth_uid": "sync.groups",
-                "cas_uid": "sync.groups",
-            }
+        user = (
+            self.env["res.users"]
+            .sudo()
+            .create(
+                {
+                    "name": "Sync Groups",
+                    "login": "sync.groups",
+                    "oauth_provider_id": self.cas_provider.id,
+                    "oauth_uid": "sync.groups",
+                    "cas_uid": "sync.groups",
+                }
+            )
         )
         validation = {
             "user": "sync.groups",
