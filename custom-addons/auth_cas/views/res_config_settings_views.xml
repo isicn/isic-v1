@@ -40,6 +40,10 @@
                             <field name="cas_slo_enabled" class="oe_inline"/>
                             <label for="cas_slo_enabled" string="Enable Single Logout (SLO)"/>
                         </div>
+                        <div class="mt8">
+                            <field name="cas_verify_ssl" class="oe_inline"/>
+                            <label for="cas_verify_ssl" string="Verify SSL certificate"/>
+                        </div>
                         <div class="mt16">
                             <button name="action_configure_cas_provider"
                                     type="object"

@@ -54,6 +54,13 @@ class ResConfigSettings(models.TransientModel):
         help="Activer le Single Logout - déconnexion du CAS lors du logout Odoo",
     )
 
+    cas_verify_ssl = fields.Boolean(
+        string="Verify SSL Certificate",
+        config_parameter="auth_cas.verify_ssl",
+        default=True,
+        help="Vérifier le certificat SSL du serveur CAS. Désactiver pour les certificats auto-signés.",
+    )
+
     cas_provider_id = fields.Many2one(
         "auth.oauth.provider",
         string="CAS OAuth Provider",

@@ -170,10 +170,13 @@ class CASAuthController(http.Controller):
             "format": "JSON",  # Demander JSON si supporté
         }
 
-        _logger.debug("Validating CAS ticket at: %s", validate_url)
+        # Vérification SSL configurable (désactivée pour les certificats auto-signés)
+        verify_ssl = request.env["ir.config_parameter"].sudo().get_param("auth_cas.verify_ssl", "True") == "True"
+
+        _logger.debug("Validating CAS ticket at: %s (verify_ssl=%s)", validate_url, verify_ssl)
 
         try:
-            response = requests.get(validate_url, params=params, timeout=30)
+            response = requests.get(validate_url, params=params, timeout=30, verify=verify_ssl)
             _logger.debug("CAS validation response status: %s", response.status_code)
 
             if response.status_code != 200:
