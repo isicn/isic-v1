@@ -16,7 +16,7 @@
                     type="object"
                     class="btn-primary"
                     invisible="ged_state != 'draft'"
-                    groups="isic_base.group_gestionnaire"
+                    groups="isic_base.group_isic_scolarite"
                 />
                 <button
                     name="action_archive_ged"
@@ -24,14 +24,14 @@
                     type="object"
                     class="btn-primary"
                     invisible="ged_state != 'validated'"
-                    groups="isic_base.group_gestionnaire"
+                    groups="isic_base.group_isic_scolarite"
                 />
                 <button
                     name="action_reset_draft"
                     string="Remettre en brouillon"
                     type="object"
                     invisible="ged_state == 'draft'"
-                    groups="isic_base.group_direction"
+                    groups="isic_base.group_isic_direction"
                 />
                 <field
                     name="ged_state"

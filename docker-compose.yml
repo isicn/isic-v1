@@ -60,6 +60,7 @@ services:
       - "${LONGPOLLING_PORT:-8072}:8072"
     networks:
       - isic-network
+      - isic-auth-network
 
   pgadmin:
     image: dpage/pgadmin4:latest
@@ -94,3 +95,6 @@ networks:
   isic-network:
     name: isic-network-dev
     driver: bridge
+  isic-auth-network:
+    name: isic-auth-network
+    external: true

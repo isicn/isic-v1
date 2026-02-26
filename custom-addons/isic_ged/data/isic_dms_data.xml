@@ -9,28 +9,43 @@
     </record>
 
     <!-- ============================================================ -->
-    <!-- Catégories DMS = services ISIC                               -->
+    <!-- Categories DMS = services ISIC                               -->
     <!-- ============================================================ -->
     <record id="category_direction" model="dms.category">
         <field name="name">Direction</field>
     </record>
     <record id="category_scolarite" model="dms.category">
-        <field name="name">Scolarité</field>
+        <field name="name">Scolarite</field>
+    </record>
+    <record id="category_enseignement" model="dms.category">
+        <field name="name">Enseignement</field>
+    </record>
+    <record id="category_stages" model="dms.category">
+        <field name="name">Stages et Formation continue</field>
+    </record>
+    <record id="category_bibliotheque" model="dms.category">
+        <field name="name">Bibliotheque</field>
     </record>
     <record id="category_rh" model="dms.category">
         <field name="name">Ressources Humaines</field>
     </record>
     <record id="category_finances" model="dms.category">
-        <field name="name">Affaires financières</field>
-    </record>
-    <record id="category_communication" model="dms.category">
-        <field name="name">Communication</field>
+        <field name="name">Affaires financieres</field>
     </record>
     <record id="category_informatique" model="dms.category">
         <field name="name">Informatique</field>
     </record>
+    <record id="category_cooperation" model="dms.category">
+        <field name="name">Cooperation</field>
+    </record>
     <record id="category_recherche" model="dms.category">
-        <field name="name">Recherche et coopération</field>
+        <field name="name">Recherche et cooperation</field>
+    </record>
+    <record id="category_communication" model="dms.category">
+        <field name="name">Communication</field>
+    </record>
+    <record id="category_partage" model="dms.category">
+        <field name="name">Documents partages</field>
     </record>
 
     <!-- ============================================================ -->
@@ -45,7 +60,7 @@
         <field name="color">4</field>
     </record>
     <record id="tag_a_signer" model="dms.tag">
-        <field name="name">À signer</field>
+        <field name="name">A signer</field>
         <field name="color">2</field>
     </record>
     <record id="tag_original" model="dms.tag">
@@ -58,27 +73,373 @@
     </record>
 
     <!-- ============================================================ -->
-    <!-- Groupes d'accès DMS mappés vers groupes ISIC                 -->
+    <!-- Groupes d'acces DMS mappes vers groupes ISIC                 -->
     <!-- ============================================================ -->
+
+    <!-- Lecture seule pour tous les internes -->
     <record id="access_group_utilisateur" model="dms.access.group">
         <field name="name">ISIC Utilisateurs</field>
-        <field name="group_ids" eval="[(4, ref('isic_base.group_utilisateur'))]" />
+        <field name="group_ids" eval="[(4, ref('base.group_user'))]" />
         <field name="perm_create" eval="False" />
         <field name="perm_write" eval="False" />
         <field name="perm_unlink" eval="False" />
     </record>
+
+    <!-- Scolarite : creer + ecrire -->
     <record id="access_group_gestionnaire" model="dms.access.group">
         <field name="name">ISIC Gestionnaires</field>
-        <field name="group_ids" eval="[(4, ref('isic_base.group_gestionnaire'))]" />
+        <field name="group_ids" eval="[(4, ref('isic_base.group_isic_scolarite'))]" />
         <field name="perm_create" eval="True" />
         <field name="perm_write" eval="True" />
         <field name="perm_unlink" eval="False" />
     </record>
+
+    <!-- Direction : CRUD complet -->
     <record id="access_group_direction" model="dms.access.group">
         <field name="name">ISIC Direction</field>
-        <field name="group_ids" eval="[(4, ref('isic_base.group_direction'))]" />
+        <field name="group_ids" eval="[(4, ref('isic_base.group_isic_direction'))]" />
         <field name="perm_create" eval="True" />
         <field name="perm_write" eval="True" />
         <field name="perm_unlink" eval="True" />
+    </record>
+
+    <!-- Enseignement : creer + ecrire -->
+    <record id="access_group_enseignement" model="dms.access.group">
+        <field name="name">ISIC Enseignement</field>
+        <field name="group_ids" eval="[(4, ref('isic_base.group_isic_enseignant'))]" />
+        <field name="perm_create" eval="True" />
+        <field name="perm_write" eval="True" />
+        <field name="perm_unlink" eval="False" />
+    </record>
+
+    <!-- Stages et FC : creer + ecrire -->
+    <record id="access_group_stages" model="dms.access.group">
+        <field name="name">ISIC Stages et FC</field>
+        <field name="group_ids" eval="[(4, ref('isic_base.group_isic_stages'))]" />
+        <field name="perm_create" eval="True" />
+        <field name="perm_write" eval="True" />
+        <field name="perm_unlink" eval="False" />
+    </record>
+
+    <!-- Bibliotheque : creer + ecrire -->
+    <record id="access_group_bibliotheque" model="dms.access.group">
+        <field name="name">ISIC Bibliotheque</field>
+        <field name="group_ids" eval="[(4, ref('isic_base.group_isic_bibliotheque'))]" />
+        <field name="perm_create" eval="True" />
+        <field name="perm_write" eval="True" />
+        <field name="perm_unlink" eval="False" />
+    </record>
+
+    <!-- Admin. et Finances : creer + ecrire -->
+    <record id="access_group_financier" model="dms.access.group">
+        <field name="name">ISIC Admin. et Finances</field>
+        <field name="group_ids" eval="[(4, ref('isic_base.group_isic_financier'))]" />
+        <field name="perm_create" eval="True" />
+        <field name="perm_write" eval="True" />
+        <field name="perm_unlink" eval="False" />
+    </record>
+
+    <!-- Informatique : creer + ecrire -->
+    <record id="access_group_informatique" model="dms.access.group">
+        <field name="name">ISIC Informatique</field>
+        <field name="group_ids" eval="[(4, ref('isic_base.group_isic_technique'))]" />
+        <field name="perm_create" eval="True" />
+        <field name="perm_write" eval="True" />
+        <field name="perm_unlink" eval="False" />
+    </record>
+
+    <!-- Cooperation : creer + ecrire -->
+    <record id="access_group_cooperation" model="dms.access.group">
+        <field name="name">ISIC Cooperation</field>
+        <field name="group_ids" eval="[(4, ref('isic_base.group_isic_cooperation'))]" />
+        <field name="perm_create" eval="True" />
+        <field name="perm_write" eval="True" />
+        <field name="perm_unlink" eval="False" />
+    </record>
+
+    <!-- Recherche : creer + ecrire -->
+    <record id="access_group_recherche" model="dms.access.group">
+        <field name="name">ISIC Recherche</field>
+        <field name="group_ids" eval="[(4, ref('isic_base.group_isic_recherche'))]" />
+        <field name="perm_create" eval="True" />
+        <field name="perm_write" eval="True" />
+        <field name="perm_unlink" eval="False" />
+    </record>
+
+    <!-- Contributeurs (tous les internes) : creer + ecrire -->
+    <record id="access_group_contributeur" model="dms.access.group">
+        <field name="name">ISIC Contributeurs</field>
+        <field name="group_ids" eval="[(4, ref('base.group_user'))]" />
+        <field name="perm_create" eval="True" />
+        <field name="perm_write" eval="True" />
+        <field name="perm_unlink" eval="False" />
+    </record>
+
+    <!-- ============================================================ -->
+    <!-- Arborescence de dossiers GED ISIC                            -->
+    <!-- ============================================================ -->
+
+    <!-- ========== 1. Direction ========== -->
+    <record id="dir_direction" model="dms.directory">
+        <field name="name">Direction</field>
+        <field name="is_root_directory" eval="True" />
+        <field name="storage_id" ref="storage_ged_isic" />
+        <field name="category_id" ref="category_direction" />
+        <field name="group_ids" eval="[
+            (4, ref('access_group_direction')),
+            (4, ref('access_group_utilisateur')),
+        ]" />
+    </record>
+    <record id="dir_direction_notes" model="dms.directory">
+        <field name="name">Notes de service</field>
+        <field name="parent_id" ref="dir_direction" />
+        <field name="inherit_group_ids" eval="True" />
+    </record>
+    <record id="dir_direction_decisions" model="dms.directory">
+        <field name="name">Decisions</field>
+        <field name="parent_id" ref="dir_direction" />
+        <field name="inherit_group_ids" eval="True" />
+    </record>
+    <record id="dir_direction_rapports" model="dms.directory">
+        <field name="name">Rapports</field>
+        <field name="parent_id" ref="dir_direction" />
+        <field name="inherit_group_ids" eval="True" />
+    </record>
+
+    <!-- ========== 2. Scolarite ========== -->
+    <record id="dir_scolarite" model="dms.directory">
+        <field name="name">Scolarite</field>
+        <field name="is_root_directory" eval="True" />
+        <field name="storage_id" ref="storage_ged_isic" />
+        <field name="category_id" ref="category_scolarite" />
+        <field name="group_ids" eval="[
+            (4, ref('access_group_gestionnaire')),
+            (4, ref('access_group_direction')),
+            (4, ref('access_group_utilisateur')),
+        ]" />
+    </record>
+    <record id="dir_scolarite_inscriptions" model="dms.directory">
+        <field name="name">Inscriptions</field>
+        <field name="parent_id" ref="dir_scolarite" />
+        <field name="inherit_group_ids" eval="True" />
+    </record>
+    <record id="dir_scolarite_examens" model="dms.directory">
+        <field name="name">Examens</field>
+        <field name="parent_id" ref="dir_scolarite" />
+        <field name="inherit_group_ids" eval="True" />
+    </record>
+    <record id="dir_scolarite_attestations" model="dms.directory">
+        <field name="name">Attestations</field>
+        <field name="parent_id" ref="dir_scolarite" />
+        <field name="inherit_group_ids" eval="True" />
+    </record>
+
+    <!-- ========== 3. Enseignement ========== -->
+    <record id="dir_enseignement" model="dms.directory">
+        <field name="name">Enseignement</field>
+        <field name="is_root_directory" eval="True" />
+        <field name="storage_id" ref="storage_ged_isic" />
+        <field name="category_id" ref="category_enseignement" />
+        <field name="group_ids" eval="[
+            (4, ref('access_group_enseignement')),
+            (4, ref('access_group_direction')),
+            (4, ref('access_group_utilisateur')),
+        ]" />
+    </record>
+    <record id="dir_enseignement_cours" model="dms.directory">
+        <field name="name">Supports de cours</field>
+        <field name="parent_id" ref="dir_enseignement" />
+        <field name="inherit_group_ids" eval="True" />
+    </record>
+    <record id="dir_enseignement_edt" model="dms.directory">
+        <field name="name">Emplois du temps</field>
+        <field name="parent_id" ref="dir_enseignement" />
+        <field name="inherit_group_ids" eval="True" />
+    </record>
+    <record id="dir_enseignement_pv" model="dms.directory">
+        <field name="name">PV de reunions</field>
+        <field name="parent_id" ref="dir_enseignement" />
+        <field name="inherit_group_ids" eval="True" />
+    </record>
+
+    <!-- ========== 4. Stages et FC ========== -->
+    <record id="dir_stages" model="dms.directory">
+        <field name="name">Stages et FC</field>
+        <field name="is_root_directory" eval="True" />
+        <field name="storage_id" ref="storage_ged_isic" />
+        <field name="category_id" ref="category_stages" />
+        <field name="group_ids" eval="[
+            (4, ref('access_group_stages')),
+            (4, ref('access_group_direction')),
+            (4, ref('access_group_utilisateur')),
+        ]" />
+    </record>
+    <record id="dir_stages_conventions" model="dms.directory">
+        <field name="name">Conventions</field>
+        <field name="parent_id" ref="dir_stages" />
+        <field name="inherit_group_ids" eval="True" />
+    </record>
+    <record id="dir_stages_rapports" model="dms.directory">
+        <field name="name">Rapports de stage</field>
+        <field name="parent_id" ref="dir_stages" />
+        <field name="inherit_group_ids" eval="True" />
+    </record>
+    <record id="dir_stages_fc" model="dms.directory">
+        <field name="name">Formation continue</field>
+        <field name="parent_id" ref="dir_stages" />
+        <field name="inherit_group_ids" eval="True" />
+    </record>
+
+    <!-- ========== 5. Bibliotheque ========== -->
+    <record id="dir_bibliotheque" model="dms.directory">
+        <field name="name">Bibliotheque</field>
+        <field name="is_root_directory" eval="True" />
+        <field name="storage_id" ref="storage_ged_isic" />
+        <field name="category_id" ref="category_bibliotheque" />
+        <field name="group_ids" eval="[
+            (4, ref('access_group_bibliotheque')),
+            (4, ref('access_group_direction')),
+            (4, ref('access_group_utilisateur')),
+        ]" />
+    </record>
+    <record id="dir_bibliotheque_catalogues" model="dms.directory">
+        <field name="name">Catalogues</field>
+        <field name="parent_id" ref="dir_bibliotheque" />
+        <field name="inherit_group_ids" eval="True" />
+    </record>
+    <record id="dir_bibliotheque_acquisitions" model="dms.directory">
+        <field name="name">Acquisitions</field>
+        <field name="parent_id" ref="dir_bibliotheque" />
+        <field name="inherit_group_ids" eval="True" />
+    </record>
+
+    <!-- ========== 6. Admin. et Finances ========== -->
+    <record id="dir_finances" model="dms.directory">
+        <field name="name">Admin. et Finances</field>
+        <field name="is_root_directory" eval="True" />
+        <field name="storage_id" ref="storage_ged_isic" />
+        <field name="category_id" ref="category_finances" />
+        <field name="group_ids" eval="[
+            (4, ref('access_group_financier')),
+            (4, ref('access_group_direction')),
+            (4, ref('access_group_utilisateur')),
+        ]" />
+    </record>
+    <record id="dir_finances_budget" model="dms.directory">
+        <field name="name">Budget</field>
+        <field name="parent_id" ref="dir_finances" />
+        <field name="inherit_group_ids" eval="True" />
+    </record>
+    <record id="dir_finances_marches" model="dms.directory">
+        <field name="name">Marches</field>
+        <field name="parent_id" ref="dir_finances" />
+        <field name="inherit_group_ids" eval="True" />
+    </record>
+    <record id="dir_finances_rh" model="dms.directory">
+        <field name="name">Ressources humaines</field>
+        <field name="parent_id" ref="dir_finances" />
+        <field name="inherit_group_ids" eval="True" />
+    </record>
+
+    <!-- ========== 7. Informatique ========== -->
+    <record id="dir_informatique" model="dms.directory">
+        <field name="name">Informatique</field>
+        <field name="is_root_directory" eval="True" />
+        <field name="storage_id" ref="storage_ged_isic" />
+        <field name="category_id" ref="category_informatique" />
+        <field name="group_ids" eval="[
+            (4, ref('access_group_informatique')),
+            (4, ref('access_group_direction')),
+            (4, ref('access_group_utilisateur')),
+        ]" />
+    </record>
+    <record id="dir_informatique_procedures" model="dms.directory">
+        <field name="name">Procedures</field>
+        <field name="parent_id" ref="dir_informatique" />
+        <field name="inherit_group_ids" eval="True" />
+    </record>
+    <record id="dir_informatique_inventaire" model="dms.directory">
+        <field name="name">Inventaire</field>
+        <field name="parent_id" ref="dir_informatique" />
+        <field name="inherit_group_ids" eval="True" />
+    </record>
+    <record id="dir_informatique_support" model="dms.directory">
+        <field name="name">Support</field>
+        <field name="parent_id" ref="dir_informatique" />
+        <field name="inherit_group_ids" eval="True" />
+    </record>
+
+    <!-- ========== 8. Cooperation ========== -->
+    <record id="dir_cooperation" model="dms.directory">
+        <field name="name">Cooperation</field>
+        <field name="is_root_directory" eval="True" />
+        <field name="storage_id" ref="storage_ged_isic" />
+        <field name="category_id" ref="category_cooperation" />
+        <field name="group_ids" eval="[
+            (4, ref('access_group_cooperation')),
+            (4, ref('access_group_direction')),
+            (4, ref('access_group_utilisateur')),
+        ]" />
+    </record>
+    <record id="dir_cooperation_conventions" model="dms.directory">
+        <field name="name">Conventions</field>
+        <field name="parent_id" ref="dir_cooperation" />
+        <field name="inherit_group_ids" eval="True" />
+    </record>
+    <record id="dir_cooperation_partenariats" model="dms.directory">
+        <field name="name">Partenariats</field>
+        <field name="parent_id" ref="dir_cooperation" />
+        <field name="inherit_group_ids" eval="True" />
+    </record>
+
+    <!-- ========== 9. Recherche ========== -->
+    <record id="dir_recherche" model="dms.directory">
+        <field name="name">Recherche</field>
+        <field name="is_root_directory" eval="True" />
+        <field name="storage_id" ref="storage_ged_isic" />
+        <field name="category_id" ref="category_recherche" />
+        <field name="group_ids" eval="[
+            (4, ref('access_group_recherche')),
+            (4, ref('access_group_direction')),
+            (4, ref('access_group_utilisateur')),
+        ]" />
+    </record>
+    <record id="dir_recherche_publications" model="dms.directory">
+        <field name="name">Publications</field>
+        <field name="parent_id" ref="dir_recherche" />
+        <field name="inherit_group_ids" eval="True" />
+    </record>
+    <record id="dir_recherche_projets" model="dms.directory">
+        <field name="name">Projets</field>
+        <field name="parent_id" ref="dir_recherche" />
+        <field name="inherit_group_ids" eval="True" />
+    </record>
+
+    <!-- ========== 10. Documents partages ========== -->
+    <record id="dir_partage" model="dms.directory">
+        <field name="name">Documents partages</field>
+        <field name="is_root_directory" eval="True" />
+        <field name="storage_id" ref="storage_ged_isic" />
+        <field name="category_id" ref="category_partage" />
+        <field name="group_ids" eval="[
+            (4, ref('access_group_contributeur')),
+            (4, ref('access_group_direction')),
+            (4, ref('access_group_utilisateur')),
+        ]" />
+    </record>
+    <record id="dir_partage_formulaires" model="dms.directory">
+        <field name="name">Formulaires</field>
+        <field name="parent_id" ref="dir_partage" />
+        <field name="inherit_group_ids" eval="True" />
+    </record>
+    <record id="dir_partage_modeles" model="dms.directory">
+        <field name="name">Modeles</field>
+        <field name="parent_id" ref="dir_partage" />
+        <field name="inherit_group_ids" eval="True" />
+    </record>
+    <record id="dir_partage_divers" model="dms.directory">
+        <field name="name">Divers</field>
+        <field name="parent_id" ref="dir_partage" />
+        <field name="inherit_group_ids" eval="True" />
     </record>
 </odoo>

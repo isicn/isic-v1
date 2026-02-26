@@ -1,56 +1,264 @@
-<?xml version="1.0" encoding="UTF-8" ?>
+<?xml version="1.0" encoding="utf-8"?>
 <odoo>
-    <!-- ============================================================ -->
-    <!-- Privilege ISIC (groupe de groupes dans Paramètres > Groupes) -->
-    <!-- ============================================================ -->
-    <record id="privilege_isic" model="res.groups.privilege">
-        <field name="name">ISIC</field>
-    </record>
+    <data noupdate="0">
 
-    <!-- ============================================================ -->
-    <!-- Groupes de sécurité                                          -->
-    <!-- ============================================================ -->
+        <!-- Module Category -->
+        <record id="module_category_isic" model="ir.module.category">
+            <field name="name">ISIC - Gestion Scolarite</field>
+            <field name="description">Modules de gestion de la scolarite ISIC</field>
+            <field name="sequence">10</field>
+        </record>
 
-    <!-- Utilisateur interne ISIC (personnel, enseignant) -->
-    <record id="group_utilisateur" model="res.groups">
-        <field name="name">Utilisateur</field>
-        <field name="privilege_id" ref="privilege_isic" />
-        <field name="implied_ids" eval="[(4, ref('base.group_user'))]" />
-    </record>
+        <!-- ============================================ -->
+        <!-- Groups Privilege - ISIC (Odoo 19 style)     -->
+        <!-- ============================================ -->
+        <record id="privilege_isic" model="res.groups.privilege">
+            <field name="name">ISIC - Gestion Scolarite</field>
+            <field name="category_id" ref="module_category_isic"/>
+        </record>
 
-    <!-- Gestionnaire (scolarité, RH, administratif) -->
-    <record id="group_gestionnaire" model="res.groups">
-        <field name="name">Gestionnaire</field>
-        <field name="privilege_id" ref="privilege_isic" />
-        <field name="implied_ids" eval="[(4, ref('group_utilisateur'))]" />
-    </record>
+        <!-- ============================================ -->
+        <!-- Portail                                      -->
+        <!-- ============================================ -->
 
-    <!-- Direction (directeur, secrétaire général) -->
-    <record id="group_direction" model="res.groups">
-        <field name="name">Direction</field>
-        <field name="privilege_id" ref="privilege_isic" />
-        <field name="implied_ids" eval="[(4, ref('group_gestionnaire'))]" />
-        <field
-            name="user_ids"
-            eval="[(4, ref('base.user_root')), (4, ref('base.user_admin'))]"
-        />
-    </record>
+        <!-- Etudiant (portail, standalone) -->
+        <record id="group_isic_etudiant" model="res.groups">
+            <field name="name">Etudiant</field>
+            <field name="privilege_id" ref="privilege_isic"/>
+            <field name="sequence">10</field>
+            <field name="comment">
+                Acces etudiant (portail) : consultation des informations personnelles,
+                notes, emploi du temps, stages et documents.
+            </field>
+        </record>
 
-    <!-- Étudiant (portail) -->
-    <record id="group_etudiant" model="res.groups">
-        <field name="name">Étudiant</field>
-        <field name="implied_ids" eval="[(4, ref('base.group_portal'))]" />
-    </record>
+        <!-- ============================================ -->
+        <!-- Branche Enseignement                         -->
+        <!-- ============================================ -->
 
-    <!-- ============================================================ -->
-    <!-- Règles multi-société                                         -->
-    <!-- ============================================================ -->
-    <record id="rule_annee_academique_multi_company" model="ir.rule">
-        <field name="name">Année académique multi-société</field>
-        <field name="model_id" ref="model_isic_annee_academique" />
-        <field name="global" eval="True" />
-        <field
-            name="domain_force"
-        >['|',('company_id','=',False),('company_id','in',company_ids)]</field>
-    </record>
+        <!-- Enseignant -->
+        <record id="group_isic_enseignant" model="res.groups">
+            <field name="name">Enseignant</field>
+            <field name="privilege_id" ref="privilege_isic"/>
+            <field name="sequence">20</field>
+            <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
+            <field name="comment">
+                Acces enseignant : gestion des cours, saisie des notes,
+                suivi des presences et consultation des etudiants.
+            </field>
+        </record>
+
+        <!-- Responsable de Filiere (herite de Enseignant) -->
+        <record id="group_isic_responsable_filiere" model="res.groups">
+            <field name="name">Responsable de Filiere</field>
+            <field name="privilege_id" ref="privilege_isic"/>
+            <field name="sequence">25</field>
+            <field name="implied_ids" eval="[(4, ref('group_isic_enseignant'))]"/>
+            <field name="comment">
+                Acces responsable filiere : supervision d'une filiere,
+                validation des notes, gestion des emplois du temps.
+            </field>
+        </record>
+
+        <!-- Chef de Departement (standalone) -->
+        <record id="group_isic_departement" model="res.groups">
+            <field name="name">Chef de Departement</field>
+            <field name="privilege_id" ref="privilege_isic"/>
+            <field name="sequence">30</field>
+            <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
+            <field name="comment">
+                Chef de departement : supervision de plusieurs filieres,
+                coordination pedagogique, validation des maquettes.
+                Role independant, cumulable avec Enseignant ou Responsable de Filiere.
+            </field>
+        </record>
+
+        <!-- ============================================ -->
+        <!-- Services                                     -->
+        <!-- ============================================ -->
+
+        <!-- Personnel Scolarite -->
+        <record id="group_isic_scolarite" model="res.groups">
+            <field name="name">Personnel Scolarite</field>
+            <field name="privilege_id" ref="privilege_isic"/>
+            <field name="sequence">40</field>
+            <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
+            <field name="comment">
+                Service des affaires pedagogiques et estudiantines :
+                gestion des inscriptions, candidatures, documents et suivi des etudiants.
+            </field>
+        </record>
+
+        <!-- Responsable Stages et Formation Continue -->
+        <record id="group_isic_stages" model="res.groups">
+            <field name="name">Responsable Stages et FC</field>
+            <field name="privilege_id" ref="privilege_isic"/>
+            <field name="sequence">45</field>
+            <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
+            <field name="comment">
+                Service des stages et de la formation continue :
+                conventions de stage, soutenances, suivi entreprises, programmes FC.
+            </field>
+        </record>
+
+        <!-- Bibliothecaire -->
+        <record id="group_isic_bibliotheque" model="res.groups">
+            <field name="name">Bibliothecaire</field>
+            <field name="privilege_id" ref="privilege_isic"/>
+            <field name="sequence">50</field>
+            <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
+            <field name="comment">
+                Service bibliotheque et mediatheque :
+                gestion des livres, emprunts, retards, ressources numeriques.
+            </field>
+        </record>
+
+        <!-- Service Administratif et Financier -->
+        <record id="group_isic_financier" model="res.groups">
+            <field name="name">Service Administratif et Financier</field>
+            <field name="privilege_id" ref="privilege_isic"/>
+            <field name="sequence">55</field>
+            <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
+            <field name="comment">
+                Service des affaires administratives et financieres :
+                budget, comptabilite, RH, logistique.
+            </field>
+        </record>
+
+        <!-- Service Technique et IT -->
+        <record id="group_isic_technique" model="res.groups">
+            <field name="name">Service Technique et IT</field>
+            <field name="privilege_id" ref="privilege_isic"/>
+            <field name="sequence">60</field>
+            <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
+            <field name="comment">
+                Service technique et encadrement informatique :
+                infrastructure, support IT, kiosks RFID, studios.
+            </field>
+        </record>
+
+        <!-- Cooperation et Relations Exterieures -->
+        <record id="group_isic_cooperation" model="res.groups">
+            <field name="name">Cooperation et Relations Exterieures</field>
+            <field name="privilege_id" ref="privilege_isic"/>
+            <field name="sequence">65</field>
+            <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
+            <field name="comment">
+                Service de cooperation et relations exterieures :
+                partenariats internationaux, conventions, mobilite.
+            </field>
+        </record>
+
+        <!-- Centre de Recherche et de Veille -->
+        <record id="group_isic_recherche" model="res.groups">
+            <field name="name">Centre de Recherche et de Veille</field>
+            <field name="privilege_id" ref="privilege_isic"/>
+            <field name="sequence">70</field>
+            <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
+            <field name="comment">
+                Centre de recherche et de veille :
+                recherche scientifique, publications, veille mediatique.
+            </field>
+        </record>
+
+        <!-- ============================================ -->
+        <!-- Administration                               -->
+        <!-- ============================================ -->
+
+        <!-- Administrateur Scolarite (herite de Personnel Scolarite) -->
+        <record id="group_isic_admin_scolarite" model="res.groups">
+            <field name="name">Administrateur Scolarite</field>
+            <field name="privilege_id" ref="privilege_isic"/>
+            <field name="sequence">75</field>
+            <field name="implied_ids" eval="[(4, ref('group_isic_scolarite'))]"/>
+            <field name="comment">
+                Administrateur scolarite : gestion complete du systeme,
+                configuration des referentiels et parametres.
+            </field>
+        </record>
+
+        <!-- ============================================ -->
+        <!-- Equipe de Direction                          -->
+        <!-- ============================================ -->
+
+        <!-- Directeur Adjoint Pedagogie et Recherche -->
+        <record id="group_isic_da_pedagogie" model="res.groups">
+            <field name="name">Directeur Adjoint Pedagogie et Recherche</field>
+            <field name="privilege_id" ref="privilege_isic"/>
+            <field name="sequence">80</field>
+            <field name="implied_ids" eval="[
+                (4, ref('group_isic_admin_scolarite')),
+                (4, ref('group_isic_recherche')),
+            ]"/>
+            <field name="comment">
+                Directeur adjoint charge de la pedagogie et de la recherche :
+                supervise le service scolarite et le centre de recherche.
+            </field>
+        </record>
+
+        <!-- Directeur Adjoint FC et Stages -->
+        <record id="group_isic_da_stages" model="res.groups">
+            <field name="name">Directeur Adjoint FC et Stages</field>
+            <field name="privilege_id" ref="privilege_isic"/>
+            <field name="sequence">85</field>
+            <field name="implied_ids" eval="[
+                (4, ref('group_isic_stages')),
+                (4, ref('group_isic_cooperation')),
+            ]"/>
+            <field name="comment">
+                Directeur adjoint charge de la formation continue et des stages :
+                supervise le service stages/FC et la cooperation exterieure.
+            </field>
+        </record>
+
+        <!-- Secretaire General -->
+        <record id="group_isic_secretariat" model="res.groups">
+            <field name="name">Secretaire General</field>
+            <field name="privilege_id" ref="privilege_isic"/>
+            <field name="sequence">90</field>
+            <field name="implied_ids" eval="[
+                (4, ref('group_isic_admin_scolarite')),
+                (4, ref('group_isic_stages')),
+                (4, ref('group_isic_cooperation')),
+                (4, ref('group_isic_recherche')),
+                (4, ref('group_isic_bibliotheque')),
+                (4, ref('group_isic_financier')),
+                (4, ref('group_isic_technique')),
+                (4, ref('group_isic_departement')),
+            ]"/>
+            <field name="comment">
+                Secretaire general : memes droits que l'equipe de direction,
+                coordination et supervision de tous les services.
+            </field>
+        </record>
+
+        <!-- Directeur (acces total) -->
+        <record id="group_isic_direction" model="res.groups">
+            <field name="name">Direction</field>
+            <field name="privilege_id" ref="privilege_isic"/>
+            <field name="sequence">100</field>
+            <field name="implied_ids" eval="[
+                (4, ref('group_isic_da_pedagogie')),
+                (4, ref('group_isic_da_stages')),
+                (4, ref('group_isic_secretariat')),
+            ]"/>
+            <field name="user_ids" eval="[(4, ref('base.user_root')), (4, ref('base.user_admin'))]"/>
+            <field name="comment">
+                Direction ISIC (Directeur) : acces total au systeme, tableaux de bord,
+                statistiques, rapports de pilotage et decisions strategiques.
+                Supervise directement les Directeurs Adjoints et le Secretaire General.
+            </field>
+        </record>
+
+        <!-- ============================================ -->
+        <!-- Regles multi-societe                         -->
+        <!-- ============================================ -->
+        <record id="rule_annee_academique_multi_company" model="ir.rule">
+            <field name="name">Annee academique multi-societe</field>
+            <field name="model_id" ref="model_isic_annee_academique"/>
+            <field name="global" eval="True"/>
+            <field name="domain_force">['|',('company_id','=',False),('company_id','in',company_ids)]</field>
+        </record>
+
+    </data>
 </odoo>

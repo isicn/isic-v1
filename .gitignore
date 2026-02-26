@@ -38,3 +38,4 @@ docs/
 ~$*
 scripts/generate_deployment_doc.py
 scripts/generate_dev_workflow_doc.py
+formations/

@@ -6,7 +6,7 @@
         <field name="inherit_id" ref="base.res_config_settings_view_form" />
         <field name="arch" type="xml">
             <xpath expr="//form" position="inside">
-                <app string="ISIC" groups="isic_base.group_direction" name="isic_base">
+                <app string="ISIC" groups="isic_base.group_isic_direction" name="isic_base">
                     <block title="Établissement">
                         <setting
                             string="Nom de l'établissement"

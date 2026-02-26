@@ -60,7 +60,7 @@
         name="Configuration"
         parent="menu_ged_root"
         sequence="90"
-        groups="isic_base.group_direction"
+        groups="isic_base.group_isic_direction"
     />
     <menuitem
         id="menu_isic_document_type"

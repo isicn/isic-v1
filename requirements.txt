@@ -5,3 +5,5 @@
 redis>=5.0
 # LDAP authentication
 python-ldap>=3.4
+# OCA test helper (FakeModelLoader for tier validation tests)
+odoo-test-helper>=2.0

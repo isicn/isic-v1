@@ -1,5 +1,16 @@
 id,name,model_id/id,group_id/id,perm_read,perm_write,perm_create,perm_unlink
 
-access_document_type_utilisateur,document_type_utilisateur,model_isic_document_type,isic_base.group_utilisateur,1,0,0,0
-access_document_type_gestionnaire,document_type_gestionnaire,model_isic_document_type,isic_base.group_gestionnaire,1,1,1,0
-access_document_type_direction,document_type_direction,model_isic_document_type,isic_base.group_direction,1,1,1,1
+access_document_type_user,document_type_user,model_isic_document_type,base.group_user,1,0,0,0
+access_document_type_scolarite,document_type_scolarite,model_isic_document_type,isic_base.group_isic_scolarite,1,1,1,0
+access_document_type_direction,document_type_direction,model_isic_document_type,isic_base.group_isic_direction,1,1,1,1
+
+access_dms_file_user,dms_file_user,dms.model_dms_file,base.group_user,1,1,1,0
+access_dms_file_direction,dms_file_direction,dms.model_dms_file,isic_base.group_isic_direction,1,1,1,1
+
+access_dms_directory_user,dms_directory_user,dms.model_dms_directory,base.group_user,1,1,1,0
+access_dms_directory_direction,dms_directory_direction,dms.model_dms_directory,isic_base.group_isic_direction,1,1,1,1
+
+access_dms_tag_user,dms_tag_user,dms.model_dms_tag,base.group_user,1,0,0,0
+access_dms_category_user,dms_category_user,dms.model_dms_category,base.group_user,1,0,0,0
+access_dms_storage_user,dms_storage_user,dms.model_dms_storage,base.group_user,1,0,0,0
+access_dms_access_group_user,dms_access_group_user,dms.model_dms_access_group,base.group_user,1,0,0,0

@@ -48,12 +48,13 @@ $o-border-radius-lg: 8px;
 $o-navbar-height: 46px;
 $o-navbar-entry-border-radius: 4px;
 $o-navbar-entry-padding-h: 0.5em;
+$o-navbar-border-bottom: none;
 
 // Navbar badge (notification bubbles en or ISIC)
 $o-navbar-badge-bg: #D4A843;
 
-// Webclient background
-$o-webclient-background-color: #F0F2F5;
+// Webclient background — white to avoid sub-pixel grid gaps
+$o-webclient-background-color: #fff;
 
 // ============================================================================
 // Theme Text Colors Map — Used by Odoo for text-* utility classes

@@ -73,6 +73,8 @@ class DmsFile(models.Model):
             rec.write({"ged_state": "archived"})
 
     def action_reset_draft(self):
+        if not self.env.user.has_group("isic_base.group_isic_direction"):
+            raise UserError("Seule la direction peut remettre un document en brouillon.")
         self.write({"ged_state": "draft", "valideur_id": False, "date_validation": False})
 
     @api.onchange("document_type_id")

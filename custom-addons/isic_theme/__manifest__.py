@@ -25,6 +25,7 @@
             "isic_theme/static/src/scss/rtl.scss",
             "isic_theme/static/src/css/has_rules.css",
             "isic_theme/static/src/js/dms_store_fix.js",
+            "isic_theme/static/src/xml/chatter.xml",
         ],
         "web.assets_frontend": [
             "isic_theme/static/src/scss/backend.scss",

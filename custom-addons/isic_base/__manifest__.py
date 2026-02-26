@@ -1,7 +1,7 @@
 {
     "name": "ISIC - Base",
     "summary": "Socle commun ISIC : groupes de sécurité, année académique, paramètres",
-    "version": "19.0.1.0.0",
+    "version": "19.0.2.0.0",
     "category": "Education",
     "author": "ISIC Rabat",
     "website": "https://isic.ac.ma",
