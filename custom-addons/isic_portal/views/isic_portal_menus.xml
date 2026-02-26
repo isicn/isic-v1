@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <!-- ============================================================ -->
+    <!-- Client Action — Dashboard                                    -->
+    <!-- ============================================================ -->
+    <record id="isic_portal_dashboard_action" model="ir.actions.client">
+        <field name="name">Tableau de bord ISIC</field>
+        <field name="tag">isic_portal.Dashboard</field>
+        <field name="target">main</field>
+    </record>
+
+    <!-- ============================================================ -->
+    <!-- Menu racine                                                  -->
+    <!-- ============================================================ -->
+    <menuitem
+        id="isic_portal_menu_root"
+        name="Portail ISIC"
+        sequence="1"
+        action="isic_portal_dashboard_action"
+        web_icon="isic_portal,static/description/icon.png"
+    />
+</odoo>

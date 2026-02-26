@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<templates xml:space="preserve">
+    <t t-name="isic_portal.Dashboard">
+        <div class="isic-dashboard o_action">
+            <!-- Loading spinner -->
+            <div t-if="state.loading" class="isic-dashboard__loading text-center p-5">
+                <i class="fa fa-spinner fa-spin fa-3x text-primary" title="Chargement" />
+                <p class="mt-3 text-muted">Chargement du tableau de bord...</p>
+            </div>
+
+            <div t-if="!state.loading and state.data" class="isic-dashboard__content">
+                <!-- Header -->
+                <div class="isic-dashboard__header">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div>
+                            <h2 class="isic-dashboard__title mb-0">
+                                Bienvenue, <t t-out="state.data.user_name" />
+                            </h2>
+                            <p t-if="state.data.annee_academique" class="isic-dashboard__subtitle text-muted mb-0">
+                                Année académique : <strong><t t-out="state.data.annee_academique" /></strong>
+                            </p>
+                        </div>
+                        <button class="btn btn-outline-primary btn-sm" t-on-click="onRefresh" title="Actualiser">
+                            <i class="fa fa-refresh" title="Actualiser" /> Actualiser
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Sections -->
+                <div class="isic-dashboard__sections">
+                    <t t-foreach="state.data.sections" t-as="section" t-key="section.title">
+                        <div class="isic-dashboard__section">
+                            <h4 class="isic-dashboard__section-title">
+                                <i t-attf-class="fa {{ section.icon }} me-2" t-att-title="section.title" />
+                                <t t-out="section.title" />
+                            </h4>
+                            <div class="isic-dashboard__kpis">
+                                <t t-foreach="section.kpis" t-as="kpi" t-key="kpi.label">
+                                    <KpiCard
+                                        label="kpi.label"
+                                        value="kpi.value"
+                                        icon="kpi.icon"
+                                        color="kpi.color"
+                                        action="kpi.action"
+                                        onCardClick.bind="onCardClick"
+                                    />
+                                </t>
+                            </div>
+                        </div>
+                    </t>
+                </div>
+            </div>
+        </div>
+    </t>
+</templates>
