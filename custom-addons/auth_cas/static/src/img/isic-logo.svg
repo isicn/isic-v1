@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 80" width="320" height="80">
+  <defs>
+    <!-- Gradient bleu du losange -->
+    <linearGradient id="blueGrad" x1="0%" y1="100%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#0077c8;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#00a3e8;stop-opacity:1" />
+    </linearGradient>
+    <!-- Gradient orange/flamme -->
+    <linearGradient id="orangeGrad" x1="50%" y1="100%" x2="50%" y2="0%">
+      <stop offset="0%" style="stop-color:#f7941d;stop-opacity:1" />
+      <stop offset="60%" style="stop-color:#f15a24;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#f7941d;stop-opacity:0.8" />
+    </linearGradient>
+  </defs>
+
+  <!-- Losange bleu (partie inferieure gauche) -->
+  <polygon points="5,40 35,5 65,40 35,75" fill="url(#blueGrad)" />
+
+  <!-- Flamme orange (partie superieure droite du losange) -->
+  <path d="M35,5 L50,25 Q55,10 50,2 Q45,8 42,3 Z" fill="url(#orangeGrad)" />
+  <path d="M35,5 L55,30 Q52,15 58,5 Q48,12 45,2 Z" fill="#f7941d" opacity="0.8" />
+
+  <!-- Texte ISIC -->
+  <text x="80" y="55" font-family="Arial, Helvetica, sans-serif" font-size="50" font-weight="bold" fill="#808080" letter-spacing="2">ISIC</text>
+
+  <!-- Sous-titre -->
+  <text x="80" y="72" font-family="Arial, Helvetica, sans-serif" font-size="7" fill="#999">Institut Sup&#233;rieur de l'Information et de la Communication</text>
+</svg>

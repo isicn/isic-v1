@@ -1,0 +1,257 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+
+        <!-- ============================================ -->
+        <!-- Mapping par employeeType (prioritaire)       -->
+        <!-- ============================================ -->
+
+        <record id="cas_mapping_student" model="auth.cas.group.mapping">
+            <field name="sequence">10</field>
+            <field name="cas_attribute">employeeType</field>
+            <field name="cas_value">student</field>
+            <field name="odoo_group_id" ref="isic_base.group_isic_etudiant"/>
+            <field name="is_internal_user">False</field>
+            <field name="notes">Étudiants → portail</field>
+        </record>
+
+        <record id="cas_mapping_faculty" model="auth.cas.group.mapping">
+            <field name="sequence">20</field>
+            <field name="cas_attribute">employeeType</field>
+            <field name="cas_value">faculty</field>
+            <field name="odoo_group_id" ref="isic_base.group_isic_enseignant"/>
+            <field name="is_internal_user">True</field>
+            <field name="notes">Enseignants → interne</field>
+        </record>
+
+        <record id="cas_mapping_staff" model="auth.cas.group.mapping">
+            <field name="sequence">25</field>
+            <field name="cas_attribute">employeeType</field>
+            <field name="cas_value">staff</field>
+            <field name="odoo_group_id" ref="isic_base.group_isic_scolarite"/>
+            <field name="is_internal_user">True</field>
+            <field name="notes">Personnel scolarité → interne</field>
+        </record>
+
+        <record id="cas_mapping_stages" model="auth.cas.group.mapping">
+            <field name="sequence">26</field>
+            <field name="cas_attribute">employeeType</field>
+            <field name="cas_value">stages</field>
+            <field name="odoo_group_id" ref="isic_base.group_isic_stages"/>
+            <field name="is_internal_user">True</field>
+            <field name="notes">Service stages et FC → interne</field>
+        </record>
+
+        <record id="cas_mapping_cooperation" model="auth.cas.group.mapping">
+            <field name="sequence">27</field>
+            <field name="cas_attribute">employeeType</field>
+            <field name="cas_value">cooperation</field>
+            <field name="odoo_group_id" ref="isic_base.group_isic_cooperation"/>
+            <field name="is_internal_user">True</field>
+            <field name="notes">Service coopération → interne</field>
+        </record>
+
+        <record id="cas_mapping_bibliotheque" model="auth.cas.group.mapping">
+            <field name="sequence">28</field>
+            <field name="cas_attribute">employeeType</field>
+            <field name="cas_value">bibliotheque</field>
+            <field name="odoo_group_id" ref="isic_base.group_isic_bibliotheque"/>
+            <field name="is_internal_user">True</field>
+            <field name="notes">Bibliothécaire → interne</field>
+        </record>
+
+        <record id="cas_mapping_financier" model="auth.cas.group.mapping">
+            <field name="sequence">29</field>
+            <field name="cas_attribute">employeeType</field>
+            <field name="cas_value">financier</field>
+            <field name="odoo_group_id" ref="isic_base.group_isic_financier"/>
+            <field name="is_internal_user">True</field>
+            <field name="notes">Service administratif et financier → interne</field>
+        </record>
+
+        <record id="cas_mapping_technique" model="auth.cas.group.mapping">
+            <field name="sequence">30</field>
+            <field name="cas_attribute">employeeType</field>
+            <field name="cas_value">technique</field>
+            <field name="odoo_group_id" ref="isic_base.group_isic_technique"/>
+            <field name="is_internal_user">True</field>
+            <field name="notes">Service technique et IT → interne</field>
+        </record>
+
+        <record id="cas_mapping_recherche" model="auth.cas.group.mapping">
+            <field name="sequence">31</field>
+            <field name="cas_attribute">employeeType</field>
+            <field name="cas_value">recherche</field>
+            <field name="odoo_group_id" ref="isic_base.group_isic_recherche"/>
+            <field name="is_internal_user">True</field>
+            <field name="notes">Centre de recherche → interne</field>
+        </record>
+
+        <record id="cas_mapping_secretariat" model="auth.cas.group.mapping">
+            <field name="sequence">35</field>
+            <field name="cas_attribute">employeeType</field>
+            <field name="cas_value">secretariat</field>
+            <field name="odoo_group_id" ref="isic_base.group_isic_secretariat"/>
+            <field name="is_internal_user">True</field>
+            <field name="notes">Secrétaire général → interne</field>
+        </record>
+
+        <record id="cas_mapping_da_pedagogie" model="auth.cas.group.mapping">
+            <field name="sequence">36</field>
+            <field name="cas_attribute">employeeType</field>
+            <field name="cas_value">da-pedagogie</field>
+            <field name="odoo_group_id" ref="isic_base.group_isic_da_pedagogie"/>
+            <field name="is_internal_user">True</field>
+            <field name="notes">DA Pédagogie et Recherche → interne</field>
+        </record>
+
+        <record id="cas_mapping_da_stages" model="auth.cas.group.mapping">
+            <field name="sequence">37</field>
+            <field name="cas_attribute">employeeType</field>
+            <field name="cas_value">da-stages</field>
+            <field name="odoo_group_id" ref="isic_base.group_isic_da_stages"/>
+            <field name="is_internal_user">True</field>
+            <field name="notes">DA FC et Stages → interne</field>
+        </record>
+
+        <record id="cas_mapping_direction_type" model="auth.cas.group.mapping">
+            <field name="sequence">40</field>
+            <field name="cas_attribute">employeeType</field>
+            <field name="cas_value">direction</field>
+            <field name="odoo_group_id" ref="isic_base.group_isic_direction"/>
+            <field name="is_internal_user">True</field>
+            <field name="notes">Direction → interne</field>
+        </record>
+
+        <!-- ============================================ -->
+        <!-- Mapping par memberOf LDAP (fallback)         -->
+        <!-- ============================================ -->
+
+        <record id="cas_mapping_memberof_direction" model="auth.cas.group.mapping">
+            <field name="sequence">50</field>
+            <field name="cas_attribute">memberOf</field>
+            <field name="cas_value">cn=direction,ou=Groups,dc=isic,dc=ac,dc=ma</field>
+            <field name="odoo_group_id" ref="isic_base.group_isic_direction"/>
+            <field name="is_internal_user">True</field>
+            <field name="notes">LDAP direction → Direction</field>
+        </record>
+
+        <record id="cas_mapping_memberof_da_pedagogie" model="auth.cas.group.mapping">
+            <field name="sequence">51</field>
+            <field name="cas_attribute">memberOf</field>
+            <field name="cas_value">cn=da-pedagogie,ou=Groups,dc=isic,dc=ac,dc=ma</field>
+            <field name="odoo_group_id" ref="isic_base.group_isic_da_pedagogie"/>
+            <field name="is_internal_user">True</field>
+            <field name="notes">LDAP da-pedagogie → DA Pédagogie</field>
+        </record>
+
+        <record id="cas_mapping_memberof_da_stages" model="auth.cas.group.mapping">
+            <field name="sequence">52</field>
+            <field name="cas_attribute">memberOf</field>
+            <field name="cas_value">cn=da-stages-fc,ou=Groups,dc=isic,dc=ac,dc=ma</field>
+            <field name="odoo_group_id" ref="isic_base.group_isic_da_stages"/>
+            <field name="is_internal_user">True</field>
+            <field name="notes">LDAP da-stages-fc → DA FC et Stages</field>
+        </record>
+
+        <record id="cas_mapping_memberof_secretariat" model="auth.cas.group.mapping">
+            <field name="sequence">53</field>
+            <field name="cas_attribute">memberOf</field>
+            <field name="cas_value">cn=secretariat-general,ou=Groups,dc=isic,dc=ac,dc=ma</field>
+            <field name="odoo_group_id" ref="isic_base.group_isic_secretariat"/>
+            <field name="is_internal_user">True</field>
+            <field name="notes">LDAP secretariat-general → Secrétaire Général</field>
+        </record>
+
+        <record id="cas_mapping_memberof_scolarite" model="auth.cas.group.mapping">
+            <field name="sequence">55</field>
+            <field name="cas_attribute">memberOf</field>
+            <field name="cas_value">cn=scolarite,ou=Groups,dc=isic,dc=ac,dc=ma</field>
+            <field name="odoo_group_id" ref="isic_base.group_isic_scolarite"/>
+            <field name="is_internal_user">True</field>
+            <field name="notes">LDAP scolarite → Personnel Scolarité</field>
+        </record>
+
+        <record id="cas_mapping_memberof_stages" model="auth.cas.group.mapping">
+            <field name="sequence">56</field>
+            <field name="cas_attribute">memberOf</field>
+            <field name="cas_value">cn=stages-fc,ou=Groups,dc=isic,dc=ac,dc=ma</field>
+            <field name="odoo_group_id" ref="isic_base.group_isic_stages"/>
+            <field name="is_internal_user">True</field>
+            <field name="notes">LDAP stages-fc → Stages et FC</field>
+        </record>
+
+        <record id="cas_mapping_memberof_cooperation" model="auth.cas.group.mapping">
+            <field name="sequence">57</field>
+            <field name="cas_attribute">memberOf</field>
+            <field name="cas_value">cn=cooperation,ou=Groups,dc=isic,dc=ac,dc=ma</field>
+            <field name="odoo_group_id" ref="isic_base.group_isic_cooperation"/>
+            <field name="is_internal_user">True</field>
+            <field name="notes">LDAP cooperation → Coopération</field>
+        </record>
+
+        <record id="cas_mapping_memberof_bibliotheque" model="auth.cas.group.mapping">
+            <field name="sequence">58</field>
+            <field name="cas_attribute">memberOf</field>
+            <field name="cas_value">cn=bibliotheque,ou=Groups,dc=isic,dc=ac,dc=ma</field>
+            <field name="odoo_group_id" ref="isic_base.group_isic_bibliotheque"/>
+            <field name="is_internal_user">True</field>
+            <field name="notes">LDAP bibliotheque → Bibliothécaire</field>
+        </record>
+
+        <record id="cas_mapping_memberof_financier" model="auth.cas.group.mapping">
+            <field name="sequence">59</field>
+            <field name="cas_attribute">memberOf</field>
+            <field name="cas_value">cn=administratif-financier,ou=Groups,dc=isic,dc=ac,dc=ma</field>
+            <field name="odoo_group_id" ref="isic_base.group_isic_financier"/>
+            <field name="is_internal_user">True</field>
+            <field name="notes">LDAP administratif-financier → Service Financier</field>
+        </record>
+
+        <record id="cas_mapping_memberof_technique" model="auth.cas.group.mapping">
+            <field name="sequence">60</field>
+            <field name="cas_attribute">memberOf</field>
+            <field name="cas_value">cn=technique-it,ou=Groups,dc=isic,dc=ac,dc=ma</field>
+            <field name="odoo_group_id" ref="isic_base.group_isic_technique"/>
+            <field name="is_internal_user">True</field>
+            <field name="notes">LDAP technique-it → Service Technique</field>
+        </record>
+
+        <record id="cas_mapping_memberof_recherche" model="auth.cas.group.mapping">
+            <field name="sequence">61</field>
+            <field name="cas_attribute">memberOf</field>
+            <field name="cas_value">cn=recherche,ou=Groups,dc=isic,dc=ac,dc=ma</field>
+            <field name="odoo_group_id" ref="isic_base.group_isic_recherche"/>
+            <field name="is_internal_user">True</field>
+            <field name="notes">LDAP recherche → Centre de Recherche</field>
+        </record>
+
+        <record id="cas_mapping_memberof_departements" model="auth.cas.group.mapping">
+            <field name="sequence">62</field>
+            <field name="cas_attribute">memberOf</field>
+            <field name="cas_value">cn=departements,ou=Groups,dc=isic,dc=ac,dc=ma</field>
+            <field name="odoo_group_id" ref="isic_base.group_isic_departement"/>
+            <field name="is_internal_user">True</field>
+            <field name="notes">LDAP departements → Chef de Département</field>
+        </record>
+
+        <record id="cas_mapping_memberof_enseignants" model="auth.cas.group.mapping">
+            <field name="sequence">65</field>
+            <field name="cas_attribute">memberOf</field>
+            <field name="cas_value">cn=enseignants,ou=Groups,dc=isic,dc=ac,dc=ma</field>
+            <field name="odoo_group_id" ref="isic_base.group_isic_enseignant"/>
+            <field name="is_internal_user">True</field>
+            <field name="notes">LDAP enseignants → Enseignant</field>
+        </record>
+
+        <record id="cas_mapping_memberof_etudiants" model="auth.cas.group.mapping">
+            <field name="sequence">70</field>
+            <field name="cas_attribute">memberOf</field>
+            <field name="cas_value">cn=etudiants,ou=Groups,dc=isic,dc=ac,dc=ma</field>
+            <field name="odoo_group_id" ref="isic_base.group_isic_etudiant"/>
+            <field name="is_internal_user">False</field>
+            <field name="notes">LDAP etudiants → Étudiant (portail)</field>
+        </record>
+
+    </data>
+</odoo>

@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+        <!-- Provider CAS ISIC (dev Docker local) -->
+        <record id="provider_cas_isic" model="auth.oauth.provider">
+            <field name="name">ISIC CAS</field>
+            <field name="enabled">True</field>
+            <field name="is_cas_provider">True</field>
+            <field name="client_id">odoo_isic</field>
+            <field name="cas_server_url">http://isic-cas:8443/cas</field>
+            <field name="auth_endpoint">http://localhost:8543/cas/oauth2.0/authorize</field>
+            <field name="validation_endpoint">http://isic-cas:8443/cas/p3/serviceValidate</field>
+            <field name="cas_scope">openid profile email eduPerson</field>
+            <field name="cas_attribute_map">{
+    "login": "uid",
+    "email": "mail",
+    "name": "cn",
+    "groups": "memberOf",
+    "affiliation": "eduPersonAffiliation"
+}</field>
+            <field name="body">Se connecter avec CAS ISIC</field>
+            <field name="css_class">fa fa-fw fa-university</field>
+            <field name="sequence">10</field>
+        </record>
+    </data>
+</odoo>

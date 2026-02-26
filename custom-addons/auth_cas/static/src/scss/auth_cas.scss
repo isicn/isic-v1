@@ -1,0 +1,364 @@
+// ============================================
+// ISIC CAS Authentication - Charte Graphique
+// ============================================
+// Basé sur https://isic.ac.ma/
+// Couleurs principales: #0693e3 (bleu), #ff6900 (orange), #00d084 (vert)
+
+// Variables ISIC
+$isic-primary: #0693e3;      // Bleu vivide
+$isic-secondary: #ff6900;    // Orange lumineux
+$isic-accent: #00d084;       // Vert vivide
+$isic-dark: #1a1a2e;         // Bleu très foncé
+$isic-light: #f8f9fa;
+$isic-gray: #abb8c3;
+
+// Gradient ISIC
+$isic-gradient: linear-gradient(135deg, $isic-primary 0%, #0056b3 100%);
+
+// ============================================
+// Page de Login Personnalisée
+// ============================================
+
+.oe_login_form {
+    // Conteneur principal
+    .card {
+        border: none;
+        border-radius: 16px;
+        box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+        overflow: hidden;
+    }
+}
+
+// Header personnalisé ISIC
+.isic-login-header {
+    background: $isic-gradient;
+    padding: 2rem;
+    text-align: center;
+
+    .isic-logo {
+        max-width: 180px;
+        height: auto;
+        margin-bottom: 1rem;
+    }
+
+    .isic-title {
+        color: white;
+        font-size: 1.5rem;
+        font-weight: 600;
+        margin: 0;
+        text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    .isic-subtitle {
+        color: rgba(255, 255, 255, 0.9);
+        font-size: 0.9rem;
+        margin-top: 0.5rem;
+    }
+}
+
+// Boutons OAuth/CAS
+.o_login_auth_oauth {
+    margin-bottom: 1.5rem;
+
+    // Bouton principal CAS ISIC
+    .btn.o_oauth_provider {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+        padding: 0.875rem 1.5rem;
+        font-size: 1rem;
+        font-weight: 500;
+        border-radius: 8px;
+        transition: all 0.3s ease;
+
+        // Style CAS ISIC
+        &[data-provider="cas"],
+        &.isic-cas-btn {
+            background: $isic-gradient;
+            border: none;
+            color: white;
+
+            &:hover {
+                transform: translateY(-2px);
+                box-shadow: 0 6px 20px rgba($isic-primary, 0.4);
+            }
+
+            &:focus {
+                box-shadow: 0 0 0 0.2rem rgba($isic-primary, 0.25);
+            }
+
+            &:active {
+                transform: translateY(0);
+            }
+
+            i, .fa {
+                margin-right: 10px;
+                font-size: 1.1rem;
+            }
+        }
+    }
+
+    // Séparateur "ou"
+    .o_oauth_separator,
+    .isic-separator {
+        position: relative;
+        text-align: center;
+        margin: 1.5rem 0;
+
+        &::before,
+        &::after {
+            content: "";
+            position: absolute;
+            top: 50%;
+            width: 42%;
+            height: 1px;
+            background: linear-gradient(to right, transparent, $isic-gray, transparent);
+        }
+
+        &::before {
+            left: 0;
+        }
+
+        &::after {
+            right: 0;
+        }
+
+        span {
+            background: white;
+            padding: 0 15px;
+            color: $isic-gray;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+    }
+}
+
+// Formulaire de login
+.oe_login_form {
+    .form-control {
+        border-radius: 8px;
+        border: 2px solid #e9ecef;
+        padding: 0.75rem 1rem;
+        font-size: 0.95rem;
+        transition: border-color 0.3s ease, box-shadow 0.3s ease;
+
+        &:focus {
+            border-color: $isic-primary;
+            box-shadow: 0 0 0 0.2rem rgba($isic-primary, 0.1);
+        }
+
+        &::placeholder {
+            color: $isic-gray;
+        }
+    }
+
+    .form-label {
+        font-weight: 500;
+        color: $isic-dark;
+        margin-bottom: 0.5rem;
+    }
+
+    // Bouton de connexion
+    .btn-primary {
+        background: $isic-gradient;
+        border: none;
+        border-radius: 8px;
+        padding: 0.75rem 1.5rem;
+        font-weight: 500;
+        transition: all 0.3s ease;
+
+        &:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba($isic-primary, 0.4);
+        }
+
+        &:focus {
+            box-shadow: 0 0 0 0.2rem rgba($isic-primary, 0.25);
+        }
+    }
+
+    // Liens
+    a {
+        color: $isic-primary;
+        text-decoration: none;
+        transition: color 0.2s ease;
+
+        &:hover {
+            color: darken($isic-primary, 15%);
+            text-decoration: underline;
+        }
+    }
+}
+
+// Message d'erreur
+.o_login_error,
+.alert-danger {
+    background-color: #fef2f2;
+    border: 1px solid #fecaca;
+    color: #991b1b;
+    padding: 0.875rem 1rem;
+    margin-bottom: 1rem;
+    border-radius: 8px;
+    font-size: 0.9rem;
+
+    &.cas_error {
+        background-color: #fff7ed;
+        border-color: #fed7aa;
+        color: #c2410c;
+    }
+}
+
+// Message de succès
+.alert-success {
+    background-color: #ecfdf5;
+    border: 1px solid #a7f3d0;
+    color: #065f46;
+    border-radius: 8px;
+}
+
+// ============================================
+// Footer ISIC
+// ============================================
+
+.isic-login-footer {
+    text-align: center;
+    padding: 1rem;
+    background: $isic-light;
+    border-top: 1px solid #e9ecef;
+
+    .isic-footer-text {
+        color: $isic-gray;
+        font-size: 0.8rem;
+        margin: 0;
+
+        a {
+            color: $isic-primary;
+            font-weight: 500;
+        }
+    }
+
+    .isic-footer-links {
+        margin-top: 0.5rem;
+
+        a {
+            color: $isic-gray;
+            font-size: 0.75rem;
+            margin: 0 0.5rem;
+
+            &:hover {
+                color: $isic-primary;
+            }
+        }
+    }
+}
+
+// ============================================
+// Badge Ministère
+// ============================================
+
+.isic-ministry-badge {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    padding: 0.75rem;
+    background: rgba($isic-primary, 0.05);
+    border-radius: 8px;
+    margin-top: 1rem;
+
+    .ministry-logo {
+        width: 40px;
+        height: auto;
+    }
+
+    .ministry-text {
+        font-size: 0.7rem;
+        color: $isic-gray;
+        text-align: left;
+        line-height: 1.3;
+
+        strong {
+            color: $isic-dark;
+            display: block;
+        }
+    }
+}
+
+// ============================================
+// Responsive
+// ============================================
+
+@media (max-width: 576px) {
+    .isic-login-header {
+        padding: 1.5rem 1rem;
+
+        .isic-logo {
+            max-width: 140px;
+        }
+
+        .isic-title {
+            font-size: 1.25rem;
+        }
+    }
+
+    .oe_login_form .card-body {
+        padding: 1.5rem;
+    }
+}
+
+// ============================================
+// Animation d'entrée
+// ============================================
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.oe_login_form .card {
+    animation: fadeInUp 0.5s ease-out;
+}
+
+// ============================================
+// Mode sombre (optionnel)
+// ============================================
+
+@media (prefers-color-scheme: dark) {
+    .oe_login_form {
+        .card {
+            background: #1f2937;
+
+            .form-control {
+                background: #374151;
+                border-color: #4b5563;
+                color: white;
+
+                &::placeholder {
+                    color: #9ca3af;
+                }
+            }
+
+            .form-label {
+                color: #f3f4f6;
+            }
+        }
+
+        .isic-login-footer {
+            background: #111827;
+            border-color: #374151;
+        }
+
+        .o_oauth_separator span,
+        .isic-separator span {
+            background: #1f2937;
+        }
+    }
+}

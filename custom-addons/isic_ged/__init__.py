@@ -1,6 +1,6 @@
 import logging
 
-from . import models
+from . import models, tests
 
 _logger = logging.getLogger(__name__)
 

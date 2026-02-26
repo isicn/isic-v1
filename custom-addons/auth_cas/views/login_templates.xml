@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- ============================================ -->
+    <!-- Template de Login Personnalisé ISIC         -->
+    <!-- ============================================ -->
+
+    <!-- Surcharge du template de login principal -->
+    <template id="login_isic" inherit_id="web.login" name="ISIC Login Page">
+
+        <!-- Footer ISIC après le formulaire -->
+        <xpath expr="//div[@id='oe_structure_login_bottom']" position="before">
+            <div class="isic-login-footer mt-3">
+                <p class="isic-footer-text">
+                    Plateforme de gestion académique
+                    <a href="https://isic.ac.ma" target="_blank">ISIC</a>
+                </p>
+                <div class="isic-footer-links">
+                    <a href="https://isic.ac.ma/contact" target="_blank">Contact</a>
+                    <span>|</span>
+                    <a href="https://isic.ac.ma/faq" target="_blank">Aide</a>
+                </div>
+            </div>
+        </xpath>
+
+    </template>
+
+
+</odoo>

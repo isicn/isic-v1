@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Extension des paramètres généraux pour CAS - après le setting OAuth -->
+    <record id="res_config_settings_view_form_cas" model="ir.ui.view">
+        <field name="name">res.config.settings.view.form.inherit.auth_cas</field>
+        <field name="model">res.config.settings</field>
+        <field name="inherit_id" ref="base_setup.res_config_settings_view_form"/>
+        <field name="priority">60</field>
+        <field name="arch" type="xml">
+            <!-- Ajouter après le setting OAuth de Google si présent, sinon après module_auth_oauth -->
+            <setting id="module_auth_oauth" position="after">
+                <setting id="cas_enabled_setting" string="CAS SSO Authentication" help="Enable CAS Single Sign-On for ISIC users">
+                    <field name="cas_enabled"/>
+                    <div class="content-group" invisible="not cas_enabled">
+                        <div class="row mt16">
+                            <label for="cas_server_url" string="CAS Server URL" class="col-lg-3 o_light_label"/>
+                            <field name="cas_server_url" placeholder="https://cas.isic.ma/cas"/>
+                        </div>
+                        <div class="row mt8">
+                            <label for="cas_client_id" string="Client ID" class="col-lg-3 o_light_label"/>
+                            <field name="cas_client_id" placeholder="odoo_isic"/>
+                        </div>
+                        <div class="row mt8">
+                            <label for="cas_client_secret" string="Client Secret" class="col-lg-3 o_light_label"/>
+                            <field name="cas_client_secret" password="True"/>
+                        </div>
+                        <div class="row mt8">
+                            <label for="cas_callback_url" string="Callback URL" class="col-lg-3 o_light_label"/>
+                            <field name="cas_callback_url" readonly="1" widget="CopyClipboardChar"/>
+                        </div>
+                        <div class="mt16">
+                            <field name="cas_auto_create_users" class="oe_inline"/>
+                            <label for="cas_auto_create_users" string="Auto-create users"/>
+                        </div>
+                        <div class="mt8">
+                            <field name="cas_sync_groups" class="oe_inline"/>
+                            <label for="cas_sync_groups" string="Sync groups on login"/>
+                        </div>
+                        <div class="mt8">
+                            <field name="cas_slo_enabled" class="oe_inline"/>
+                            <label for="cas_slo_enabled" string="Enable Single Logout (SLO)"/>
+                        </div>
+                        <div class="mt16">
+                            <button name="action_configure_cas_provider"
+                                    type="object"
+                                    string="Configure CAS Provider"
+                                    class="btn-link"
+                                    icon="oi-arrow-right"/>
+                        </div>
+                        <div class="mt8">
+                            <button name="action_open_cas_mappings"
+                                    type="object"
+                                    string="Manage Group Mappings"
+                                    class="btn-link"
+                                    icon="oi-arrow-right"/>
+                        </div>
+                    </div>
+                </setting>
+            </setting>
+        </field>
+    </record>
+</odoo>

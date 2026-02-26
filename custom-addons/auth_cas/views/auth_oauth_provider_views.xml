@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Extension de la vue form du provider OAuth pour les champs CAS -->
+    <record id="auth_oauth_provider_view_form_cas" model="ir.ui.view">
+        <field name="name">auth.oauth.provider.form.inherit.cas</field>
+        <field name="model">auth.oauth.provider</field>
+        <field name="inherit_id" ref="auth_oauth.view_oauth_provider_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='enabled']" position="after">
+                <field name="is_cas_provider"/>
+            </xpath>
+
+            <xpath expr="//sheet" position="inside">
+                <group string="CAS Configuration" invisible="not is_cas_provider">
+                    <group>
+                        <field name="cas_server_url" placeholder="https://cas.isic.ma/cas"/>
+                        <field name="cas_token_endpoint" readonly="1"/>
+                        <field name="cas_logout_endpoint" readonly="1"/>
+                    </group>
+                    <group>
+                        <field name="client_secret" password="True"/>
+                        <field name="cas_scope"/>
+                        <field name="cas_use_pkce"/>
+                    </group>
+                </group>
+                <group string="CAS Attribute Mapping" invisible="not is_cas_provider">
+                    <field name="cas_attribute_map" nolabel="1"/>
+                </group>
+            </xpath>
+        </field>
+    </record>
+
+    <!-- Extension de la vue list -->
+    <record id="auth_oauth_provider_view_list_cas" model="ir.ui.view">
+        <field name="name">auth.oauth.provider.list.inherit.cas</field>
+        <field name="model">auth.oauth.provider</field>
+        <field name="inherit_id" ref="auth_oauth.view_oauth_provider_tree"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='enabled']" position="after">
+                <field name="is_cas_provider" optional="show"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>

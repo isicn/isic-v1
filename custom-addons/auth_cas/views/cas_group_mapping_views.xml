@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Tree View -->
+    <record id="cas_group_mapping_view_tree" model="ir.ui.view">
+        <field name="name">auth.cas.group.mapping.tree</field>
+        <field name="model">auth.cas.group.mapping</field>
+        <field name="arch" type="xml">
+            <list string="CAS Group Mappings">
+                <field name="sequence" widget="handle"/>
+                <field name="cas_attribute"/>
+                <field name="cas_value"/>
+                <field name="cas_value_is_regex" widget="boolean_toggle"/>
+                <field name="odoo_group_id"/>
+                <field name="is_internal_user" widget="boolean_toggle"/>
+                <field name="active" widget="boolean_toggle"/>
+            </list>
+        </field>
+    </record>
+
+    <!-- Form View -->
+    <record id="cas_group_mapping_view_form" model="ir.ui.view">
+        <field name="name">auth.cas.group.mapping.form</field>
+        <field name="model">auth.cas.group.mapping</field>
+        <field name="arch" type="xml">
+            <form string="CAS Group Mapping">
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button name="toggle_active" type="object" class="oe_stat_button" icon="fa-archive">
+                            <field name="active" widget="boolean_button" options='{"terminology": "archive"}'/>
+                        </button>
+                    </div>
+                    <div class="oe_title">
+                        <h1>
+                            <field name="name" readonly="1"/>
+                        </h1>
+                    </div>
+                    <group>
+                        <group string="CAS Attribute Matching">
+                            <field name="cas_attribute"/>
+                            <field name="cas_value" placeholder="e.g., student, faculty, cn=group,ou=..."/>
+                            <field name="cas_value_is_regex"/>
+                        </group>
+                        <group string="Odoo Configuration">
+                            <field name="odoo_group_id"/>
+                            <field name="is_internal_user"/>
+                            <field name="provider_id"/>
+                            <field name="company_id" groups="base.group_multi_company"/>
+                        </group>
+                    </group>
+                    <group string="Additional Settings">
+                        <field name="sequence"/>
+                        <field name="notes" placeholder="Internal notes about this mapping..."/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- Search View -->
+    <record id="cas_group_mapping_view_search" model="ir.ui.view">
+        <field name="name">auth.cas.group.mapping.search</field>
+        <field name="model">auth.cas.group.mapping</field>
+        <field name="arch" type="xml">
+            <search string="CAS Group Mappings">
+                <field name="cas_attribute"/>
+                <field name="cas_value"/>
+                <field name="odoo_group_id"/>
+                <filter string="Active" name="active" domain="[('active', '=', True)]"/>
+                <filter string="Archived" name="inactive" domain="[('active', '=', False)]"/>
+                <separator/>
+                <filter string="Internal Users" name="internal" domain="[('is_internal_user', '=', True)]"/>
+                <filter string="Portal Users" name="portal" domain="[('is_internal_user', '=', False)]"/>
+            </search>
+        </field>
+    </record>
+
+    <!-- Action -->
+    <record id="cas_group_mapping_action" model="ir.actions.act_window">
+        <field name="name">CAS Group Mappings</field>
+        <field name="res_model">auth.cas.group.mapping</field>
+        <field name="view_mode">list,form</field>
+        <field name="search_view_id" ref="cas_group_mapping_view_search"/>
+        <field name="context">{'search_default_active': 1}</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Create a CAS to Odoo group mapping
+            </p>
+            <p>
+                Define how CAS attributes (like eduPersonAffiliation or memberOf)
+                should be mapped to Odoo groups for automatic user provisioning.
+            </p>
+        </field>
+    </record>
+
+    <!-- Menu -->
+    <menuitem id="menu_cas_group_mapping"
+              name="CAS Group Mappings"
+              parent="base.menu_users"
+              action="cas_group_mapping_action"
+              sequence="30"/>
+</odoo>
