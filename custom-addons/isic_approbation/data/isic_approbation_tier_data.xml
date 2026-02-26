@@ -7,13 +7,16 @@
         <!-- ============================================================ -->
 
         <!-- === CONGÉ : Département → Secrétariat Général === -->
+        <!-- NB: base_tier_validation utilise order="sequence desc" puis assigne
+             les review_sequence en ordre croissant. Donc sequence PLUS ÉLEVÉE
+             = approuve EN PREMIER (review seq=1, status=pending). -->
         <record id="tier_conge_l1" model="tier.definition">
             <field name="name">Congé - Chef de département</field>
             <field name="model_id" ref="model_isic_approbation_demande" />
             <field name="review_type">group</field>
             <field name="reviewer_group_id" ref="isic_base.group_isic_departement" />
             <field name="definition_domain">[('categorie_id.code', '=', 'CONGE')]</field>
-            <field name="sequence">10</field>
+            <field name="sequence">20</field>
             <field name="approve_sequence" eval="True" />
             <field name="notify_on_create" eval="True" />
             <field name="has_comment" eval="True" />
@@ -25,7 +28,7 @@
             <field name="review_type">group</field>
             <field name="reviewer_group_id" ref="isic_base.group_isic_secretariat" />
             <field name="definition_domain">[('categorie_id.code', '=', 'CONGE')]</field>
-            <field name="sequence">20</field>
+            <field name="sequence">10</field>
             <field name="approve_sequence" eval="True" />
             <field name="notify_on_pending" eval="True" />
             <field name="has_comment" eval="True" />
@@ -38,7 +41,7 @@
             <field name="review_type">group</field>
             <field name="reviewer_group_id" ref="isic_base.group_isic_departement" />
             <field name="definition_domain">[('categorie_id.code', '=', 'MISSION')]</field>
-            <field name="sequence">10</field>
+            <field name="sequence">20</field>
             <field name="approve_sequence" eval="True" />
             <field name="notify_on_create" eval="True" />
             <field name="has_comment" eval="True" />
@@ -50,7 +53,7 @@
             <field name="review_type">group</field>
             <field name="reviewer_group_id" ref="isic_base.group_isic_secretariat" />
             <field name="definition_domain">[('categorie_id.code', '=', 'MISSION')]</field>
-            <field name="sequence">20</field>
+            <field name="sequence">10</field>
             <field name="approve_sequence" eval="True" />
             <field name="notify_on_pending" eval="True" />
             <field name="has_comment" eval="True" />
@@ -74,7 +77,7 @@
             <field name="review_type">group</field>
             <field name="reviewer_group_id" ref="isic_base.group_isic_departement" />
             <field name="definition_domain">[('categorie_id.code', '=', 'MATERIEL')]</field>
-            <field name="sequence">10</field>
+            <field name="sequence">20</field>
             <field name="approve_sequence" eval="True" />
             <field name="notify_on_create" eval="True" />
         </record>
@@ -85,7 +88,7 @@
             <field name="review_type">group</field>
             <field name="reviewer_group_id" ref="isic_base.group_isic_technique" />
             <field name="definition_domain">[('categorie_id.code', '=', 'MATERIEL')]</field>
-            <field name="sequence">20</field>
+            <field name="sequence">10</field>
             <field name="approve_sequence" eval="True" />
             <field name="notify_on_pending" eval="True" />
         </record>
