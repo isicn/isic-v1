@@ -114,21 +114,21 @@
                     </group>
 
                     <!-- Tier reviews -->
-                    <group string="Circuit d'approbation"
+                    <separator string="Circuit d'approbation"
+                        invisible="not review_ids" />
+                    <field name="review_ids" widget="tier_validation"
+                        nolabel="1"
                         invisible="not review_ids">
-                        <field name="review_ids" widget="tier_validation"
-                            class="w-100" nolabel="1">
-                            <list>
-                                <field name="name" />
-                                <field name="sequence" string="Niveau" />
-                                <field name="status" />
-                                <field name="todo_by" />
-                                <field name="done_by" />
-                                <field name="reviewed_date" />
-                                <field name="comment" />
-                            </list>
-                        </field>
-                    </group>
+                        <list>
+                            <field name="name" />
+                            <field name="sequence" string="Niveau" />
+                            <field name="status" />
+                            <field name="todo_by" />
+                            <field name="done_by" />
+                            <field name="reviewed_date" />
+                            <field name="comment" />
+                        </list>
+                    </field>
                 </sheet>
                 <chatter />
             </form>
