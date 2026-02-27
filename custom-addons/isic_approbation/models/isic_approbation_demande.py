@@ -158,21 +158,34 @@ class IsicApprobationDemande(models.Model):
     def create(self, vals_list):
         return super().create(vals_list)
 
-    def write(self, vals):
-        res = super().write(vals)
-        # Auto-transition quand tier validation complète
-        for rec in self:
-            if rec.state == "submitted":
-                if rec.validation_status == "validated":
-                    rec.with_context(skip_tier_check=True).action_approve()
-                elif rec.validation_status == "rejected":
-                    comments = rec.review_ids.filtered(lambda r: r.status == "rejected" and r.comment).mapped("comment")
-                    rec.with_context(skip_tier_check=True).action_reject(
-                        motif="; ".join(comments) if comments else False
-                    )
-        return res
-
     # --- tier.validation overrides ---
+    def _check_auto_transition(self):
+        """Transition automatique quand toutes les reviews sont terminées."""
+        for rec in self:
+            if rec.state != "submitted":
+                continue
+            # Invalidate le cache pour relire validation_status depuis la DB
+            rec.invalidate_recordset(["validation_status"])
+            if rec.validation_status == "validated":
+                rec.with_context(skip_tier_check=True).action_approve()
+            elif rec.validation_status == "rejected":
+                comments = rec.review_ids.filtered(
+                    lambda r: r.status == "rejected" and r.comment
+                ).mapped("comment")
+                rec.with_context(skip_tier_check=True).action_reject(
+                    motif="; ".join(comments) if comments else False
+                )
+
+    def _validate_tier(self, tiers=False):
+        """Override pour déclencher l'auto-transition après validation."""
+        super()._validate_tier(tiers)
+        self._check_auto_transition()
+
+    def _rejected_tier(self, tiers=False):
+        """Override pour déclencher l'auto-transition après rejet."""
+        super()._rejected_tier(tiers)
+        self._check_auto_transition()
+
     def _get_under_validation_exceptions(self):
         """Champs modifiables pendant la validation."""
         res = super()._get_under_validation_exceptions()
