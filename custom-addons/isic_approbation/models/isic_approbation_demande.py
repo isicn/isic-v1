@@ -169,12 +169,8 @@ class IsicApprobationDemande(models.Model):
             if rec.validation_status == "validated":
                 rec.with_context(skip_tier_check=True).action_approve()
             elif rec.validation_status == "rejected":
-                comments = rec.review_ids.filtered(
-                    lambda r: r.status == "rejected" and r.comment
-                ).mapped("comment")
-                rec.with_context(skip_tier_check=True).action_reject(
-                    motif="; ".join(comments) if comments else False
-                )
+                comments = rec.review_ids.filtered(lambda r: r.status == "rejected" and r.comment).mapped("comment")
+                rec.with_context(skip_tier_check=True).action_reject(motif="; ".join(comments) if comments else False)
 
     def _validate_tier(self, tiers=False):
         """Override pour déclencher l'auto-transition après validation."""
