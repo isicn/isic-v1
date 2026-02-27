@@ -14,7 +14,7 @@
             <field name="domain_force">[
                 '|',
                 ('demandeur_id', '=', user.id),
-                ('reviewer_ids', 'in', user.id),
+                ('review_ids.reviewer_ids', 'in', user.id),
             ]</field>
         </record>
 
