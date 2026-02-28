@@ -71,5 +71,6 @@
         parent="isic_approbation_menu_config"
         action="isic_approbation_tier_def_action"
         sequence="20"
+        groups="base.group_no_one"
     />
 </odoo>

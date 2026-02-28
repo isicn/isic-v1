@@ -44,6 +44,13 @@ class IsicApprobationCategorie(models.Model):
         help="Groupes autorisés à créer ce type de demande. Vide = tous les utilisateurs internes.",
     )
 
+    approbateur_ids = fields.One2many(
+        "isic.approbation.approbateur",
+        "categorie_id",
+        string="Approbateurs",
+        copy=True,
+    )
+
     demande_ids = fields.One2many(
         "isic.approbation.demande",
         "categorie_id",
@@ -76,7 +83,64 @@ class IsicApprobationCategorie(models.Model):
         for rec in records:
             if not rec.sequence_id:
                 rec._create_sequence()
+        records.filtered("approbateur_ids")._sync_tier_definitions()
         return records
+
+    def write(self, vals):
+        res = super().write(vals)
+        if "approbateur_ids" in vals:
+            self._sync_tier_definitions()
+        return res
+
+    def _sync_tier_definitions(self):
+        """Synchronise les approbateur_ids vers les tier.definition du moteur OCA."""
+        TierDef = self.env["tier.definition"].sudo()
+        model_id = self.env["ir.model"]._get_id("isic.approbation.demande")
+
+        for cat in self:
+            approbateurs = cat.approbateur_ids.sorted("sequence")
+            count = len(approbateurs)
+
+            for idx, appro in enumerate(approbateurs):
+                is_first = idx == 0
+                # OCA convention: order="sequence desc" → higher sequence = approves first
+                tier_seq = 1000 - (idx * 10)
+
+                vals = {
+                    "name": f"{cat.name} — {appro.name}",
+                    "model_id": model_id,
+                    "review_type": appro.review_type,
+                    "definition_domain": f"[('categorie_id', '=', {cat.id})]",
+                    "sequence": tier_seq,
+                    "approve_sequence": count > 1,
+                    "has_comment": appro.has_comment,
+                    "notify_on_create": is_first,
+                    "notify_on_pending": not is_first,
+                }
+                if appro.review_type == "group":
+                    vals["reviewer_group_id"] = appro.reviewer_group_id.id
+                    vals["reviewer_id"] = False
+                else:
+                    vals["reviewer_id"] = appro.reviewer_id.id
+                    vals["reviewer_group_id"] = False
+
+                if appro.tier_definition_id:
+                    appro.tier_definition_id.write(vals)
+                else:
+                    tier = TierDef.create(vals)
+                    appro.tier_definition_id = tier
+
+            # Supprimer les tier.definition orphelins liés à cette catégorie
+            existing_tier_ids = approbateurs.mapped("tier_definition_id").ids
+            # Suffixe ")]" empêche les faux positifs (cat.id=1 ne matche pas id=10)
+            orphans = TierDef.search(
+                [
+                    ("model_id", "=", model_id),
+                    ("definition_domain", "like", f"'categorie_id', '=', {cat.id})]"),
+                    ("id", "not in", existing_tier_ids),
+                ]
+            )
+            orphans.unlink()
 
     def _create_sequence(self):
         """Crée une séquence ir.sequence pour la numérotation automatique des demandes."""

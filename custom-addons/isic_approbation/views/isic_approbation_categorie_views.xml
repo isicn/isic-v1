@@ -40,13 +40,33 @@
                             <field name="active" invisible="1" />
                         </group>
                     </group>
-                    <group string="Restrictions d'accès">
-                        <field name="groupe_demandeur_ids" widget="many2many_tags"
-                            placeholder="Tous les utilisateurs internes" />
-                    </group>
-                    <group>
-                        <field name="description" placeholder="Description de cette catégorie..." />
-                    </group>
+                    <notebook>
+                        <page string="Approbateurs" name="approbateurs">
+                            <field name="approbateur_ids">
+                                <list editable="bottom">
+                                    <field name="sequence" widget="handle" />
+                                    <field name="review_type" />
+                                    <field name="reviewer_group_id"
+                                        invisible="review_type != 'group'"
+                                        required="review_type == 'group'" />
+                                    <field name="reviewer_id"
+                                        invisible="review_type != 'individual'"
+                                        required="review_type == 'individual'" />
+                                    <field name="has_comment" />
+                                </list>
+                            </field>
+                        </page>
+                        <page string="Restrictions" name="restrictions">
+                            <group>
+                                <field name="groupe_demandeur_ids" widget="many2many_tags"
+                                    placeholder="Tous les utilisateurs internes" />
+                            </group>
+                            <group>
+                                <field name="description"
+                                    placeholder="Description de cette catégorie..." />
+                            </group>
+                        </page>
+                    </notebook>
                 </sheet>
                 <chatter />
             </form>
