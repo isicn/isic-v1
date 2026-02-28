@@ -144,6 +144,7 @@ class ResUsers(models.Model):
                 "name": name or login,
                 "login": login,
                 "email": email or "",
+                "lang": "fr_FR",
                 "company_id": company.id,
                 "company_ids": [(6, 0, [company.id])],
                 "oauth_provider_id": provider.id,
@@ -181,6 +182,9 @@ class ResUsers(models.Model):
                         group_cmds.extend([(4, gid) for gid in group_ids])
                     new_user.sudo().write({"group_ids": group_cmds})
                 _logger.info("CAS portal user created: %s (id=%d)", login, new_user.id)
+
+            # Synchroniser les champs LDAP vers le partner
+            new_user._cas_sync_partner_fields(validation)
 
             return new_user.login
 
@@ -279,7 +283,49 @@ class ResUsers(models.Model):
             _logger.info("CAS user %s updated as portal", self.login)
 
         self.sudo().write(vals)
+
+        # Synchroniser les champs LDAP vers le partner
+        self._cas_sync_partner_fields(validation)
+
         _logger.info("CAS user updated: %s", self.login)
+
+    def _cas_sync_partner_fields(self, validation):
+        """
+        Synchronise les attributs LDAP (reçus via CAS) vers le res.partner associé.
+
+        Champs synchronisés :
+        - sn (surname) → pas de champ séparé, contribue au name
+        - givenName → pas de champ séparé, contribue au name
+        - title → function (fonction/poste)
+        - employeeType → is_enseignant (si 'faculty')
+        - ldap_synced → True (flag de synchronisation)
+        """
+        self.ensure_one()
+        partner = self.partner_id
+        if not partner:
+            return
+
+        partner_vals = {"ldap_synced": True}
+
+        # Synchroniser la fonction depuis LDAP title
+        title = self._cas_extract_attr(validation, "title")
+        if title:
+            partner_vals["function"] = title
+
+        # Déterminer is_enseignant depuis employeeType
+        employee_type = self._cas_extract_attr(validation, "employeeType")
+        if employee_type:
+            partner_vals["is_enseignant"] = employee_type.lower() == "faculty"
+
+        partner.sudo().write(partner_vals)
+
+    @staticmethod
+    def _cas_extract_attr(validation, attr_name):
+        """Extrait un attribut CAS, gère le cas où la valeur est une liste."""
+        val = validation.get(attr_name)
+        if isinstance(val, list):
+            return val[0] if val else ""
+        return val or ""
 
     @api.model
     def _cas_resolve_groups(self, cas_attributes, provider_id=None):
