@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <!-- ============================================================ -->
+    <!-- Client Action — Dashboard                                    -->
+    <!-- ============================================================ -->
+    <record id="isic_dashboard_action" model="ir.actions.client">
+        <field name="name">Dashboard ISIC</field>
+        <field name="tag">isic_dashboard.Dashboard</field>
+        <field name="target">main</field>
+    </record>
+
+    <!-- ============================================================ -->
+    <!-- Menus                                                        -->
+    <!-- ============================================================ -->
+    <menuitem
+        id="isic_dashboard_menu_root"
+        name="Dashboard"
+        sequence="1"
+        action="isic_dashboard_action"
+        web_icon="isic_dashboard,static/description/icon.png"
+    />
+
+    <menuitem
+        id="isic_dashboard_menu_config"
+        name="Configuration"
+        parent="isic_dashboard_menu_root"
+        sequence="90"
+        groups="isic_base.group_isic_direction"
+    />
+
+    <menuitem
+        id="isic_dashboard_menu_sections"
+        name="Sections"
+        parent="isic_dashboard_menu_config"
+        action="isic_dashboard_section_action"
+        sequence="10"
+    />
+</odoo>
