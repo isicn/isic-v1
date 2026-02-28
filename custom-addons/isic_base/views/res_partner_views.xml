@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <!-- ============================================================ -->
+    <!-- Form : onglet Profil Personnel                                -->
+    <!-- ============================================================ -->
+    <record id="view_partner_form_isic_profil" model="ir.ui.view">
+        <field name="name">res.partner.form.isic.profil</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_partner_form" />
+        <field name="priority">50</field>
+        <field name="arch" type="xml">
+            <xpath expr="//page[@name='internal_notes']" position="after">
+
+                <!-- ── Profil personnel ── -->
+                <page name="isic_profil" string="Profil Personnel">
+                    <group>
+                        <group name="profil_identite">
+                            <field name="cin" />
+                            <field name="genre" />
+                            <field name="date_naissance" />
+                            <field name="lieu_naissance" />
+                            <field name="nationalite_id" options="{'no_create': True}" />
+                            <field name="situation_familiale" />
+                        </group>
+                        <group name="profil_contact">
+                            <field name="adresse_personnelle" />
+                            <field name="telephone_personnel" />
+                            <separator string="Contact d'urgence" />
+                            <field name="contact_urgence_nom" />
+                            <field name="contact_urgence_tel" />
+                        </group>
+                    </group>
+                    <group invisible="not ldap_synced" class="text-muted small">
+                        <div colspan="2">
+                            <i class="fa fa-info-circle" title="Info LDAP" />
+                            Les champs Nom, Email et Fonction sont synchronisés
+                            depuis le référentiel LDAP à chaque connexion CAS.
+                        </div>
+                        <field name="ldap_synced" invisible="1" />
+                    </group>
+                </page>
+
+                <!-- ── Enseignant ── -->
+                <page name="isic_enseignant" string="Enseignant"
+                      invisible="not is_enseignant">
+                    <group>
+                        <group name="enseignant_info">
+                            <field name="is_enseignant" invisible="1" />
+                            <field name="grade" />
+                            <field name="specialite" />
+                        </group>
+                        <group name="enseignant_admin">
+                            <field name="date_recrutement" />
+                            <field name="volume_horaire_statutaire" />
+                        </group>
+                    </group>
+                </page>
+
+                <!-- ── Fiscal marocain ── -->
+                <page name="isic_fiscal" string="Fiscal Marocain"
+                      invisible="not is_company">
+                    <group>
+                        <group name="fiscal_identifiants">
+                            <field name="ice" />
+                            <field name="identifiant_fiscal" />
+                            <field name="rc" />
+                            <field name="ville_rc" />
+                        </group>
+                        <group name="fiscal_social">
+                            <field name="cnss" />
+                            <field name="patente" />
+                            <field name="tp" />
+                        </group>
+                    </group>
+                </page>
+
+            </xpath>
+
+            <!-- Checkbox Enseignant dans le header du formulaire -->
+            <xpath expr="//field[@name='function']" position="after">
+                <field name="is_enseignant" widget="boolean_toggle"
+                       invisible="is_company" />
+            </xpath>
+        </field>
+    </record>
+
+    <!-- ============================================================ -->
+    <!-- List : colonnes supplémentaires                               -->
+    <!-- ============================================================ -->
+    <record id="view_partner_list_isic" model="ir.ui.view">
+        <field name="name">res.partner.list.isic</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_partner_tree" />
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='email']" position="after">
+                <field name="cin" optional="hide" />
+                <field name="ice" optional="hide" />
+            </xpath>
+        </field>
+    </record>
+
+    <!-- ============================================================ -->
+    <!-- Search : filtres                                              -->
+    <!-- ============================================================ -->
+    <record id="view_partner_search_isic" model="ir.ui.view">
+        <field name="name">res.partner.search.isic</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_res_partner_filter" />
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='name']" position="after">
+                <field name="cin" />
+                <field name="ice" />
+            </xpath>
+            <xpath expr="//filter[@name='type_company']" position="after">
+                <filter name="is_enseignant" string="Enseignants"
+                        domain="[('is_enseignant', '=', True)]" />
+            </xpath>
+        </field>
+    </record>
+</odoo>

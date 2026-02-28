@@ -1,1 +1,1 @@
-from . import isic_annee_academique, res_config_settings, res_users
+from . import isic_annee_academique, res_config_settings, res_partner, res_users
