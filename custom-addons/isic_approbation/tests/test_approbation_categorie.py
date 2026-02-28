@@ -292,9 +292,7 @@ class TestPostInitMigration(TransactionCase):
         _post_init_hook(self.env)
 
         # Check approbateurs were created
-        appros = self.Approbateur.search(
-            [("categorie_id", "=", cat.id)], order="sequence"
-        )
+        appros = self.Approbateur.search([("categorie_id", "=", cat.id)], order="sequence")
         self.assertEqual(len(appros), 2)
         # First appro (from tier with highest seq=20, processed first) should link to tier1
         self.assertEqual(appros[0].tier_definition_id, tier1)
