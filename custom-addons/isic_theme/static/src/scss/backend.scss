@@ -266,7 +266,8 @@
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
     border: 1px solid rgba(0, 0, 0, 0.08);
     padding: 0.15rem 0;
-    overflow: hidden;
+    max-height: 80vh;
+    overflow-y: auto;
 
     .dropdown-item {
         border-radius: 0;
