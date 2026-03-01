@@ -1,16 +1,14 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <templates xml:space="preserve">
     <t t-name="isic_ged.PreviewField">
-        <div t-if="previewType === 'pdf'" class="o_isic_preview_pdf">
+        <div t-if="previewType === 'pdf'" class="o_isic_preview_pdf w-100" style="min-height:700px;">
             <iframe t-att-src="previewUrl"
-                class="w-100 border-0 rounded"
-                style="height:700px;"
-                title="Aperçu PDF" />
+                style="width:100%;height:700px;border:none;border-radius:8px;" />
         </div>
-        <div t-elif="previewType === 'image'" class="o_isic_preview_image text-center">
+        <div t-elif="previewType === 'image'" class="o_isic_preview_image text-center w-100">
             <img t-att-src="imageUrl"
-                class="rounded mw-100"
-                style="max-height:500px;"
+                class="rounded img-fluid"
+                style="max-height:600px;"
                 alt="Aperçu image" />
         </div>
     </t>
