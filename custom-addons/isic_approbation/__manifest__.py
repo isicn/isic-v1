@@ -12,7 +12,6 @@
         "security/ir.model.access.csv",
         "data/isic_approbation_activity_data.xml",
         "data/isic_approbation_categorie_data.xml",
-        "data/isic_approbation_tier_data.xml",
         "views/isic_approbation_demande_views.xml",
         "views/isic_approbation_categorie_views.xml",
         "views/isic_approbation_menus.xml",

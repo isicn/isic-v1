@@ -153,12 +153,14 @@ class IsicApprobationCategorie(models.Model):
                     appro.tier_definition_id = tier
 
             # Supprimer les tier.definition orphelins liés à cette catégorie
+            # Attrape les deux formats de domaine: par ID et par code
             existing_tier_ids = approbateurs.mapped("tier_definition_id").ids
-            # Suffixe ")]" empêche les faux positifs (cat.id=1 ne matche pas id=10)
             orphans = TierDef.search(
                 [
                     ("model_id", "=", model_id),
+                    "|",
                     ("definition_domain", "like", f"'categorie_id', '=', {cat.id})]"),
+                    ("definition_domain", "like", f"'categorie_id.code', '=', '{cat.code}')]"),
                     ("id", "not in", existing_tier_ids),
                 ]
             )

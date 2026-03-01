@@ -56,21 +56,4 @@
         sequence="10"
     />
 
-    <!-- Lien vers la config tier.definition filtrée sur notre modèle -->
-    <record id="isic_approbation_tier_def_action" model="ir.actions.act_window">
-        <field name="name">Circuits d'approbation</field>
-        <field name="res_model">tier.definition</field>
-        <field name="view_mode">list,form</field>
-        <field name="domain">[('model', '=', 'isic.approbation.demande')]</field>
-        <field name="context" eval="{'default_model_id': ref('model_isic_approbation_demande')}" />
-    </record>
-
-    <menuitem
-        id="isic_approbation_menu_tier_defs"
-        name="Circuits d'approbation"
-        parent="isic_approbation_menu_config"
-        action="isic_approbation_tier_def_action"
-        sequence="20"
-        groups="base.group_no_one"
-    />
 </odoo>
