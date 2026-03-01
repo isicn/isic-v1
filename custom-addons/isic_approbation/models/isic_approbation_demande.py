@@ -118,6 +118,11 @@ class IsicApprobationDemande(models.Model):
         for rec in self:
             if rec.state != "draft":
                 raise UserError(_("Seule une demande en brouillon peut être soumise."))
+            allowed_groups = rec.categorie_id.groupe_demandeur_ids
+            if allowed_groups and not (allowed_groups & rec.demandeur_id.group_ids):
+                raise UserError(
+                    _("Vous n'êtes pas autorisé à soumettre une demande de type « %s ».", rec.categorie_id.name)
+                )
             if rec.name == "/":
                 seq = rec.categorie_id.sequence_id
                 if seq:
