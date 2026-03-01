@@ -87,48 +87,60 @@
                                 readonly="state != 'draft'" />
                         </group>
                     </group>
-                    <group>
-                        <field name="motif"
-                            readonly="state != 'draft'"
-                            placeholder="Décrivez votre demande..." />
-                    </group>
-                    <group>
-                        <field name="observations"
-                            placeholder="Observations complémentaires..." />
-                    </group>
-                    <group>
-                        <field name="piece_jointe" filename="nom_fichier" />
-                        <field name="nom_fichier" invisible="1" />
-                    </group>
-
-                    <!-- Décision -->
-                    <group string="Décision"
-                        invisible="state not in ('approved', 'rejected')">
-                        <group>
-                            <field name="date_decision" />
-                        </group>
-                        <group>
-                            <field name="motif_refus"
-                                invisible="state != 'rejected'" />
-                        </group>
-                    </group>
-
-                    <!-- Tier reviews -->
-                    <separator string="Circuit d'approbation"
-                        invisible="not review_ids" />
-                    <field name="review_ids" widget="tier_validation"
-                        nolabel="1"
-                        invisible="not review_ids">
-                        <list>
-                            <field name="name" />
-                            <field name="sequence" string="Niveau" />
-                            <field name="status" />
-                            <field name="todo_by" />
-                            <field name="done_by" />
-                            <field name="reviewed_date" />
-                            <field name="comment" />
-                        </list>
-                    </field>
+                    <notebook>
+                        <page string="Détails" name="details">
+                            <group>
+                                <field name="motif"
+                                    readonly="state != 'draft'"
+                                    placeholder="Décrivez votre demande..." />
+                            </group>
+                            <group>
+                                <field name="observations"
+                                    placeholder="Observations complémentaires..." />
+                            </group>
+                            <group>
+                                <field name="piece_jointe" filename="nom_fichier" />
+                                <field name="nom_fichier" invisible="1" />
+                            </group>
+                            <!-- Décision -->
+                            <group string="Décision"
+                                invisible="state not in ('approved', 'rejected')">
+                                <group>
+                                    <field name="date_decision" />
+                                </group>
+                                <group>
+                                    <field name="motif_refus"
+                                        invisible="state != 'rejected'" />
+                                </group>
+                            </group>
+                        </page>
+                        <page string="Circuit de validation" name="validation_circuit">
+                            <!-- Brouillon : circuit prévu depuis la catégorie -->
+                            <field name="approbateur_preview_ids"
+                                invisible="state != 'draft'"
+                                nolabel="1" readonly="1">
+                                <list create="0" delete="0">
+                                    <field name="sequence" string="Ordre" />
+                                    <field name="name" string="Approbateur" />
+                                    <field name="review_type" string="Type" />
+                                </list>
+                            </field>
+                            <!-- Soumise+ : circuit réel avec statuts -->
+                            <field name="review_ids" widget="tier_validation"
+                                invisible="state == 'draft'"
+                                nolabel="1">
+                                <list>
+                                    <field name="name" />
+                                    <field name="sequence" string="Niveau" />
+                                    <field name="status" />
+                                    <field name="todo_by" />
+                                    <field name="done_by" />
+                                    <field name="reviewed_date" />
+                                    <field name="comment" />
+                                </list>
+                            </field>
+                        </page>
+                    </notebook>
                 </sheet>
                 <chatter />
             </form>

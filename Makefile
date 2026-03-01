@@ -83,8 +83,15 @@ test:
 ifndef MODULE
 	$(error MODULE requis. Usage: make test MODULE=mon_module)
 endif
-	$(DOCKER_COMPOSE) exec odoo odoo -d test_isic \
-		--test-enable --stop-after-init -i $(MODULE) --log-level=test --no-http
+	$(DOCKER_COMPOSE) exec -T odoo odoo -c /etc/odoo/odoo.conf -d test_isic \
+		--test-enable --stop-after-init -u $(MODULE) --log-level=test --http-port=8099
+
+test-init:
+ifndef MODULE
+	$(error MODULE requis. Usage: make test-init MODULE=mon_module)
+endif
+	$(DOCKER_COMPOSE) exec -T odoo odoo -c /etc/odoo/odoo.conf -d test_isic \
+		--test-enable --stop-after-init -i $(MODULE) --log-level=test --http-port=8099
 
 build:
 	$(DOCKER_COMPOSE) build

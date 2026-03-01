@@ -93,12 +93,24 @@ class IsicApprobationDemande(models.Model):
     date_decision = fields.Datetime(string="Date de décision", readonly=True)
     motif_refus = fields.Text(string="Motif du refus", readonly=True)
 
+    # Circuit preview (computed from category)
+    approbateur_preview_ids = fields.Many2many(
+        "isic.approbation.approbateur",
+        string="Circuit de validation prévu",
+        compute="_compute_approbateur_preview_ids",
+    )
+
     # --- Contraintes ---
     @api.constrains("date_debut", "date_fin")
     def _check_dates(self):
         for rec in self:
             if rec.date_debut and rec.date_fin and rec.date_fin < rec.date_debut:
                 raise UserError(_("La date de fin doit être postérieure à la date de début."))
+
+    @api.depends("categorie_id.approbateur_ids")
+    def _compute_approbateur_preview_ids(self):
+        for rec in self:
+            rec.approbateur_preview_ids = rec.categorie_id.approbateur_ids
 
     # --- Workflow ---
     def action_submit(self):
@@ -115,6 +127,7 @@ class IsicApprobationDemande(models.Model):
             rec.state = "submitted"
             if rec.categorie_id.approbation_requise:
                 rec.with_context(skip_check_state_condition=True).request_validation()
+            rec._sync_review_activities()
 
     def action_approve(self):
         """Marque la demande comme approuvée."""
@@ -142,6 +155,7 @@ class IsicApprobationDemande(models.Model):
                 raise UserError(_("Une demande approuvée ne peut pas être annulée."))
         self.write({"state": "cancelled"})
         self.mapped("review_ids").unlink()
+        self._sync_review_activities()
 
     def action_reset_draft(self):
         """Remise en brouillon (direction uniquement)."""
@@ -153,10 +167,44 @@ class IsicApprobationDemande(models.Model):
             }
         )
         self.mapped("review_ids").unlink()
+        self._sync_review_activities()
 
     @api.model_create_multi
     def create(self, vals_list):
         return super().create(vals_list)
+
+    # --- Activités ---
+    def _sync_review_activities(self):
+        """Synchronise les activités avec l'état des reviews.
+
+        Supprime les activités d'approbation obsolètes et planifie
+        de nouvelles activités pour les approbateurs en attente.
+        """
+        activity_type = self.env.ref(
+            "isic_approbation.mail_activity_type_approbation",
+            raise_if_not_found=False,
+        )
+        if not activity_type:
+            return
+        for rec in self:
+            rec.activity_ids.filtered(lambda a, at=activity_type: a.activity_type_id == at).unlink()
+            if rec.state != "submitted":
+                continue
+            # S'assurer que les reviews waiting sont avancées en pending
+            rec.review_ids._advance_pending_status()
+            pending_reviews = rec.review_ids.filtered(lambda r: r.status == "pending")
+            for review in pending_reviews:
+                for user in review.reviewer_ids:
+                    rec.activity_schedule(
+                        act_type_xmlid="isic_approbation.mail_activity_type_approbation",
+                        summary=_("Approbation requise : %s", rec.name or rec.categorie_id.name),
+                        note=_(
+                            "La demande %(ref)s de %(user)s nécessite votre approbation.",
+                            ref=rec.name,
+                            user=rec.demandeur_id.name,
+                        ),
+                        user_id=user.id,
+                    )
 
     # --- tier.validation overrides ---
     def _check_auto_transition(self):
@@ -173,14 +221,16 @@ class IsicApprobationDemande(models.Model):
                 rec.with_context(skip_tier_check=True).action_reject(motif="; ".join(comments) if comments else False)
 
     def _validate_tier(self, tiers=False):
-        """Override pour déclencher l'auto-transition après validation."""
+        """Override pour déclencher l'auto-transition et les activités après validation."""
         super()._validate_tier(tiers)
         self._check_auto_transition()
+        self._sync_review_activities()
 
     def _rejected_tier(self, tiers=False):
-        """Override pour déclencher l'auto-transition après rejet."""
+        """Override pour déclencher l'auto-transition et les activités après rejet."""
         super()._rejected_tier(tiers)
         self._check_auto_transition()
+        self._sync_review_activities()
 
     def _get_under_validation_exceptions(self):
         """Champs modifiables pendant la validation."""

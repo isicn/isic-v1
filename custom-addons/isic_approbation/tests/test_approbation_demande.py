@@ -8,11 +8,40 @@ class TestApprobationDemande(TransactionCase):
         super().setUpClass()
         cls.Demande = cls.env["isic.approbation.demande"]
         cls.Categorie = cls.env["isic.approbation.categorie"]
+        cls.group_dept = cls.env.ref("isic_base.group_isic_departement")
+        cls.group_sg = cls.env.ref("isic_base.group_isic_secretariat")
+        cls.activity_type = cls.env.ref("isic_approbation.mail_activity_type_approbation")
+        # Reviewer user in dept group
+        cls.reviewer_user = cls.env["res.users"].create(
+            {
+                "name": "Test Reviewer",
+                "login": "test_reviewer_appro",
+                "group_ids": [(4, cls.group_dept.id)],
+            }
+        )
         cls.cat_conge = cls.Categorie.create(
             {
                 "name": "Congé Test",
                 "code": "TEST_CONGE",
                 "approbation_requise": True,
+            }
+        )
+        cls.cat_with_circuit = cls.Categorie.create(
+            {
+                "name": "Circuit Test",
+                "code": "TEST_CIRCUIT",
+                "approbation_requise": True,
+                "approbateur_ids": [
+                    (
+                        0,
+                        0,
+                        {
+                            "sequence": 10,
+                            "review_type": "group",
+                            "reviewer_group_id": cls.group_dept.id,
+                        },
+                    ),
+                ],
             }
         )
         cls.cat_simple = cls.Categorie.create(
@@ -122,3 +151,61 @@ class TestApprobationDemande(TransactionCase):
         self.assertEqual(dem.state, "rejected")
         self.assertEqual(dem.motif_refus, "Pas de budget")
         self.assertTrue(dem.date_decision)
+
+    # --- Activity tests ---
+
+    def test_submit_creates_activity(self):
+        """Submitting a demand with circuit creates activities for pending reviewers."""
+        dem = self._create_demande(categorie=self.cat_with_circuit)
+        dem.action_submit()
+        self.assertEqual(dem.state, "submitted")
+        self.assertTrue(dem.review_ids, "Reviews should be created")
+        activities = dem.activity_ids.filtered(
+            lambda a: a.activity_type_id == self.activity_type
+        )
+        self.assertTrue(activities, "Activity should be created for reviewer")
+        self.assertIn(self.reviewer_user, activities.mapped("user_id"))
+
+    def test_submit_no_circuit_no_activity(self):
+        """Submitting without approbation_requise creates no activity."""
+        dem = self._create_demande(categorie=self.cat_simple)
+        dem.action_submit()
+        activities = dem.activity_ids.filtered(
+            lambda a: a.activity_type_id == self.activity_type
+        )
+        self.assertFalse(activities)
+
+    def test_cancel_cleans_activities(self):
+        """Cancelling a demand removes approval activities."""
+        dem = self._create_demande(categorie=self.cat_with_circuit)
+        dem.action_submit()
+        self.assertTrue(dem.activity_ids)
+        dem.action_cancel()
+        activities = dem.activity_ids.filtered(
+            lambda a: a.activity_type_id == self.activity_type
+        )
+        self.assertFalse(activities)
+
+    def test_reset_draft_cleans_activities(self):
+        """Resetting to draft removes approval activities."""
+        dem = self._create_demande(categorie=self.cat_with_circuit)
+        dem.action_submit()
+        dem.write({"state": "rejected"})
+        dem.action_reset_draft()
+        activities = dem.activity_ids.filtered(
+            lambda a: a.activity_type_id == self.activity_type
+        )
+        self.assertFalse(activities)
+
+    def test_approbateur_preview_ids(self):
+        """approbateur_preview_ids reflects category's approbateurs."""
+        dem = self._create_demande(categorie=self.cat_with_circuit)
+        self.assertEqual(
+            dem.approbateur_preview_ids,
+            self.cat_with_circuit.approbateur_ids,
+        )
+
+    def test_approbateur_preview_empty_for_no_circuit(self):
+        """approbateur_preview_ids is empty when category has no approbateurs."""
+        dem = self._create_demande(categorie=self.cat_simple)
+        self.assertFalse(dem.approbateur_preview_ids)
