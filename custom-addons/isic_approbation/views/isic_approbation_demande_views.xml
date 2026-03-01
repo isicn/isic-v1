@@ -62,7 +62,7 @@
                         <group name="info_left">
                             <field name="categorie_id"
                                 readonly="state != 'draft'"
-                                domain="['|', ('groupe_demandeur_ids', '=', False), ('groupe_demandeur_ids.user_ids', 'in', [uid])]" />
+                                domain="[('is_user_allowed', '=', True)]" />
                             <field name="demandeur_id" />
                             <field name="priorite"
                                 widget="priority" />

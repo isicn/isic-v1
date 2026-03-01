@@ -52,6 +52,10 @@ class IsicApprobationCategorie(models.Model):
         string="Groupes autorisés",
         help="Groupes autorisés à créer ce type de demande. Vide = tous les utilisateurs internes.",
     )
+    is_user_allowed = fields.Boolean(
+        compute="_compute_is_user_allowed",
+        search="_search_is_user_allowed",
+    )
 
     approbateur_ids = fields.One2many(
         "isic.approbation.approbateur",
@@ -74,6 +78,36 @@ class IsicApprobationCategorie(models.Model):
         "UNIQUE(code)",
         "Le code de la catégorie doit être unique.",
     )
+
+    @api.depends_context("uid")
+    @api.depends("groupe_demandeur_ids")
+    def _compute_is_user_allowed(self):
+        user_groups = self.env.user.group_ids
+        for rec in self:
+            if not rec.groupe_demandeur_ids:
+                rec.is_user_allowed = True
+            else:
+                rec.is_user_allowed = bool(rec.groupe_demandeur_ids & user_groups)
+
+    def _search_is_user_allowed(self, operator, value):
+        # Normalize: is_user_allowed = True OR is_user_allowed != False
+        positive = (operator == "=" and value) or (operator == "!=" and not value)
+        user_group_ids = self.env.user.group_ids.ids
+        if not user_group_ids:
+            if positive:
+                return [("groupe_demandeur_ids", "=", False)]
+            else:
+                return [("groupe_demandeur_ids", "!=", False)]
+        # Categories with no restriction OR user is in an allowed group
+        all_cats = self.search([])
+        allowed_ids = []
+        for cat in all_cats:
+            if not cat.groupe_demandeur_ids or (cat.groupe_demandeur_ids & self.env.user.group_ids):
+                allowed_ids.append(cat.id)
+        if positive:
+            return [("id", "in", allowed_ids)]
+        else:
+            return [("id", "not in", allowed_ids)]
 
     @api.depends("demande_ids")
     def _compute_demande_count(self):
