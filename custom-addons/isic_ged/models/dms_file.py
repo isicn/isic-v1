@@ -359,7 +359,20 @@ class DmsFile(models.Model):
         return "\n".join(parts)
 
     def _update_fulltext_index(self):
-        """Update the PostgreSQL tsvector column for full-text search."""
+        """Update the PostgreSQL tsvector column for full-text search.
+
+        The tsvector column is created by post_init_hook (first install).
+        On module update, if the column is missing, create it on the fly.
+        """
+        self.env.cr.execute(
+            "SELECT 1 FROM information_schema.columns WHERE table_name = 'dms_file' AND column_name = 'fulltext_tsvector'"
+        )
+        if not self.env.cr.fetchone():
+            self.env.cr.execute("ALTER TABLE dms_file ADD COLUMN fulltext_tsvector tsvector")
+            self.env.cr.execute(
+                "CREATE INDEX IF NOT EXISTS idx_dms_file_fulltext ON dms_file USING gin(fulltext_tsvector)"
+            )
+            _logger.info("Created fulltext_tsvector column and GIN index on dms_file")
         for rec in self:
             if rec.fulltext_content:
                 self.env.cr.execute(
