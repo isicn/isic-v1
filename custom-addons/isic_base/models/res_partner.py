@@ -22,7 +22,7 @@ class ResPartner(models.Model):
         ],
         string="Situation familiale",
     )
-    nationalite_id = fields.Many2one("res.country", string="Nationalité")
+    nationalite_id = fields.Many2one("res.country", string="Nationalité", ondelete="set null")
     adresse_personnelle = fields.Text(string="Adresse personnelle")
     telephone_personnel = fields.Char(string="Téléphone personnel")
     contact_urgence_nom = fields.Char(string="Contact d'urgence")

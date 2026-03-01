@@ -192,28 +192,6 @@ class ResUsers(models.Model):
             _logger.exception("Failed to create CAS user %s: %s", login, e)
             raise AccessDenied(_("Failed to create user account: %s") % str(e))
 
-    def _cas_create_partner(self, login, name, email):
-        """
-        Crée ou trouve un partner pour un nouvel utilisateur CAS.
-        """
-        Partner = self.env["res.partner"].sudo()
-
-        # Chercher un partner existant par email
-        partner = None
-        if email:
-            partner = Partner.search([("email", "=", email)], limit=1)
-
-        if not partner:
-            partner = Partner.create(
-                {
-                    "name": name or login,
-                    "email": email or "",
-                }
-            )
-            _logger.info("Created partner for CAS user: %s", partner.name)
-
-        return partner
-
     def _cas_update_user(self, provider, validation, cas_uid):
         """
         Met à jour un utilisateur existant avec les données CAS.

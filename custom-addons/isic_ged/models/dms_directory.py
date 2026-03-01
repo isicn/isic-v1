@@ -16,4 +16,5 @@ class DmsDirectory(models.Model):
     annee_academique_id = fields.Many2one(
         "isic.annee.academique",
         string="Année académique",
+        ondelete="set null",
     )

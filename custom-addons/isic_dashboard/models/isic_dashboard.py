@@ -1,11 +1,8 @@
-import logging
 from datetime import date
 
 from dateutil.relativedelta import relativedelta
 
 from odoo import api, models
-
-_logger = logging.getLogger(__name__)
 
 
 class IsicDashboard(models.AbstractModel):

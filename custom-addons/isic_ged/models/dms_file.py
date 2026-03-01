@@ -1,4 +1,4 @@
-from odoo import api, fields, models
+from odoo import _, api, fields, models
 from odoo.exceptions import UserError
 
 
@@ -18,6 +18,7 @@ class DmsFile(models.Model):
         "isic.document.type",
         string="Type de document",
         tracking=True,
+        ondelete="set null",
     )
     ged_state = fields.Selection(
         [
@@ -43,11 +44,13 @@ class DmsFile(models.Model):
         "isic.annee.academique",
         string="Année académique",
         tracking=True,
+        ondelete="set null",
     )
     valideur_id = fields.Many2one(
         "res.users",
         string="Validé par",
         readonly=True,
+        ondelete="set null",
     )
     date_validation = fields.Datetime(
         string="Date de validation",
@@ -57,7 +60,7 @@ class DmsFile(models.Model):
     def action_validate(self):
         for rec in self:
             if rec.ged_state != "draft":
-                raise UserError("Seul un document en brouillon peut être validé.")
+                raise UserError(_("Seul un document en brouillon peut être validé."))
             rec.write(
                 {
                     "ged_state": "validated",
@@ -69,12 +72,12 @@ class DmsFile(models.Model):
     def action_archive_ged(self):
         for rec in self:
             if rec.document_type_id.validation_required and rec.ged_state != "validated":
-                raise UserError("Ce type de document nécessite une validation avant classement.")
+                raise UserError(_("Ce type de document nécessite une validation avant classement."))
             rec.write({"ged_state": "archived"})
 
     def action_reset_draft(self):
         if not self.env.user.has_group("isic_base.group_isic_direction"):
-            raise UserError("Seule la direction peut remettre un document en brouillon.")
+            raise UserError(_("Seule la direction peut remettre un document en brouillon."))
         self.write({"ged_state": "draft", "valideur_id": False, "date_validation": False})
 
     @api.onchange("document_type_id")

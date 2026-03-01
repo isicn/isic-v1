@@ -1,4 +1,4 @@
-from odoo import api, fields, models
+from odoo import _, api, fields, models
 from odoo.exceptions import ValidationError
 
 
@@ -51,6 +51,7 @@ class IsicAnneeAcademique(models.Model):
         "res.company",
         string="Société",
         default=lambda self: self.env.company,
+        ondelete="restrict",
     )
 
     _unique_code_company = models.Constraint(
@@ -67,7 +68,7 @@ class IsicAnneeAcademique(models.Model):
     def _check_dates(self):
         for rec in self:
             if rec.date_start and rec.date_end and rec.date_start >= rec.date_end:
-                raise ValidationError("La date de début doit être antérieure à la date de fin.")
+                raise ValidationError(_("La date de début doit être antérieure à la date de fin."))
 
     @api.constrains("state")
     def _check_single_open(self):
@@ -81,7 +82,7 @@ class IsicAnneeAcademique(models.Model):
                     ]
                 )
                 if other:
-                    raise ValidationError("Une seule année académique peut être en cours par société.")
+                    raise ValidationError(_("Une seule année académique peut être en cours par société."))
 
     def action_ouvrir(self):
         self.write({"state": "open"})

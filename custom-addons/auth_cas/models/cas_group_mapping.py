@@ -58,10 +58,13 @@ class CASGroupMapping(models.Model):
         "auth.oauth.provider",
         string="CAS Provider",
         domain=[("is_cas_provider", "=", True)],
+        ondelete="set null",
         help="Si défini, ce mapping ne s'applique qu'à ce provider CAS",
     )
 
-    company_id = fields.Many2one("res.company", string="Company", default=lambda self: self.env.company)
+    company_id = fields.Many2one(
+        "res.company", string="Company", default=lambda self: self.env.company, ondelete="restrict"
+    )
 
     notes = fields.Text(string="Notes", help="Notes internes sur ce mapping")
 

@@ -7,7 +7,7 @@ class ResUsers(models.Model):
     sidebar_type = fields.Selection(default="invisible")
     color_scheme = fields.Selection(
         [("light", "Light"), ("dark", "Dark")],
-        string="Color Mode",
+        string="Mode couleur",
         default="light",
     )
 

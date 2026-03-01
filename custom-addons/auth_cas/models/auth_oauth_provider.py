@@ -46,7 +46,7 @@ Exemple: {"login": "uid", "email": "mail", "name": "cn", "groups": "memberOf"}""
         string="OAuth Scopes", default="openid profile email", help="Scopes OAuth2 à demander au serveur CAS"
     )
 
-    @api.depends("cas_server_url")
+    @api.depends("cas_server_url", "is_cas_provider")
     def _compute_cas_endpoints(self):
         """Calcule les endpoints CAS à partir de l'URL de base"""
         for provider in self:

@@ -22,10 +22,12 @@ class IsicApprobationApprobateur(models.Model):
     reviewer_group_id = fields.Many2one(
         "res.groups",
         string="Groupe approbateur",
+        ondelete="set null",
     )
     reviewer_id = fields.Many2one(
         "res.users",
         string="Utilisateur approbateur",
+        ondelete="set null",
     )
     has_comment = fields.Boolean(string="Commentaire", default=True)
     tier_definition_id = fields.Many2one(

@@ -160,9 +160,7 @@ class TestApprobationDemande(TransactionCase):
         dem.action_submit()
         self.assertEqual(dem.state, "submitted")
         self.assertTrue(dem.review_ids, "Reviews should be created")
-        activities = dem.activity_ids.filtered(
-            lambda a: a.activity_type_id == self.activity_type
-        )
+        activities = dem.activity_ids.filtered(lambda a: a.activity_type_id == self.activity_type)
         self.assertTrue(activities, "Activity should be created for reviewer")
         self.assertIn(self.reviewer_user, activities.mapped("user_id"))
 
@@ -170,9 +168,7 @@ class TestApprobationDemande(TransactionCase):
         """Submitting without approbation_requise creates no activity."""
         dem = self._create_demande(categorie=self.cat_simple)
         dem.action_submit()
-        activities = dem.activity_ids.filtered(
-            lambda a: a.activity_type_id == self.activity_type
-        )
+        activities = dem.activity_ids.filtered(lambda a: a.activity_type_id == self.activity_type)
         self.assertFalse(activities)
 
     def test_cancel_cleans_activities(self):
@@ -181,9 +177,7 @@ class TestApprobationDemande(TransactionCase):
         dem.action_submit()
         self.assertTrue(dem.activity_ids)
         dem.action_cancel()
-        activities = dem.activity_ids.filtered(
-            lambda a: a.activity_type_id == self.activity_type
-        )
+        activities = dem.activity_ids.filtered(lambda a: a.activity_type_id == self.activity_type)
         self.assertFalse(activities)
 
     def test_reset_draft_cleans_activities(self):
@@ -192,9 +186,7 @@ class TestApprobationDemande(TransactionCase):
         dem.action_submit()
         dem.write({"state": "rejected"})
         dem.action_reset_draft()
-        activities = dem.activity_ids.filtered(
-            lambda a: a.activity_type_id == self.activity_type
-        )
+        activities = dem.activity_ids.filtered(lambda a: a.activity_type_id == self.activity_type)
         self.assertFalse(activities)
 
     def test_approbateur_preview_ids(self):

@@ -1,7 +1,7 @@
 import logging
 
 from odoo import _, api, fields, models
-from odoo.exceptions import UserError
+from odoo.exceptions import UserError, ValidationError
 
 _logger = logging.getLogger(__name__)
 
@@ -105,7 +105,7 @@ class IsicApprobationDemande(models.Model):
     def _check_dates(self):
         for rec in self:
             if rec.date_debut and rec.date_fin and rec.date_fin < rec.date_debut:
-                raise UserError(_("La date de fin doit être postérieure à la date de début."))
+                raise ValidationError(_("La date de fin doit être postérieure à la date de début."))
 
     @api.depends("categorie_id.approbateur_ids")
     def _compute_approbateur_preview_ids(self):
