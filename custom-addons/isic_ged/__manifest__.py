@@ -29,6 +29,7 @@
     "assets": {
         "web.assets_backend": [
             "isic_ged/static/src/scss/kanban.scss",
+            "isic_ged/static/src/scss/preview.scss",
             "isic_ged/static/src/components/preview_field/preview_field.js",
             "isic_ged/static/src/components/preview_field/preview_field.xml",
         ],

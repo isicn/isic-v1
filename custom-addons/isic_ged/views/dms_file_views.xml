@@ -87,7 +87,7 @@
                 </page>
                 <page string="Aperçu" name="page_preview" invisible="preview_type == 'none'">
                     <field name="preview_type" invisible="1" />
-                    <div class="w-100">
+                    <div class="o_isic_preview_container">
                         <field name="preview_type" widget="preview_embed" nolabel="1" />
                         <div class="mt-2">
                             <button name="action_preview"

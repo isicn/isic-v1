@@ -1,0 +1,30 @@
+// ==========================================================================
+// GED Preview — Force full width for embedded PDF/image preview in form view
+// ==========================================================================
+
+.o_form_view {
+    .o_isic_preview_container {
+        display: block;
+        width: 100%;
+        max-width: 100%;
+    }
+
+    // Force the field widget wrapper to be full-width block element
+    .o_isic_preview_container .o_field_widget {
+        display: block !important;
+        width: 100% !important;
+        max-width: none !important;
+    }
+
+    .o_isic_preview_pdf,
+    .o_isic_preview_image {
+        display: block !important;
+        width: 100% !important;
+        max-width: none !important;
+    }
+
+    .o_isic_preview_pdf iframe {
+        display: block;
+        width: 100% !important;
+    }
+}
