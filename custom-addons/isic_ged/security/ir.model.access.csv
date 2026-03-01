@@ -14,3 +14,10 @@ access_dms_tag_user,dms_tag_user,dms.model_dms_tag,base.group_user,1,0,0,0
 access_dms_category_user,dms_category_user,dms.model_dms_category,base.group_user,1,0,0,0
 access_dms_storage_user,dms_storage_user,dms.model_dms_storage,base.group_user,1,0,0,0
 access_dms_access_group_user,dms_access_group_user,dms.model_dms_access_group,base.group_user,1,0,0,0
+
+access_document_version_user,document_version_user,model_isic_document_version,base.group_user,1,0,0,0
+access_document_version_scolarite,document_version_scolarite,model_isic_document_version,isic_base.group_isic_scolarite,1,1,1,0
+access_document_version_direction,document_version_direction,model_isic_document_version,isic_base.group_isic_direction,1,1,1,1
+
+access_classification_rule_user,classification_rule_user,model_isic_document_classification_rule,base.group_user,1,0,0,0
+access_classification_rule_direction,classification_rule_direction,model_isic_document_classification_rule,isic_base.group_isic_direction,1,1,1,1

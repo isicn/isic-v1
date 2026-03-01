@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <!-- ============================================================ -->
+    <!-- Form                                                         -->
+    <!-- ============================================================ -->
+    <record id="view_isic_document_version_form" model="ir.ui.view">
+        <field name="name">isic.document.version.form</field>
+        <field name="model">isic.document.version</field>
+        <field name="arch" type="xml">
+            <form string="Version du document" create="false" edit="false">
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="version_number" />
+                            <field name="name" />
+                            <field name="mimetype" />
+                        </group>
+                        <group>
+                            <field name="author_id" />
+                            <field name="date" />
+                            <field name="human_size" />
+                            <field name="checksum" />
+                        </group>
+                    </group>
+                    <group>
+                        <field name="comment" />
+                    </group>
+                    <group>
+                        <field name="content" filename="name" />
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- ============================================================ -->
+    <!-- List                                                         -->
+    <!-- ============================================================ -->
+    <record id="view_isic_document_version_list" model="ir.ui.view">
+        <field name="name">isic.document.version.list</field>
+        <field name="model">isic.document.version</field>
+        <field name="arch" type="xml">
+            <list create="false" edit="false">
+                <field name="version_number" />
+                <field name="name" />
+                <field name="author_id" />
+                <field name="date" />
+                <field name="human_size" />
+                <field name="comment" />
+            </list>
+        </field>
+    </record>
+</odoo>

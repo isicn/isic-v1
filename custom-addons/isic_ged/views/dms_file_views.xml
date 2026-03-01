@@ -39,24 +39,81 @@
                     statusbar_visible="draft,validated,archived"
                 />
             </xpath>
-            <!-- GED metadata group after settings -->
+            <!-- Preview button after settings (always visible, compact) -->
             <xpath expr="//group[@name='settings']" position="after">
-                <group name="ged_metadata" string="Métadonnées GED">
+                <field name="preview_type" invisible="1" />
+                <div invisible="preview_type == 'none'" class="mb-3">
+                    <button name="action_preview"
+                        string="Prévisualiser le document"
+                        type="object"
+                        class="btn btn-outline-primary"
+                        icon="fa-eye"
+                    />
+                </div>
+            </xpath>
+            <!-- GED tabs in notebook (before native Meta tab) -->
+            <xpath expr="//notebook" position="inside">
+                <page string="Métadonnées GED" name="page_ged_metadata">
                     <group>
-                        <field name="document_type_id" />
-                        <field name="reference" />
+                        <group>
+                            <field name="document_type_id" />
+                            <field name="reference" />
+                            <field name="auto_classified" invisible="not auto_classified" />
+                        </group>
+                        <group>
+                            <field name="date_document" />
+                            <field name="annee_academique_id" />
+                        </group>
+                    </group>
+                </page>
+                <page string="Validation" name="page_ged_validation" invisible="ged_state == 'draft'">
+                    <group>
+                        <group>
+                            <field name="valideur_id" />
+                            <field name="date_validation" />
+                        </group>
+                    </group>
+                </page>
+                <page string="Versions" name="page_versions">
+                    <field name="version_ids" mode="list" readonly="1">
+                        <list create="false" edit="false" delete="false">
+                            <field name="version_number" />
+                            <field name="name" />
+                            <field name="author_id" />
+                            <field name="date" />
+                            <field name="human_size" />
+                            <field name="comment" />
+                            <button name="action_restore"
+                                string="Restaurer"
+                                type="object"
+                                icon="fa-undo"
+                                groups="isic_base.group_isic_scolarite"
+                                confirm="Restaurer cette version ? Le contenu actuel sera sauvegardé comme nouvelle version."
+                            />
+                        </list>
+                    </field>
+                    <group>
+                        <field name="version_count" />
+                        <field name="current_version" />
+                    </group>
+                </page>
+                <page string="Indexation" name="page_fulltext" groups="isic_base.group_isic_direction">
+                    <group>
+                        <field name="fulltext_indexed" />
+                        <field name="fulltext_error" invisible="not fulltext_error" />
                     </group>
                     <group>
-                        <field name="date_document" />
-                        <field name="annee_academique_id" />
+                        <field name="fulltext_content" readonly="1" />
                     </group>
-                </group>
-                <group name="ged_validation" string="Validation" invisible="ged_state == 'draft'">
-                    <group>
-                        <field name="valideur_id" />
-                        <field name="date_validation" />
-                    </group>
-                </group>
+                    <div>
+                        <button name="action_reindex_fulltext"
+                            string="Réindexer"
+                            type="object"
+                            class="btn btn-outline-secondary"
+                            groups="isic_base.group_isic_direction"
+                        />
+                    </div>
+                </page>
             </xpath>
         </field>
     </record>
@@ -78,6 +135,7 @@
                     decoration-success="ged_state == 'validated'"
                     decoration-muted="ged_state == 'archived'"
                     optional="show" />
+                <field name="version_count" optional="hide" string="Versions" />
             </xpath>
         </field>
     </record>
@@ -103,6 +161,8 @@
                 <separator />
                 <filter name="filter_this_year" string="Cette année"
                     domain="[('annee_academique_id.state','=','open')]" />
+                <filter name="filter_fulltext_indexed" string="Indexés"
+                    domain="[('fulltext_indexed','=',True)]" />
                 <separator />
             </xpath>
             <xpath expr="//filter[@name='group_category']" position="after">
@@ -138,9 +198,6 @@
     </record>
 
     <!-- ============================================================ -->
-    <!-- Action + Menu                                                -->
-    <!-- ============================================================ -->
-    <!-- ============================================================ -->
     <!-- Menus                                                        -->
     <!-- ============================================================ -->
     <menuitem
@@ -164,6 +221,19 @@
         action="action_isic_ged_documents"
         sequence="10"
     />
+
+    <!-- ============================================================ -->
+    <!-- Server action: reindex all documents (admin)                 -->
+    <!-- ============================================================ -->
+    <record id="action_reindex_all_fulltext" model="ir.actions.server">
+        <field name="name">Réindexer le contenu full-text</field>
+        <field name="model_id" ref="dms.model_dms_file" />
+        <field name="binding_model_id" ref="dms.model_dms_file" />
+        <field name="binding_view_types">list</field>
+        <field name="state">code</field>
+        <field name="group_ids" eval="[(4, ref('isic_base.group_isic_direction'))]" />
+        <field name="code">records.action_reindex_fulltext()</field>
+    </record>
 
     <!-- ============================================================ -->
     <!-- Hide native DMS menus (users use ISIC GED instead)           -->

@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <!-- ============================================================ -->
+    <!-- Form                                                         -->
+    <!-- ============================================================ -->
+    <record id="view_isic_classification_rule_form" model="ir.ui.view">
+        <field name="name">isic.document.classification.rule.form</field>
+        <field name="model">isic.document.classification.rule</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="name" />
+                            <field name="sequence" />
+                            <field name="active" />
+                        </group>
+                        <group>
+                            <field name="match_type" />
+                            <field name="match_pattern" />
+                            <field name="match_case_sensitive" />
+                        </group>
+                    </group>
+                    <group string="Classification">
+                        <group>
+                            <field name="document_type_id" />
+                        </group>
+                        <group>
+                            <field name="tag_ids" widget="many2many_tags" />
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- ============================================================ -->
+    <!-- List                                                         -->
+    <!-- ============================================================ -->
+    <record id="view_isic_classification_rule_list" model="ir.ui.view">
+        <field name="name">isic.document.classification.rule.list</field>
+        <field name="model">isic.document.classification.rule</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="sequence" widget="handle" />
+                <field name="name" />
+                <field name="match_type" />
+                <field name="match_pattern" />
+                <field name="document_type_id" />
+                <field name="tag_ids" widget="many2many_tags" />
+            </list>
+        </field>
+    </record>
+
+    <!-- ============================================================ -->
+    <!-- Action + Menu                                                -->
+    <!-- ============================================================ -->
+    <record id="action_isic_classification_rule" model="ir.actions.act_window">
+        <field name="name">Règles de classification</field>
+        <field name="res_model">isic.document.classification.rule</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+    <menuitem
+        id="menu_isic_classification_rule"
+        name="Règles de classification"
+        parent="menu_ged_configuration"
+        action="action_isic_classification_rule"
+        sequence="20"
+    />
+</odoo>

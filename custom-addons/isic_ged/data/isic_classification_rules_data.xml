@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data noupdate="1">
+        <!-- Default classification rules based on filename patterns -->
+        <record id="rule_pv" model="isic.document.classification.rule">
+            <field name="name">Procès-verbaux (PV_*)</field>
+            <field name="sequence">1</field>
+            <field name="match_type">filename</field>
+            <field name="match_pattern">PV_*</field>
+            <field name="document_type_id" ref="isic_ged.type_pv" />
+        </record>
+
+        <record id="rule_nds" model="isic.document.classification.rule">
+            <field name="name">Notes de service (NDS_*)</field>
+            <field name="sequence">2</field>
+            <field name="match_type">filename</field>
+            <field name="match_pattern">NDS_*</field>
+            <field name="document_type_id" ref="isic_ged.type_nds" />
+        </record>
+
+        <record id="rule_cir" model="isic.document.classification.rule">
+            <field name="name">Circulaires (CIR_*)</field>
+            <field name="sequence">3</field>
+            <field name="match_type">filename</field>
+            <field name="match_pattern">CIR_*</field>
+            <field name="document_type_id" ref="isic_ged.type_cir" />
+        </record>
+
+        <record id="rule_dec" model="isic.document.classification.rule">
+            <field name="name">Décisions (DEC_*)</field>
+            <field name="sequence">4</field>
+            <field name="match_type">filename</field>
+            <field name="match_pattern">DEC_*</field>
+            <field name="document_type_id" ref="isic_ged.type_dec" />
+        </record>
+
+        <record id="rule_att" model="isic.document.classification.rule">
+            <field name="name">Attestations (ATT_*)</field>
+            <field name="sequence">5</field>
+            <field name="match_type">filename</field>
+            <field name="match_pattern">ATT_*</field>
+            <field name="document_type_id" ref="isic_ged.type_att" />
+        </record>
+
+        <record id="rule_rap" model="isic.document.classification.rule">
+            <field name="name">Rapports (RAP_*)</field>
+            <field name="sequence">6</field>
+            <field name="match_type">filename</field>
+            <field name="match_pattern">RAP_*</field>
+            <field name="document_type_id" ref="isic_ged.type_rap" />
+        </record>
+
+        <record id="rule_cr" model="isic.document.classification.rule">
+            <field name="name">Comptes rendus (CR_*)</field>
+            <field name="sequence">7</field>
+            <field name="match_type">filename</field>
+            <field name="match_pattern">CR_*</field>
+            <field name="document_type_id" ref="isic_ged.type_cr" />
+        </record>
+
+        <record id="rule_conv" model="isic.document.classification.rule">
+            <field name="name">Conventions (CONV_*)</field>
+            <field name="sequence">8</field>
+            <field name="match_type">filename</field>
+            <field name="match_pattern">CONV_*</field>
+            <field name="document_type_id" ref="isic_ged.type_conv" />
+        </record>
+    </data>
+</odoo>
