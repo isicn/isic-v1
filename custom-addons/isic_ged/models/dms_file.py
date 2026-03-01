@@ -123,11 +123,6 @@ class DmsFile(models.Model):
         compute="_compute_preview_type",
         store=True,
     )
-    preview_embed = fields.Html(
-        string="Aperçu",
-        compute="_compute_preview_embed",
-        sanitize=False,
-    )
 
     # ------------------------------------------------------------------
     # V2 — Classification automatique
@@ -142,35 +137,19 @@ class DmsFile(models.Model):
     # Compute methods
     # ==================================================================
 
-    @api.depends("mimetype")
+    @api.depends("mimetype", "extension")
     def _compute_preview_type(self):
-        image_types = {"image/png", "image/jpeg", "image/jpg", "image/gif", "image/svg+xml", "image/webp"}
+        image_mimes = {"image/png", "image/jpeg", "image/jpg", "image/gif", "image/svg+xml", "image/webp"}
+        image_exts = {"png", "jpg", "jpeg", "gif", "svg", "webp"}
         for rec in self:
             mime = rec.mimetype or ""
-            if mime == "application/pdf":
+            ext = (rec.extension or "").lower().lstrip(".")
+            if mime == "application/pdf" or ext == "pdf":
                 rec.preview_type = "pdf"
-            elif mime in image_types:
+            elif mime in image_mimes or ext in image_exts:
                 rec.preview_type = "image"
             else:
                 rec.preview_type = "none"
-
-    @api.depends("preview_type")
-    def _compute_preview_embed(self):
-        for rec in self:
-            if not rec.id:
-                rec.preview_embed = False
-            elif rec.preview_type == "image":
-                rec.preview_embed = (
-                    f'<img src="/web/image/dms.file/{rec.id}/content"'
-                    f' style="max-width:100%;max-height:500px;border-radius:8px;"/>'
-                )
-            elif rec.preview_type == "pdf":
-                rec.preview_embed = (
-                    f'<iframe src="/isic_ged/preview/{rec.id}"'
-                    f' style="width:100%;height:700px;border:none;border-radius:8px;"></iframe>'
-                )
-            else:
-                rec.preview_embed = False
 
     # ==================================================================
     # Preview action (open in new tab)

@@ -35,10 +35,15 @@ class IsicGedPreview(http.Controller):
             return request.not_found()
 
         binary = base64.b64decode(content)
-        mimetype = dms_file.mimetype or "application/octet-stream"
         filename = _sanitize_filename(dms_file.name)
 
-        return request.make_response(
+        # Fix mimetype for PDF files detected as text/plain
+        mimetype = dms_file.mimetype or "application/octet-stream"
+        ext = (dms_file.extension or "").lower().lstrip(".")
+        if ext == "pdf" and mimetype != "application/pdf":
+            mimetype = "application/pdf"
+
+        response = request.make_response(
             binary,
             headers=[
                 ("Content-Type", mimetype),
@@ -46,3 +51,6 @@ class IsicGedPreview(http.Controller):
                 ("Content-Disposition", f'inline; filename="{filename}"'),
             ],
         )
+        # Allow embedding in same-origin iframes
+        response.headers["X-Frame-Options"] = "SAMEORIGIN"
+        return response

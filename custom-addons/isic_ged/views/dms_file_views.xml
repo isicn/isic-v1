@@ -87,7 +87,7 @@
                 </page>
                 <page string="Aperçu" name="page_preview" invisible="preview_type == 'none'">
                     <field name="preview_type" invisible="1" />
-                    <field name="preview_embed" widget="html" readonly="1" class="o_field_html" />
+                    <field name="preview_type" widget="preview_embed" nolabel="1" colspan="2" />
                     <div class="mt-2">
                         <button name="action_preview"
                             string="Ouvrir dans un nouvel onglet"
