@@ -31,6 +31,15 @@ class IsicApprobationCategorie(models.Model):
         help="Délai indicatif en jours pour le traitement d'une demande.",
     )
 
+    auto_sequence = fields.Boolean(
+        string="Séquence automatique",
+        default=True,
+        help="Génère automatiquement une référence pour chaque demande de cette catégorie.",
+    )
+    prefix_code = fields.Char(
+        string="Code préfixe",
+        help="Préfixe utilisé pour la numérotation. Ex: DEM/ATT → DEM/ATT/2026/0001",
+    )
     sequence_id = fields.Many2one(
         "ir.sequence",
         string="Séquence",
@@ -77,11 +86,19 @@ class IsicApprobationCategorie(models.Model):
         for rec in self:
             rec.demande_count = counts.get(rec.id, 0)
 
+    @api.onchange("code")
+    def _onchange_code(self):
+        if self.code and not self.prefix_code:
+            self.prefix_code = f"DEM/{self.code}"
+
     @api.model_create_multi
     def create(self, vals_list):
+        for vals in vals_list:
+            if vals.get("auto_sequence", True) and not vals.get("prefix_code") and vals.get("code"):
+                vals["prefix_code"] = f"DEM/{vals['code']}"
         records = super().create(vals_list)
         for rec in records:
-            if not rec.sequence_id:
+            if rec.auto_sequence and not rec.sequence_id:
                 rec._create_sequence()
         records.filtered("approbateur_ids")._sync_tier_definitions()
         return records
@@ -90,6 +107,11 @@ class IsicApprobationCategorie(models.Model):
         res = super().write(vals)
         if "approbateur_ids" in vals:
             self._sync_tier_definitions()
+        for rec in self:
+            if rec.auto_sequence and not rec.sequence_id:
+                rec._create_sequence()
+            elif rec.auto_sequence and rec.sequence_id and "prefix_code" in vals:
+                rec.sequence_id.sudo().write({"prefix": f"{rec.prefix_code}/%(year)s/"})
         return res
 
     def _sync_tier_definitions(self):
@@ -145,6 +167,7 @@ class IsicApprobationCategorie(models.Model):
     def _create_sequence(self):
         """Crée une séquence ir.sequence pour la numérotation automatique des demandes."""
         self.ensure_one()
+        prefix = self.prefix_code or f"DEM/{self.code}"
         seq = (
             self.env["ir.sequence"]
             .sudo()
@@ -152,7 +175,7 @@ class IsicApprobationCategorie(models.Model):
                 {
                     "name": f"Demande {self.name}",
                     "code": f"isic.approbation.demande.{self.code.lower()}",
-                    "prefix": f"DEM/{self.code}/%(year)s/",
+                    "prefix": f"{prefix}/%(year)s/",
                     "padding": 4,
                     "company_id": False,
                 }

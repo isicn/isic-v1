@@ -37,6 +37,11 @@
                             <field name="approbation_requise" />
                             <field name="nombre_niveaux" />
                             <field name="delai_traitement" />
+                            <field name="auto_sequence" />
+                            <field name="prefix_code"
+                                invisible="not auto_sequence"
+                                required="auto_sequence"
+                                placeholder="DEM/ATT" />
                             <field name="active" invisible="1" />
                         </group>
                     </group>
