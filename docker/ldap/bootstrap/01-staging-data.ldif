@@ -1,0 +1,380 @@
+dn: ou=Groups,dc=isic,dc=ac,dc=ma
+objectClass: organizationalUnit
+ou: Groups
+description: Groupes LDAP
+
+dn: ou=People,dc=isic,dc=ac,dc=ma
+objectClass: organizationalUnit
+ou: People
+description: Tous les utilisateurs ISIC
+
+dn: ou=Services,dc=isic,dc=ac,dc=ma
+objectClass: organizationalUnit
+ou: Services
+description: Comptes de service techniques
+
+dn: cn=direction,ou=Groups,dc=isic,dc=ac,dc=ma
+objectClass: groupOfUniqueNames
+cn: direction
+description: Direction ISIC
+uniqueMember: uid=directeur,ou=Staff,ou=People,dc=isic,dc=ac,dc=ma
+uniqueMember: uid=admin.odoo,ou=Staff,ou=People,dc=isic,dc=ac,dc=ma
+
+dn: cn=etudiants,ou=Groups,dc=isic,dc=ac,dc=ma
+objectClass: groupOfUniqueNames
+cn: etudiants
+description: Etudiants inscrits
+uniqueMember: uid=etudiant1,ou=Students,ou=People,dc=isic,dc=ac,dc=ma
+uniqueMember: uid=etudiant2,ou=Students,ou=People,dc=isic,dc=ac,dc=ma
+uniqueMember: uid=etudiant3,ou=Students,ou=People,dc=isic,dc=ac,dc=ma
+
+dn: cn=recherche,ou=Groups,dc=isic,dc=ac,dc=ma
+objectClass: groupOfUniqueNames
+cn: recherche
+description: Centre de recherche et de veille
+uniqueMember: uid=chercheur,ou=Staff,ou=People,dc=isic,dc=ac,dc=ma
+
+dn: cn=scolarite,ou=Groups,dc=isic,dc=ac,dc=ma
+objectClass: groupOfUniqueNames
+cn: scolarite
+description: Personnel de scolarite
+uniqueMember: uid=admin.scolarite,ou=Staff,ou=People,dc=isic,dc=ac,dc=ma
+uniqueMember: uid=agent.scolarite,ou=Staff,ou=People,dc=isic,dc=ac,dc=ma
+
+dn: cn=stages-fc,ou=Groups,dc=isic,dc=ac,dc=ma
+objectClass: groupOfUniqueNames
+cn: stages-fc
+description: Service des stages et de la formation continue
+uniqueMember: uid=resp.stages,ou=Staff,ou=People,dc=isic,dc=ac,dc=ma
+
+dn: cn=cooperation,ou=Groups,dc=isic,dc=ac,dc=ma
+objectClass: groupOfUniqueNames
+cn: cooperation
+description: Service de cooperation et relations exterieures
+uniqueMember: uid=resp.cooperation,ou=Staff,ou=People,dc=isic,dc=ac,dc=ma
+
+dn: cn=enseignants,ou=Groups,dc=isic,dc=ac,dc=ma
+objectClass: groupOfUniqueNames
+cn: enseignants
+description: Corps enseignant
+uniqueMember: uid=prof.informatique,ou=Staff,ou=People,dc=isic,dc=ac,dc=ma
+uniqueMember: uid=resp.ci,ou=Staff,ou=People,dc=isic,dc=ac,dc=ma
+
+dn: cn=bibliotheque,ou=Groups,dc=isic,dc=ac,dc=ma
+objectClass: groupOfUniqueNames
+cn: bibliotheque
+description: Service bibliotheque et mediatheque
+uniqueMember: uid=bibliothecaire,ou=Staff,ou=People,dc=isic,dc=ac,dc=ma
+
+dn: cn=da-pedagogie,ou=Groups,dc=isic,dc=ac,dc=ma
+objectClass: groupOfUniqueNames
+cn: da-pedagogie
+description: Directeur Adjoint Pedagogie et Recherche
+uniqueMember: uid=da.pedagogie,ou=Staff,ou=People,dc=isic,dc=ac,dc=ma
+
+dn: cn=da-stages-fc,ou=Groups,dc=isic,dc=ac,dc=ma
+objectClass: groupOfUniqueNames
+cn: da-stages-fc
+description: Directeur Adjoint FC et Stages
+uniqueMember: uid=da.stages,ou=Staff,ou=People,dc=isic,dc=ac,dc=ma
+
+dn: cn=departements,ou=Groups,dc=isic,dc=ac,dc=ma
+objectClass: groupOfUniqueNames
+cn: departements
+description: Chefs de departement
+uniqueMember: uid=chef.dept.com,ou=Staff,ou=People,dc=isic,dc=ac,dc=ma
+
+dn: cn=technique-it,ou=Groups,dc=isic,dc=ac,dc=ma
+objectClass: groupOfUniqueNames
+cn: technique-it
+description: Service technique et encadrement informatique
+uniqueMember: uid=technicien,ou=Staff,ou=People,dc=isic,dc=ac,dc=ma
+
+dn: cn=admin-scolarite,ou=Groups,dc=isic,dc=ac,dc=ma
+objectClass: groupOfUniqueNames
+cn: admin-scolarite
+description: Administrateur scolarite - configuration systeme et referentiels
+uniqueMember: uid=admin.scolarite,ou=Staff,ou=People,dc=isic,dc=ac,dc=ma
+
+dn: cn=responsable-filiere,ou=Groups,dc=isic,dc=ac,dc=ma
+objectClass: groupOfUniqueNames
+cn: responsable-filiere
+description: Responsables de filiere (CI, Journalisme, Communication, etc.)
+uniqueMember: uid=resp.ci,ou=Staff,ou=People,dc=isic,dc=ac,dc=ma
+
+dn: cn=secretariat-general,ou=Groups,dc=isic,dc=ac,dc=ma
+objectClass: groupOfUniqueNames
+cn: secretariat-general
+description: Secretariat General
+uniqueMember: uid=secretaire.general,ou=Staff,ou=People,dc=isic,dc=ac,dc=ma
+
+dn: cn=administratif-financier,ou=Groups,dc=isic,dc=ac,dc=ma
+objectClass: groupOfUniqueNames
+cn: administratif-financier
+description: Service des affaires administratives et financieres
+uniqueMember: uid=resp.financier,ou=Staff,ou=People,dc=isic,dc=ac,dc=ma
+
+dn: ou=Staff,ou=People,dc=isic,dc=ac,dc=ma
+objectClass: organizationalUnit
+ou: Staff
+description: Personnel administratif et enseignant
+
+dn: ou=Students,ou=People,dc=isic,dc=ac,dc=ma
+objectClass: organizationalUnit
+ou: Students
+description: Etudiants ISIC
+
+dn: uid=resp.ci,ou=Staff,ou=People,dc=isic,dc=ac,dc=ma
+objectClass: inetOrgPerson
+objectClass: organizationalPerson
+objectClass: person
+uid: resp.ci
+cn: Ahmed Responsable
+sn: Responsable
+givenName: Ahmed
+mail: resp.ci@isic.ac.ma
+title: Responsable Filiere CI
+employeeType: faculty
+userPassword:: e1NTSEF9K2RpcC9VaTlLTzFYdFZxUWYrK0I3ckppNTFTQWtOS08=
+
+dn: uid=chercheur,ou=Staff,ou=People,dc=isic,dc=ac,dc=ma
+objectClass: inetOrgPerson
+objectClass: organizationalPerson
+objectClass: person
+uid: chercheur
+cn: Nabil Chercheur
+sn: Chercheur
+givenName: Nabil
+mail: chercheur@isic.ac.ma
+title: Chercheur
+employeeType: recherche
+userPassword:: e1NTSEF9TndESk5heEVUNVZMMUNzZVBmSzZNemF5eHlidFEzRVY=
+
+dn: uid=da.stages,ou=Staff,ou=People,dc=isic,dc=ac,dc=ma
+objectClass: inetOrgPerson
+objectClass: organizationalPerson
+objectClass: person
+uid: da.stages
+cn: Abdessamad Moutei
+sn: Moutei
+givenName: Abdessamad
+mail: da.stages@isic.ac.ma
+title: Directeur Adjoint FC et Stages
+employeeType: da-stages
+userPassword:: e1NTSEF9SC80Wlcwd0h2Y0ppRE0wUzZjcHZaS0FLeEFVZkI1NWM=
+
+dn: uid=directeur,ou=Staff,ou=People,dc=isic,dc=ac,dc=ma
+objectClass: inetOrgPerson
+objectClass: organizationalPerson
+objectClass: person
+uid: directeur
+cn: Mohammed Directeur
+sn: Directeur
+givenName: Mohammed
+mail: directeur@isic.ac.ma
+title: Directeur
+employeeType: direction
+userPassword:: e1NTSEF9Z1RycDhjZ0p3VldjcG9uQXkveFB0dWlVcUE4Z1lobVo=
+
+dn: uid=technicien,ou=Staff,ou=People,dc=isic,dc=ac,dc=ma
+objectClass: inetOrgPerson
+objectClass: organizationalPerson
+objectClass: person
+uid: technicien
+cn: Mounir Bouamri
+sn: Bouamri
+givenName: Mounir
+mail: technicien@isic.ac.ma
+title: Technicien IT
+employeeType: technique
+userPassword:: e1NTSEF9SDA4bW9RaVNVakRwRlU0d2phNzJKcWh3RGM3VXhZRlI=
+
+dn: uid=resp.stages,ou=Staff,ou=People,dc=isic,dc=ac,dc=ma
+objectClass: inetOrgPerson
+objectClass: organizationalPerson
+objectClass: person
+uid: resp.stages
+cn: Aziddin Himit
+sn: Himit
+givenName: Aziddin
+mail: resp.stages@isic.ac.ma
+title: Chef Service Stages et FC
+employeeType: stages
+userPassword:: e1NTSEF9K25VTy91aFJXRkNBM2U2K0daNGhWOXpkdE5VS2R5YS8=
+
+dn: uid=da.pedagogie,ou=Staff,ou=People,dc=isic,dc=ac,dc=ma
+objectClass: inetOrgPerson
+objectClass: organizationalPerson
+objectClass: person
+uid: da.pedagogie
+cn: Mohcine Benzakour
+sn: Benzakour
+givenName: Mohcine
+mail: da.pedagogie@isic.ac.ma
+title: Directeur Adjoint Pedagogie et Recherche
+employeeType: da-pedagogie
+userPassword:: e1NTSEF9K0tvTWVnQlpNQ2I5UWN6QkJBcVNIT2ppQW5DaVp2REU=
+
+dn: uid=chef.dept.com,ou=Staff,ou=People,dc=isic,dc=ac,dc=ma
+objectClass: inetOrgPerson
+objectClass: organizationalPerson
+objectClass: person
+uid: chef.dept.com
+cn: Khalid Chef Departement
+sn: Chef Departement
+givenName: Khalid
+mail: chef.dept.com@isic.ac.ma
+title: Chef Departement Communication
+employeeType: faculty
+userPassword:: e1NTSEF9V2RWeEhqYUF3aGcwTlN0eHJIZWVHZWc2WWJKUHBLYkI=
+
+dn: uid=bibliothecaire,ou=Staff,ou=People,dc=isic,dc=ac,dc=ma
+objectClass: inetOrgPerson
+objectClass: organizationalPerson
+objectClass: person
+uid: bibliothecaire
+cn: Fatima Zahrae Ghanimi
+sn: Ghanimi
+givenName: Fatima Zahrae
+mail: bibliothecaire@isic.ac.ma
+title: Bibliothecaire
+employeeType: bibliotheque
+userPassword:: e1NTSEF9MTZRWTMvNHNCSUE1RXY1ZXlFYnNkdEo5TnJQbjdvVi8=
+
+dn: uid=resp.financier,ou=Staff,ou=People,dc=isic,dc=ac,dc=ma
+objectClass: inetOrgPerson
+objectClass: organizationalPerson
+objectClass: person
+uid: resp.financier
+cn: Abdelaziz Echared
+sn: Echared
+givenName: Abdelaziz
+mail: resp.financier@isic.ac.ma
+title: Chef Service Administratif et Financier
+employeeType: financier
+userPassword:: e1NTSEF9RE84Z2xtMWhrUkJOUHRTU0JVVndGSFc1b0ZNSnRmVmQ=
+
+dn: uid=admin.scolarite,ou=Staff,ou=People,dc=isic,dc=ac,dc=ma
+objectClass: inetOrgPerson
+objectClass: organizationalPerson
+objectClass: person
+uid: admin.scolarite
+cn: Fatima Admin
+sn: Admin
+givenName: Fatima
+mail: admin.scolarite@isic.ac.ma
+title: Administrateur Scolarite
+employeeType: staff
+userPassword:: e1NTSEF9S09WV1hXME53dkhUVVhFa25SdFBVVUttSHhwbFVjUzY=
+
+dn: uid=agent.scolarite,ou=Staff,ou=People,dc=isic,dc=ac,dc=ma
+objectClass: inetOrgPerson
+objectClass: organizationalPerson
+objectClass: person
+uid: agent.scolarite
+cn: Karim Agent
+sn: Agent
+givenName: Karim
+mail: agent.scolarite@isic.ac.ma
+title: Agent de Scolarite
+employeeType: staff
+userPassword:: e1NTSEF9aEVXaXRxaXk2OERndzlUb2QrNUV5UXhhNFJBOHlScUw=
+
+dn: uid=resp.cooperation,ou=Staff,ou=People,dc=isic,dc=ac,dc=ma
+objectClass: inetOrgPerson
+objectClass: organizationalPerson
+objectClass: person
+uid: resp.cooperation
+cn: Siham Omari
+sn: Omari
+givenName: Siham
+mail: resp.cooperation@isic.ac.ma
+title: Chef Service Cooperation
+employeeType: cooperation
+userPassword:: e1NTSEF9V0pScGVPRnFxZDVJWGFONzVia1RCV1lMQUVQUjVodEI=
+
+dn: uid=prof.informatique,ou=Staff,ou=People,dc=isic,dc=ac,dc=ma
+objectClass: inetOrgPerson
+objectClass: organizationalPerson
+objectClass: person
+uid: prof.informatique
+cn: Sara Prof
+sn: Prof
+givenName: Sara
+mail: prof.informatique@isic.ac.ma
+title: Professeur Informatique
+employeeType: faculty
+userPassword:: e1NTSEF9SjA4c1RCY2ZDa2pDYTRzeGpGTDJjU2JEcmVPT1liOG4=
+
+dn: uid=secretaire.general,ou=Staff,ou=People,dc=isic,dc=ac,dc=ma
+objectClass: inetOrgPerson
+objectClass: organizationalPerson
+objectClass: person
+uid: secretaire.general
+cn: Soumia El Andaloussi
+sn: El Andaloussi
+givenName: Soumia
+mail: secretaire.general@isic.ac.ma
+title: Secretaire Generale
+employeeType: secretariat
+userPassword:: e1NTSEF9V29VYnM4ajJGZ2RSdGUvYnBvOFVic3pFVmlNN0VYb3A=
+
+dn: uid=etudiant1,ou=Students,ou=People,dc=isic,dc=ac,dc=ma
+objectClass: inetOrgPerson
+objectClass: organizationalPerson
+objectClass: person
+uid: etudiant1
+cn: Youssef Etudiant
+sn: Etudiant
+givenName: Youssef
+mail: youssef.etudiant@etu.isic.ac.ma
+employeeType: student
+userPassword:: e1NTSEF9NzFBdmJ0ZkVSRm1ZajI3WTVWVGJGZ05LNVJ5YXdaWnk=
+
+dn: uid=etudiant2,ou=Students,ou=People,dc=isic,dc=ac,dc=ma
+objectClass: inetOrgPerson
+objectClass: organizationalPerson
+objectClass: person
+uid: etudiant2
+cn: Zineb Etudiante
+sn: Etudiante
+givenName: Zineb
+mail: zineb.etudiante@etu.isic.ac.ma
+employeeType: student
+userPassword:: e1NTSEF9NlpycTBoTHk4bTRhSkVtdTlOQ3VMYUJRSiswR1hpWTI=
+
+dn: uid=etudiant3,ou=Students,ou=People,dc=isic,dc=ac,dc=ma
+objectClass: inetOrgPerson
+objectClass: organizationalPerson
+objectClass: person
+uid: etudiant3
+cn: Omar Etudiant
+sn: Etudiant
+givenName: Omar
+mail: omar.etudiant@etu.isic.ac.ma
+employeeType: student
+userPassword:: e1NTSEF9ZVZnT1pESE5ZNjVlZEV5UUVpWHVNczlEUTZuaDBuTDI=
+
+dn: uid=admin.odoo,ou=Staff,ou=People,dc=isic,dc=ac,dc=ma
+objectClass: inetOrgPerson
+objectClass: organizationalPerson
+objectClass: person
+uid: admin.odoo
+cn: Administrateur Odoo
+sn: Administrateur
+givenName: Admin
+mail: admin@isic.ac.ma
+title: Administrateur Systeme
+employeeType: direction
+userPassword:: e1NTSEF9pAmAJC0huHIMmer4FGzLZZkUqLObKX4nberLWg==
+
+dn: uid=odoo_bind,ou=Services,dc=isic,dc=ac,dc=ma
+objectClass: inetOrgPerson
+objectClass: organizationalPerson
+objectClass: person
+uid: odoo_bind
+cn: Odoo LDAP Bind Account
+sn: Bind
+description: Service account for Odoo LDAP authentication
+userPassword:: e1NTSEF9TE9mOElEcWtGQW9RbHdlSStEQ0F6U0NzWWd5OWtLcDg=
+

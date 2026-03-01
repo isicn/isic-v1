@@ -287,6 +287,36 @@ $isic-gradient: linear-gradient(135deg, $isic-primary 0%, #0056b3 100%);
 }
 
 // ============================================
+// Mode CAS-only — bouton principal
+// ============================================
+
+.o_cas_login_main {
+    .o_cas_login_btn {
+        background: $isic-gradient;
+        border: none;
+        color: white;
+        border-radius: 8px;
+        padding: 1rem 1.5rem;
+        font-size: 1.05rem;
+        transition: all 0.3s ease;
+
+        &:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba($isic-primary, 0.4);
+            color: white;
+        }
+
+        &:active {
+            transform: translateY(0);
+        }
+
+        i, .fa {
+            font-size: 1.2rem;
+        }
+    }
+}
+
+// ============================================
 // Responsive
 // ============================================
 

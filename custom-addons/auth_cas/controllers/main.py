@@ -24,6 +24,25 @@ class CASAuthLogin(OAuthLogin):
     Override list_providers() pour les providers CAS.
     """
 
+    @http.route()
+    def web_login(self, *args, **kw):
+        response = super().web_login(*args, **kw)
+        if response.is_qweb:
+            # Par défaut, masquer le formulaire natif et afficher uniquement le bouton CAS.
+            # Le paramètre ?admin=1 permet d'afficher le formulaire natif (backdoor).
+            admin_mode = request.params.get("admin") == "1"
+            response.qcontext["cas_only_mode"] = not admin_mode
+            # Filtrer les providers pour n'afficher que les CAS en mode CAS-only
+            providers = response.qcontext.get("providers", [])
+            cas_provider_ids = (
+                request.env["auth.oauth.provider"]
+                .sudo()
+                .search([("is_cas_provider", "=", True), ("enabled", "=", True)])
+                .ids
+            )
+            response.qcontext["cas_providers"] = [p for p in providers if p["id"] in cas_provider_ids]
+        return response
+
     def list_providers(self):
         """
         Override pour modifier les paramètres des providers CAS.

@@ -8,6 +8,42 @@
     <!-- Surcharge du template de login principal -->
     <template id="login_isic" inherit_id="web.login" name="ISIC Login Page">
 
+        <!-- Mode CAS-only : masquer le composant user_switch -->
+        <xpath expr="//owl-component[@name='web.user_switch']" position="attributes">
+            <attribute name="t-if">not login and not cas_only_mode</attribute>
+        </xpath>
+
+        <!-- Mode CAS-only : masquer le formulaire natif -->
+        <xpath expr="//form[@data-captcha='login']" position="attributes">
+            <attribute name="t-attf-class">oe_login_form #{'' if login else 'd-none'} #{'d-none' if cas_only_mode else ''}</attribute>
+        </xpath>
+
+        <!-- Bouton CAS principal affiché quand le formulaire natif est masqué -->
+        <xpath expr="//form[@data-captcha='login']" position="before">
+            <div t-if="cas_only_mode and cas_providers" class="o_cas_login_main text-center">
+                <h5 class="mb-4">Connexion</h5>
+
+                <p class="alert alert-danger" t-if="error" role="alert">
+                    <t t-out="error"/>
+                </p>
+                <p class="alert alert-success" t-if="message" role="status">
+                    <t t-out="message"/>
+                </p>
+
+                <div class="list-group mb-3">
+                    <t t-foreach="cas_providers" t-as="p">
+                        <a t-att-href="p.get('auth_link') or '#'"
+                           class="list-group-item list-group-item-action d-flex align-items-center gap-2 py-3 o_cas_login_btn">
+                            <i t-att-class="p['css_class']" role="presentation" title="CAS"/>
+                            <span class="mx-auto fw-bold" t-out="p['body']"/>
+                        </a>
+                    </t>
+                </div>
+
+                <input type="hidden" name="redirect" t-att-value="redirect"/>
+            </div>
+        </xpath>
+
         <!-- Footer ISIC après le formulaire -->
         <xpath expr="//div[@id='oe_structure_login_bottom']" position="before">
             <div class="isic-login-footer mt-3">
