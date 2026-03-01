@@ -26,5 +26,29 @@
             <field name="domain_force">[(1, '=', 1)]</field>
         </record>
 
+        <!-- ============================================ -->
+        <!-- ir.rule : visibilité des catégories          -->
+        <!-- ============================================ -->
+
+        <!-- Utilisateurs voient catégories sans restriction OU celles de leurs groupes -->
+        <record id="rule_categorie_user" model="ir.rule">
+            <field name="name">Catégories : groupes autorisés</field>
+            <field name="model_id" ref="model_isic_approbation_categorie" />
+            <field name="groups" eval="[(4, ref('base.group_user'))]" />
+            <field name="domain_force">[
+                '|',
+                ('groupe_demandeur_ids', '=', False),
+                ('groupe_demandeur_ids', 'in', user.group_ids.ids),
+            ]</field>
+        </record>
+
+        <!-- Direction voit toutes les catégories (config) -->
+        <record id="rule_categorie_direction" model="ir.rule">
+            <field name="name">Catégories : accès total direction</field>
+            <field name="model_id" ref="model_isic_approbation_categorie" />
+            <field name="groups" eval="[(4, ref('isic_base.group_isic_direction'))]" />
+            <field name="domain_force">[(1, '=', 1)]</field>
+        </record>
+
     </data>
 </odoo>
