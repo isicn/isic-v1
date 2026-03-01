@@ -118,7 +118,7 @@
                             <field name="review_ids"
                                 invisible="state == 'draft'"
                                 nolabel="1" readonly="1">
-                                <list create="0" delete="0">
+                                <list create="0" delete="0" no_open="1">
                                     <field name="sequence" string="Niveau" />
                                     <field name="name" string="Description" />
                                     <field name="status" string="Statut" />
