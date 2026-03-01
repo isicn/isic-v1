@@ -14,6 +14,15 @@
                         type="object"
                         class="btn-primary"
                         invisible="state != 'draft'" />
+                    <button name="validate_tier"
+                        string="Approuver"
+                        type="object"
+                        class="btn-primary"
+                        invisible="not can_review or state != 'submitted'" />
+                    <button name="reject_tier"
+                        string="Refuser"
+                        type="object"
+                        invisible="not can_review or state != 'submitted'" />
                     <button name="action_cancel"
                         string="Annuler"
                         type="object"
@@ -32,26 +41,6 @@
                     <field name="validation_status" invisible="1" />
 
                     <field name="can_review" invisible="1" />
-                    <field name="need_validation" invisible="1" />
-                    <div class="alert alert-warning mb-0" role="alert"
-                        invisible="validation_status != 'pending' or state != 'submitted'">
-                        <i class="fa fa-lg fa-info-circle" title="En attente" />
-                        Cette demande est en attente de validation.
-                        <button name="validate_tier"
-                            string="Approuver"
-                            invisible="not can_review"
-                            type="object"
-                            class="btn-sm btn-success ms-2"
-                            icon="fa-thumbs-up" />
-                        <button name="reject_tier"
-                            string="Refuser"
-                            invisible="not can_review"
-                            type="object"
-                            class="btn-sm btn-danger ms-1"
-                            icon="fa-thumbs-down" />
-                        <br />
-                        <field name="next_review" readonly="1" />
-                    </div>
                     <div class="alert alert-success mb-0" role="alert"
                         invisible="state != 'approved'">
                         <i class="fa fa-lg fa-check-circle" title="Approuvée" />
