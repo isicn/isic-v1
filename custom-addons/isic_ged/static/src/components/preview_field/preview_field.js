@@ -20,4 +20,7 @@ class PreviewField extends Component {
     }
 }
 
-registry.category("fields").add("preview_embed", PreviewField);
+registry.category("fields").add("preview_embed", {
+    component: PreviewField,
+    supportedTypes: ["selection"],
+});
