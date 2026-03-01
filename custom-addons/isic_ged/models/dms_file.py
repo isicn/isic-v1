@@ -123,6 +123,11 @@ class DmsFile(models.Model):
         compute="_compute_preview_type",
         store=True,
     )
+    preview_embed = fields.Html(
+        string="Aperçu",
+        compute="_compute_preview_embed",
+        sanitize=False,
+    )
 
     # ------------------------------------------------------------------
     # V2 — Classification automatique
@@ -149,8 +154,26 @@ class DmsFile(models.Model):
             else:
                 rec.preview_type = "none"
 
+    @api.depends("preview_type")
+    def _compute_preview_embed(self):
+        for rec in self:
+            if not rec.id:
+                rec.preview_embed = False
+            elif rec.preview_type == "image":
+                rec.preview_embed = (
+                    f'<img src="/web/image/dms.file/{rec.id}/content"'
+                    f' style="max-width:100%;max-height:500px;border-radius:8px;"/>'
+                )
+            elif rec.preview_type == "pdf":
+                rec.preview_embed = (
+                    f'<iframe src="/isic_ged/preview/{rec.id}"'
+                    f' style="width:100%;height:700px;border:none;border-radius:8px;"></iframe>'
+                )
+            else:
+                rec.preview_embed = False
+
     # ==================================================================
-    # Preview action
+    # Preview action (open in new tab)
     # ==================================================================
 
     def action_preview(self):
