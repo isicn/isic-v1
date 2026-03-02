@@ -1,0 +1,4 @@
+id,name,model_id/id,group_id/id,perm_read,perm_write,perm_create,perm_unlink
+access_demande_portal,demande.portal,isic_approbation.model_isic_approbation_demande,base.group_portal,1,0,0,0
+access_categorie_portal,categorie.portal,isic_approbation.model_isic_approbation_categorie,base.group_portal,1,0,0,0
+access_approbateur_portal,approbateur.portal,isic_approbation.model_isic_approbation_approbateur,base.group_portal,1,0,0,0

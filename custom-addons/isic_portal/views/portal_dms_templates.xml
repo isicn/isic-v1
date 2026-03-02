@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+
+    <!-- ============================================================ -->
+    <!--  Override DMS portal : ajouter badge ged_state sur fichiers  -->
+    <!-- ============================================================ -->
+
+    <template id="portal_my_dms_ged_state" name="DMS Portal: GED State badges"
+              inherit_id="dms.portal_my_dms" priority="50">
+        <!-- Add ged_state badge after file name -->
+        <xpath expr="//t[@t-foreach='dms_files']//span[@t-out='dms_file.name']" position="after">
+            <t t-if="dms_file.ged_state == 'validated'">
+                <span class="badge bg-success ms-2">Valide</span>
+            </t>
+            <t t-elif="dms_file.ged_state == 'archived'">
+                <span class="badge bg-secondary ms-2">Archive</span>
+            </t>
+        </xpath>
+    </template>
+
+</odoo>
