@@ -91,8 +91,10 @@ class CASAuthController(http.Controller):
     @http.route("/auth_cas/login", type="http", auth="public", website=True, sitemap=False)
     def cas_direct_login(self, **kw):
         """Direct CAS login — redirects to CAS server without showing /web/login."""
-        provider = request.env["auth.oauth.provider"].sudo().search(
-            [("is_cas_provider", "=", True), ("enabled", "=", True)], limit=1
+        provider = (
+            request.env["auth.oauth.provider"]
+            .sudo()
+            .search([("is_cas_provider", "=", True), ("enabled", "=", True)], limit=1)
         )
         if not provider:
             return request.redirect("/web/login")
