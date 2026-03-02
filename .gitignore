@@ -40,4 +40,4 @@ scripts/generate_deployment_doc.py
 scripts/generate_dev_workflow_doc.py
 scripts/generate_tests_deploy_doc.py
 scripts/generate_ged_structure_doc.py
-formations/
+/formations/
