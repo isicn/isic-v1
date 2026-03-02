@@ -500,8 +500,7 @@ class DmsFile(models.Model):
                     if rec.ged_state in ("validated", "archived"):
                         raise UserError(
                             _(
-                                "Le document « %s » est %s. "
-                                "Remettez-le en brouillon avant de le modifier.",
+                                "Le document « %s » est %s. Remettez-le en brouillon avant de le modifier.",
                                 rec.name,
                                 dict(rec._fields["ged_state"].selection).get(rec.ged_state, rec.ged_state),
                             )
@@ -513,9 +512,7 @@ class DmsFile(models.Model):
             if protected_by_lock:
                 for rec in self:
                     if rec.locked_by and rec.locked_by.id != self.env.uid:
-                        raise UserError(
-                            _("Le document « %s » est verrouillé par %s.", rec.name, rec.locked_by.name)
-                        )
+                        raise UserError(_("Le document « %s » est verrouillé par %s.", rec.name, rec.locked_by.name))
 
         # Versionning: snapshot before content change
         if "content" in vals and not self.env.context.get("_isic_skip_version"):
