@@ -2,8 +2,10 @@
 <odoo>
 
     <!-- ========== ISIC Navigation Menus ========== -->
-    <!-- noupdate=0 to ensure menus are always correct after update -->
-    <data noupdate="0">
+    <!-- noupdate=1: menus are fixed by post_init_hook on install;
+         updates must NOT overwrite parent_id (website.main_menu is the
+         global template, not the per-website root menu). -->
+    <data noupdate="1">
 
         <record id="menu_home" model="website.menu">
             <field name="name">Accueil</field>
