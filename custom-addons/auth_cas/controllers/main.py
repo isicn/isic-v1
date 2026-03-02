@@ -88,6 +88,30 @@ class CASAuthController(http.Controller):
     Valide le ticket auprès du serveur CAS.
     """
 
+    @http.route("/auth_cas/login", type="http", auth="public", website=True, sitemap=False)
+    def cas_direct_login(self, **kw):
+        """Direct CAS login — redirects to CAS server without showing /web/login."""
+        provider = request.env["auth.oauth.provider"].sudo().search(
+            [("is_cas_provider", "=", True), ("enabled", "=", True)], limit=1
+        )
+        if not provider:
+            return request.redirect("/web/login")
+
+        base_url = request.env["ir.config_parameter"].sudo().get_param("web.base.url")
+        service_url = f"{base_url}/auth_cas/callback"
+
+        cas_login_url = provider.auth_endpoint or provider.cas_server_url
+        if not cas_login_url.endswith("/login"):
+            for suffix in ("/oauth2.0/authorize", "/oauth2.0", "/p3/serviceValidate"):
+                if suffix in cas_login_url:
+                    cas_login_url = cas_login_url.split(suffix)[0]
+                    break
+            cas_login_url = cas_login_url.rstrip("/") + "/login"
+
+        request.session["cas_provider_id"] = provider.id
+        auth_link = f"{cas_login_url}?service={urllib.parse.quote(service_url, safe='')}"
+        return request.redirect(auth_link)
+
     @http.route("/auth_cas/callback", type="http", auth="none", csrf=False)
     def cas_callback(self, **kw):
         """

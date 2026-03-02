@@ -33,6 +33,7 @@ Architecture:
         "base",
         "base_setup",
         "web",
+        "portal",
         "http_routing",
         "auth_oauth",
         "auth_ldap",

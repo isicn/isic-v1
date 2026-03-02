@@ -61,5 +61,11 @@
 
     </template>
 
+    <!-- Override navbar "Sign in" link to go directly to CAS -->
+    <template id="user_sign_in_cas" inherit_id="portal.user_sign_in" name="CAS Direct Sign In">
+        <xpath expr="//a" position="attributes">
+            <attribute name="t-attf-href">/auth_cas/login</attribute>
+        </xpath>
+    </template>
 
 </odoo>
