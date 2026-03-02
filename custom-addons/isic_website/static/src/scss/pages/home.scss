@@ -2,29 +2,37 @@
 //  ISIC Website — Page: Accueil
 // ============================================================
 
-// Hero section
+// Hero section — full-screen photo + gradient overlay
 .isic-www-hero {
     position: relative;
     min-height: 85vh;
     display: flex;
     align-items: center;
-    background: linear-gradient(135deg, $isic-primary 0%, lighten($isic-primary, 12%) 50%, $isic-primary-light 100%);
     color: #fff;
     overflow: hidden;
 
-    &::before {
-        content: "";
+    // Background photo
+    &__bg {
         position: absolute;
         inset: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        z-index: 0;
+    }
+
+    // Gradient overlay on top of photo
+    &__overlay {
+        position: absolute;
+        inset: 0;
+        z-index: 1;
         background:
-            radial-gradient(circle at 20% 80%, rgba(212, 168, 67, 0.08) 0%, transparent 50%),
-            radial-gradient(circle at 80% 20%, rgba(255, 255, 255, 0.05) 0%, transparent 50%);
-        pointer-events: none;
+            linear-gradient(135deg, rgba($isic-primary, 0.92) 0%, rgba($isic-primary, 0.75) 50%, rgba(lighten($isic-primary, 12%), 0.6) 100%);
     }
 
     &__content {
         position: relative;
-        z-index: 1;
+        z-index: 2;
         max-width: 700px;
     }
 
@@ -32,6 +40,7 @@
         display: inline-block;
         padding: 0.35rem 1rem;
         background: rgba(255, 255, 255, 0.12);
+        border: 1px solid rgba(255, 255, 255, 0.15);
         border-radius: 50px;
         font-size: 0.85rem;
         font-weight: 500;

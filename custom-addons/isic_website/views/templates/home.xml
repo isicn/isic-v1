@@ -12,6 +12,11 @@
 
                 <!-- ======== HERO ======== -->
                 <section class="isic-www-hero">
+                    <img src="/isic_website/static/img/hero-campus.jpg"
+                         alt="Campus ISIC — Hall principal"
+                         class="isic-www-hero__bg"
+                         loading="eager"/>
+                    <div class="isic-www-hero__overlay"/>
                     <div class="isic-container">
                         <div class="isic-www-hero__content">
                             <span class="isic-www-hero__label">Établissement public depuis 1969</span>
