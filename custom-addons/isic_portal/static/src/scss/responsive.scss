@@ -1,0 +1,105 @@
+// ============================================================
+//  ISIC Portal — Responsive (mobile-first)
+// ============================================================
+
+// ----------------------------------------------------------
+//  Small screens (< 576px)
+// ----------------------------------------------------------
+@media (max-width: 575.98px) {
+    .isic-hero {
+        padding: 1.25rem;
+
+        &__greeting {
+            flex-direction: column;
+            text-align: center;
+        }
+
+        &__title { font-size: 1.25rem; }
+
+        &__stats {
+            grid-template-columns: repeat(3, 1fr);
+            gap: 0.5rem;
+        }
+
+        &__actions {
+            flex-direction: column;
+
+            .isic-quick-action { justify-content: center; }
+        }
+    }
+
+    .isic-stat-card {
+        padding: 0.75rem 0.5rem;
+
+        &__value { font-size: 1.25rem; }
+        &__label { font-size: 0.7rem; }
+    }
+
+    .isic-dashboard-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .isic-category-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .isic-profile__grid {
+        grid-template-columns: 1fr;
+    }
+
+    .isic-info-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .isic-pipeline--full {
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+        flex-wrap: nowrap;
+        padding-bottom: 0.5rem;
+
+        .isic-pipeline__step {
+            min-width: 80px;
+            flex-shrink: 0;
+        }
+    }
+
+    .isic-filters-bar {
+        .form-select,
+        .form-control {
+            max-width: 100%;
+        }
+    }
+}
+
+// ----------------------------------------------------------
+//  Medium screens (576px - 767px)
+// ----------------------------------------------------------
+@media (min-width: 576px) and (max-width: 767.98px) {
+    .isic-dashboard-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .isic-category-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+// ----------------------------------------------------------
+//  Large screens (>= 768px)
+// ----------------------------------------------------------
+@media (min-width: 768px) {
+    .isic-hero {
+        padding: 2.5rem;
+
+        &__greeting { gap: 1.25rem; }
+        &__title { font-size: 1.75rem; }
+    }
+
+    .isic-dashboard-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+
+    .isic-profile__header {
+        gap: 1.5rem;
+    }
+}

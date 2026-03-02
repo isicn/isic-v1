@@ -1,0 +1,428 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+
+    <!-- ============================================================ -->
+    <!--  Liste : /my/demandes — Cards avec mini-pipeline             -->
+    <!-- ============================================================ -->
+
+    <template id="portal_my_demandes" name="Mes demandes">
+        <t t-call="portal.portal_layout">
+            <t t-set="breadcrumbs_searchbar" t-value="True"/>
+
+            <t t-call="portal.portal_searchbar">
+                <t t-set="title">Mes demandes</t>
+            </t>
+
+            <!-- Header avec bouton nouvelle demande -->
+            <div class="isic-demandes-header">
+                <h4 class="mb-0">
+                    Mes demandes
+                    <small class="text-muted" t-if="pager.get('total')">
+                        (<t t-out="pager['total']"/>)
+                    </small>
+                </h4>
+                <a href="/my/demandes/new" class="isic-quick-action isic-lift">
+                    <i class="fa fa-plus-circle" title="Nouvelle demande"/>
+                    Nouvelle demande
+                </a>
+            </div>
+
+            <!-- Empty state -->
+            <t t-if="not demandes">
+                <div class="isic-empty-state">
+                    <div class="isic-empty-state__icon">
+                        <i class="fa fa-inbox" title="Aucune demande"/>
+                    </div>
+                    <h4>Aucune demande</h4>
+                    <p>Vous n'avez pas encore soumis de demande.</p>
+                    <a href="/my/demandes/new" class="isic-quick-action isic-lift">
+                        <i class="fa fa-plus-circle" title="Creer"/>
+                        Creer ma premiere demande
+                    </a>
+                </div>
+            </t>
+
+            <!-- Demandes cards list -->
+            <div t-if="demandes" class="isic-demandes-list isic-stagger-container">
+                <t t-foreach="demandes" t-as="dem">
+                    <a t-attf-href="/my/demandes/#{dem.id}"
+                       class="isic-demande-card isic-lift isic-stagger-item">
+
+                        <!-- Mini pipeline -->
+                        <div class="isic-pipeline isic-pipeline--mini">
+                            <t t-set="states" t-value="['draft', 'submitted', 'approved']"/>
+                            <t t-if="dem.state == 'rejected'"
+                               t-set="states" t-value="['draft', 'submitted', 'rejected']"/>
+                            <t t-foreach="states" t-as="st">
+                                <span t-attf-class="isic-pipeline__step
+                                    #{'isic-pipeline__step--done' if states.index(st) &lt; states.index(dem.state) else ''}
+                                    #{'isic-pipeline__step--current' if st == dem.state else ''}
+                                    #{'isic-pipeline__step--rejected' if st == 'rejected' and dem.state == 'rejected' else ''}"
+                                    t-att-title="st"/>
+                            </t>
+                        </div>
+
+                        <!-- Card body -->
+                        <div class="isic-demande-card__body">
+                            <div class="isic-demande-card__header">
+                                <span class="isic-demande-card__ref">
+                                    <t t-out="dem.name"/>
+                                </span>
+                                <span class="isic-status-badge"
+                                      t-att-data-state="dem.state">
+                                    <t t-out="dict(dem._fields['state'].selection).get(dem.state, dem.state)"/>
+                                </span>
+                            </div>
+                            <div class="isic-demande-card__meta">
+                                <span>
+                                    <t t-if="dem.categorie_id.icon">
+                                        <i t-att-class="dem.categorie_id.icon"
+                                           t-att-title="dem.categorie_id.name"/>
+                                    </t>
+                                    <t t-out="dem.categorie_id.name"/>
+                                </span>
+                                <span class="isic-demande-card__date">
+                                    <i class="fa fa-calendar-o" title="Date"/>
+                                    <span t-out="dem.create_date"
+                                          t-options="{'widget': 'date'}"/>
+                                </span>
+                                <t t-if="dem.priorite != '0'">
+                                    <span t-attf-class="isic-priority isic-priority--#{dem.priorite}">
+                                        <t t-if="dem.priorite == '1'">Urgente</t>
+                                        <t t-if="dem.priorite == '2'">Tres urgente</t>
+                                    </span>
+                                </t>
+                            </div>
+                        </div>
+                    </a>
+                </t>
+            </div>
+
+            <!-- Pager -->
+            <div t-if="pager" class="d-flex justify-content-center mt-3">
+                <t t-call="portal.pager"/>
+            </div>
+        </t>
+    </template>
+
+    <!-- ============================================================ -->
+    <!--  Detail : /my/demandes/<id> — Progress bar + Timeline        -->
+    <!-- ============================================================ -->
+
+    <template id="portal_my_demande_detail" name="Detail demande">
+        <t t-call="portal.portal_layout">
+            <t t-set="breadcrumbs_searchbar" t-value="True"/>
+
+            <!-- Detail card -->
+            <div class="isic-detail-card">
+                <div class="isic-detail-card__header">
+                    <h4><t t-out="demande.name"/></h4>
+                    <span class="isic-status-badge isic-status-badge--lg"
+                          t-att-data-state="demande.state">
+                        <t t-out="dict(demande._fields['state'].selection).get(demande.state, demande.state)"/>
+                    </span>
+                </div>
+
+                <div class="isic-detail-card__body">
+
+                    <!-- Full pipeline progress bar -->
+                    <div class="isic-pipeline isic-pipeline--full mb-4">
+                        <t t-foreach="state_pipeline" t-as="step">
+                            <t t-set="step_state" t-value="step[0]"/>
+                            <t t-set="step_label" t-value="step[1]"/>
+                            <t t-set="step_idx" t-value="state_pipeline.index(step)"/>
+                            <t t-set="current_idx" t-value="[s[0] for s in state_pipeline].index(demande.state) if demande.state in [s[0] for s in state_pipeline] else -1"/>
+                            <div t-attf-class="isic-pipeline__step
+                                #{'isic-pipeline__step--done' if step_idx &lt; current_idx else ''}
+                                #{'isic-pipeline__step--current' if step_idx == current_idx else ''}
+                                #{'isic-pipeline__step--rejected' if step_state == 'rejected' else ''}">
+                                <div class="isic-pipeline__dot"/>
+                                <div class="isic-pipeline__label">
+                                    <t t-out="step_label"/>
+                                </div>
+                            </div>
+                        </t>
+                    </div>
+
+                    <!-- Rejection alert -->
+                    <t t-if="demande.state == 'rejected' and demande.motif_refus">
+                        <div class="isic-alert-rejection">
+                            <strong>Motif du refus :</strong>
+                            <t t-out="demande.motif_refus"/>
+                        </div>
+                    </t>
+
+                    <!-- Info grid -->
+                    <div class="isic-info-grid mb-4">
+                        <div class="isic-info-grid__item">
+                            <label>Categorie</label>
+                            <span>
+                                <t t-if="demande.categorie_id.icon">
+                                    <i t-att-class="demande.categorie_id.icon"
+                                       t-att-title="demande.categorie_id.name"/>
+                                </t>
+                                <t t-out="demande.categorie_id.name"/>
+                            </span>
+                        </div>
+                        <div class="isic-info-grid__item">
+                            <label>Date de demande</label>
+                            <span t-out="demande.date_demande"
+                                  t-options="{'widget': 'date'}"/>
+                        </div>
+                        <div class="isic-info-grid__item" t-if="demande.date_debut">
+                            <label>Date de debut</label>
+                            <span t-out="demande.date_debut"
+                                  t-options="{'widget': 'date'}"/>
+                        </div>
+                        <div class="isic-info-grid__item" t-if="demande.date_fin">
+                            <label>Date de fin</label>
+                            <span t-out="demande.date_fin"
+                                  t-options="{'widget': 'date'}"/>
+                        </div>
+                        <div class="isic-info-grid__item">
+                            <label>Priorite</label>
+                            <span>
+                                <t t-out="dict(demande._fields['priorite'].selection).get(demande.priorite, demande.priorite)"/>
+                            </span>
+                        </div>
+                        <div class="isic-info-grid__item" t-if="demande.date_decision">
+                            <label>Date de decision</label>
+                            <span t-out="demande.date_decision"
+                                  t-options="{'widget': 'datetime', 'format': 'dd/MM/yyyy HH:mm'}"/>
+                        </div>
+                    </div>
+
+                    <!-- Motif -->
+                    <h6 class="fw-bold">Motif</h6>
+                    <p class="mb-3" style="white-space: pre-wrap;"><t t-out="demande.motif"/></p>
+
+                    <!-- Observations -->
+                    <t t-if="demande.observations">
+                        <h6 class="fw-bold">Observations</h6>
+                        <p class="mb-3" style="white-space: pre-wrap;"><t t-out="demande.observations"/></p>
+                    </t>
+
+                    <!-- Piece jointe -->
+                    <t t-if="demande.piece_jointe">
+                        <h6 class="fw-bold">Piece jointe</h6>
+                        <a t-attf-href="/web/content?model=isic.approbation.demande&amp;id=#{demande.id}&amp;field=piece_jointe&amp;filename_field=nom_fichier&amp;download=true"
+                           class="btn btn-sm btn-outline-primary mb-3">
+                            <i class="fa fa-download" title="Telecharger"/>
+                            <t t-out="demande.nom_fichier or 'Telecharger'"/>
+                        </a>
+                    </t>
+
+                    <!-- Approval timeline -->
+                    <t t-if="demande.review_ids">
+                        <h6 class="fw-bold mt-4">Circuit d'approbation</h6>
+                        <div class="isic-timeline">
+                            <t t-foreach="demande.review_ids" t-as="review">
+                                <div t-attf-class="isic-timeline__item
+                                    #{'isic-timeline__item--approved' if review.status == 'approved' else ''}
+                                    #{'isic-timeline__item--rejected' if review.status == 'rejected' else ''}
+                                    #{'isic-timeline__item--pending' if review.status == 'pending' else ''}
+                                    #{'isic-timeline__item--waiting' if review.status not in ('approved', 'rejected', 'pending') else ''}">
+                                    <div class="isic-timeline__dot">
+                                        <i t-if="review.status == 'approved'"
+                                           class="fa fa-check" title="Approuve"/>
+                                        <i t-elif="review.status == 'rejected'"
+                                           class="fa fa-times" title="Refuse"/>
+                                        <i t-elif="review.status == 'pending'"
+                                           class="fa fa-hourglass-half" title="En attente"/>
+                                        <i t-else=""
+                                           class="fa fa-ellipsis-h" title="En file"/>
+                                    </div>
+                                    <div class="isic-timeline__content">
+                                        <strong>
+                                            <t t-out="review.todo_by or review.done_by.name or 'Approbateur'"/>
+                                        </strong>
+                                        <span t-attf-class="isic-status-badge isic-status-badge--sm ms-2"
+                                              t-att-data-state="'approved' if review.status == 'approved' else 'rejected' if review.status == 'rejected' else 'submitted' if review.status == 'pending' else 'draft'">
+                                            <t t-if="review.status == 'approved'">Approuve</t>
+                                            <t t-elif="review.status == 'rejected'">Refuse</t>
+                                            <t t-elif="review.status == 'pending'">En attente</t>
+                                            <t t-else="">En file</t>
+                                        </span>
+                                        <p t-if="review.comment" class="isic-timeline__comment">
+                                            <t t-out="review.comment"/>
+                                        </p>
+                                    </div>
+                                </div>
+                            </t>
+                        </div>
+                    </t>
+                </div>
+            </div>
+
+            <!-- Chatter portal -->
+            <div class="mt-4">
+                <h5>Historique</h5>
+                <t t-call="portal.message_thread">
+                    <t t-set="object" t-value="demande"/>
+                </t>
+            </div>
+
+            <div class="mt-3 mb-4">
+                <a href="/my/demandes" class="btn btn-outline-secondary">
+                    <i class="fa fa-arrow-left" title="Retour"/> Retour aux demandes
+                </a>
+            </div>
+        </t>
+    </template>
+
+    <!-- ============================================================ -->
+    <!--  Formulaire : /my/demandes/new — Category cards + Drop zone  -->
+    <!-- ============================================================ -->
+
+    <template id="portal_my_demande_new" name="Nouvelle demande">
+        <t t-call="portal.portal_layout">
+            <t t-set="breadcrumbs_searchbar" t-value="True"/>
+
+            <div class="isic-detail-card">
+                <div class="isic-detail-card__header">
+                    <h4>Nouvelle demande</h4>
+                </div>
+                <div class="isic-detail-card__body">
+
+                    <!-- Erreurs -->
+                    <t t-if="error_message">
+                        <div class="isic-alert-rejection">
+                            <t t-foreach="error_message" t-as="msg">
+                                <div><t t-out="msg"/></div>
+                            </t>
+                        </div>
+                    </t>
+
+                    <form action="/my/demandes/submit" method="POST"
+                          enctype="multipart/form-data">
+                        <input type="hidden" name="csrf_token"
+                               t-att-value="request.csrf_token()"/>
+
+                        <!-- Categorie — clickable cards -->
+                        <div class="isic-form-section">
+                            <span class="isic-form-section__label isic-form-section__required">
+                                Categorie
+                            </span>
+                            <div class="isic-category-grid">
+                                <input type="hidden" name="categorie_id"
+                                       t-att-value="categorie_id if categorie_id else ''"/>
+                                <t t-foreach="categories" t-as="cat">
+                                    <div t-attf-class="isic-category-card isic-lift
+                                        #{'isic-category-card--selected' if str(cat.id) == str(categorie_id) else ''}"
+                                        t-att-data-category-id="cat.id">
+                                        <div class="isic-category-card__icon">
+                                            <i t-att-class="cat.icon or 'fa fa-file-text'"
+                                               t-att-title="cat.name"/>
+                                        </div>
+                                        <div class="isic-category-card__name">
+                                            <t t-out="cat.name"/>
+                                        </div>
+                                    </div>
+                                </t>
+                            </div>
+                        </div>
+
+                        <!-- Motif -->
+                        <div class="isic-form-section">
+                            <label for="motif"
+                                   class="isic-form-section__label isic-form-section__required">
+                                Motif
+                            </label>
+                            <textarea name="motif" id="motif" rows="4"
+                                      required="required"
+                                      placeholder="Decrivez votre demande..."
+                                      t-attf-class="form-control #{'is-invalid' if error.get('motif') else ''}"><t t-out="motif if motif else ''"/></textarea>
+                        </div>
+
+                        <!-- Dates -->
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <div class="isic-form-section">
+                                    <label for="date_debut" class="isic-form-section__label">
+                                        Date de debut
+                                    </label>
+                                    <input type="date" name="date_debut" id="date_debut"
+                                           class="form-control"
+                                           t-att-value="date_debut if date_debut else ''"/>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="isic-form-section">
+                                    <label for="date_fin" class="isic-form-section__label">
+                                        Date de fin
+                                    </label>
+                                    <input type="date" name="date_fin" id="date_fin"
+                                           class="form-control"
+                                           t-att-value="date_fin if date_fin else ''"/>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Priorite -->
+                        <div class="isic-form-section">
+                            <label for="priorite" class="isic-form-section__label">
+                                Priorite
+                            </label>
+                            <select name="priorite" id="priorite" class="form-select">
+                                <option value="0"
+                                        t-att-selected="not priorite or priorite == '0'">
+                                    Normale
+                                </option>
+                                <option value="1"
+                                        t-att-selected="priorite == '1' if priorite else None">
+                                    Urgente
+                                </option>
+                                <option value="2"
+                                        t-att-selected="priorite == '2' if priorite else None">
+                                    Tres urgente
+                                </option>
+                            </select>
+                        </div>
+
+                        <!-- Observations -->
+                        <div class="isic-form-section">
+                            <label for="observations" class="isic-form-section__label">
+                                Observations
+                            </label>
+                            <textarea name="observations" id="observations" rows="2"
+                                      class="form-control"
+                                      placeholder="Informations complementaires..."><t t-out="observations if observations else ''"/></textarea>
+                        </div>
+
+                        <!-- Piece jointe — drag-and-drop zone -->
+                        <div class="isic-form-section">
+                            <span class="isic-form-section__label">
+                                Piece jointe
+                            </span>
+                            <div class="isic-drop-zone">
+                                <input type="file" name="piece_jointe"
+                                       class="isic-drop-zone__input"/>
+                                <div class="isic-drop-zone__prompt">
+                                    <i class="fa fa-cloud-upload" title="Deposer un fichier"/>
+                                    <span>Glissez un fichier ici ou cliquez pour choisir</span>
+                                </div>
+                                <div class="isic-drop-zone__filename"/>
+                                <button type="button" class="isic-drop-zone__clear btn btn-sm btn-link text-danger"
+                                        style="display:none;">
+                                    <i class="fa fa-times" title="Retirer"/> Retirer
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Boutons -->
+                        <div class="d-flex gap-2 mt-3">
+                            <button type="submit" class="isic-quick-action">
+                                <i class="fa fa-paper-plane" title="Soumettre"/>
+                                Soumettre
+                            </button>
+                            <a href="/my/demandes" class="btn btn-outline-secondary">
+                                Annuler
+                            </a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </t>
+    </template>
+
+</odoo>

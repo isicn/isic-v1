@@ -1,0 +1,259 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+
+    <!-- ============================================================ -->
+    <!--  Profil etudiant : /my/profile (lecture seule)               -->
+    <!-- ============================================================ -->
+
+    <template id="portal_my_profile" name="Mon profil">
+        <t t-call="portal.portal_layout">
+            <t t-set="breadcrumbs_searchbar" t-value="True"/>
+
+            <div class="isic-profile isic-stagger-container">
+                <!-- Header: Avatar + nom + matricule -->
+                <div class="isic-profile__header isic-stagger-item">
+                    <img class="isic-profile__avatar"
+                         t-att-src="'/web/image/res.partner/%s/avatar_128' % partner.id"
+                         alt="Avatar"
+                         loading="lazy"/>
+                    <div>
+                        <h2 class="isic-profile__name">
+                            <t t-out="partner.name"/>
+                        </h2>
+                        <p class="isic-profile__matricule" t-if="user.matricule">
+                            Matricule : <strong><t t-out="user.matricule"/></strong>
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Section: Identite -->
+                <div class="isic-profile__section isic-stagger-item">
+                    <h5 class="isic-profile__section-title">
+                        <i class="fa fa-id-card" title="Identite"/> Identite
+                    </h5>
+                    <div class="isic-profile__grid">
+                        <div class="isic-profile__field" t-if="partner.cin">
+                            <span class="isic-profile__field-label">CIN</span>
+                            <span class="isic-profile__field-value">
+                                <t t-out="partner.cin"/>
+                            </span>
+                        </div>
+                        <div class="isic-profile__field" t-if="partner.date_naissance">
+                            <span class="isic-profile__field-label">Date de naissance</span>
+                            <span class="isic-profile__field-value">
+                                <span t-out="partner.date_naissance"
+                                      t-options="{'widget': 'date'}"/>
+                            </span>
+                        </div>
+                        <div class="isic-profile__field" t-if="partner.lieu_naissance">
+                            <span class="isic-profile__field-label">Lieu de naissance</span>
+                            <span class="isic-profile__field-value">
+                                <t t-out="partner.lieu_naissance"/>
+                            </span>
+                        </div>
+                        <div class="isic-profile__field" t-if="partner.genre">
+                            <span class="isic-profile__field-label">Genre</span>
+                            <span class="isic-profile__field-value">
+                                <t t-if="partner.genre == 'M'">Masculin</t>
+                                <t t-elif="partner.genre == 'F'">Feminin</t>
+                            </span>
+                        </div>
+                        <div class="isic-profile__field" t-if="partner.nationalite_id">
+                            <span class="isic-profile__field-label">Nationalite</span>
+                            <span class="isic-profile__field-value">
+                                <t t-out="partner.nationalite_id.name"/>
+                            </span>
+                        </div>
+                        <div class="isic-profile__field" t-if="partner.situation_familiale">
+                            <span class="isic-profile__field-label">Situation familiale</span>
+                            <span class="isic-profile__field-value">
+                                <t t-out="dict(partner._fields['situation_familiale'].selection).get(partner.situation_familiale, '')"/>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Section: Contact -->
+                <div class="isic-profile__section isic-stagger-item">
+                    <h5 class="isic-profile__section-title">
+                        <i class="fa fa-envelope" title="Contact"/> Contact
+                    </h5>
+                    <div class="isic-profile__grid">
+                        <div class="isic-profile__field" t-if="partner.email">
+                            <span class="isic-profile__field-label">Email</span>
+                            <span class="isic-profile__field-value">
+                                <a t-attf-href="mailto:#{partner.email}">
+                                    <t t-out="partner.email"/>
+                                </a>
+                            </span>
+                        </div>
+                        <div class="isic-profile__field" t-if="partner.phone">
+                            <span class="isic-profile__field-label">Telephone</span>
+                            <span class="isic-profile__field-value">
+                                <t t-out="partner.phone"/>
+                            </span>
+                        </div>
+                        <div class="isic-profile__field" t-if="partner.telephone_personnel">
+                            <span class="isic-profile__field-label">Telephone personnel</span>
+                            <span class="isic-profile__field-value">
+                                <t t-out="partner.telephone_personnel"/>
+                            </span>
+                        </div>
+                        <div class="isic-profile__field" t-if="partner.adresse_personnelle">
+                            <span class="isic-profile__field-label">Adresse</span>
+                            <span class="isic-profile__field-value">
+                                <t t-out="partner.adresse_personnelle"/>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Section: Contact d'urgence -->
+                <div class="isic-profile__section isic-stagger-item"
+                     t-if="partner.contact_urgence_nom or partner.contact_urgence_tel">
+                    <h5 class="isic-profile__section-title">
+                        <i class="fa fa-phone" title="Urgence"/> Contact d'urgence
+                    </h5>
+                    <div class="isic-profile__grid">
+                        <div class="isic-profile__field" t-if="partner.contact_urgence_nom">
+                            <span class="isic-profile__field-label">Nom</span>
+                            <span class="isic-profile__field-value">
+                                <t t-out="partner.contact_urgence_nom"/>
+                            </span>
+                        </div>
+                        <div class="isic-profile__field" t-if="partner.contact_urgence_tel">
+                            <span class="isic-profile__field-label">Telephone</span>
+                            <span class="isic-profile__field-value">
+                                <t t-out="partner.contact_urgence_tel"/>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="mt-3 mb-4">
+                <a href="/my" class="btn btn-outline-secondary">
+                    <i class="fa fa-arrow-left" title="Retour"/> Retour a l'accueil
+                </a>
+            </div>
+        </t>
+    </template>
+
+    <!-- ============================================================ -->
+    <!--  Documents : /my/documents — Liste filtrable                 -->
+    <!-- ============================================================ -->
+
+    <template id="portal_my_documents" name="Mes documents">
+        <t t-call="portal.portal_layout">
+            <t t-set="breadcrumbs_searchbar" t-value="True"/>
+
+            <h4 class="mb-3">Mes documents</h4>
+
+            <!-- Filters bar -->
+            <div class="isic-filters-bar">
+                <select class="form-select"
+                        onchange="window.location=this.value">
+                    <option value="/my/documents"
+                            t-att-selected="not doc_type">
+                        Tous les types
+                    </option>
+                    <t t-foreach="doc_types" t-as="dt">
+                        <option t-attf-value="/my/documents?doc_type=#{dt.id}&amp;doc_state=#{doc_state or ''}&amp;search=#{search or ''}"
+                                t-att-selected="str(dt.id) == str(doc_type)">
+                            <t t-out="dt.name"/>
+                        </option>
+                    </t>
+                </select>
+
+                <select class="form-select"
+                        onchange="window.location=this.value">
+                    <option value="/my/documents?doc_type={doc_type or ''}&amp;search={search or ''}"
+                            t-attf-value="/my/documents?doc_type=#{doc_type or ''}&amp;search=#{search or ''}"
+                            t-att-selected="not doc_state">
+                        Tous les etats
+                    </option>
+                    <option t-attf-value="/my/documents?doc_type=#{doc_type or ''}&amp;doc_state=validated&amp;search=#{search or ''}"
+                            t-att-selected="doc_state == 'validated'">
+                        Valides
+                    </option>
+                    <option t-attf-value="/my/documents?doc_type=#{doc_type or ''}&amp;doc_state=archived&amp;search=#{search or ''}"
+                            t-att-selected="doc_state == 'archived'">
+                        Archives
+                    </option>
+                </select>
+
+                <form class="d-inline-flex" action="/my/documents" method="GET">
+                    <input type="hidden" name="doc_type" t-att-value="doc_type or ''"/>
+                    <input type="hidden" name="doc_state" t-att-value="doc_state or ''"/>
+                    <div class="input-group">
+                        <input type="text" name="search" class="form-control"
+                               placeholder="Rechercher..."
+                               t-att-value="search or ''"/>
+                        <button class="btn btn-outline-secondary" type="submit">
+                            <i class="fa fa-search" title="Rechercher"/>
+                        </button>
+                    </div>
+                </form>
+            </div>
+
+            <!-- Empty state -->
+            <t t-if="not documents">
+                <div class="isic-empty-state">
+                    <div class="isic-empty-state__icon">
+                        <i class="fa fa-folder-open-o" title="Aucun document"/>
+                    </div>
+                    <h4>Aucun document</h4>
+                    <p>Aucun document ne correspond a vos criteres.</p>
+                </div>
+            </t>
+
+            <!-- Documents list -->
+            <div t-if="documents" class="isic-documents-list isic-stagger-container">
+                <t t-foreach="documents" t-as="doc">
+                    <div class="isic-doc-card isic-lift isic-stagger-item">
+                        <div class="isic-doc-card__icon">
+                            <i class="fa fa-file-text" title="Document"/>
+                        </div>
+                        <div class="isic-doc-card__content">
+                            <div class="isic-doc-card__header">
+                                <span class="isic-doc-card__name">
+                                    <t t-out="doc.name"/>
+                                </span>
+                                <span class="isic-status-badge"
+                                      t-att-data-state="'approved' if doc.ged_state == 'validated' else 'draft' if doc.ged_state == 'archived' else 'submitted'">
+                                    <t t-if="doc.ged_state == 'validated'">Valide</t>
+                                    <t t-elif="doc.ged_state == 'archived'">Archive</t>
+                                    <t t-else=""><t t-out="doc.ged_state"/></t>
+                                </span>
+                            </div>
+                            <div class="isic-doc-card__meta">
+                                <span t-if="doc.document_type_id">
+                                    <t t-out="doc.document_type_id.name"/>
+                                </span>
+                                <span t-if="doc.reference">
+                                    Ref: <t t-out="doc.reference"/>
+                                </span>
+                                <span>
+                                    <i class="fa fa-calendar-o" title="Date"/>
+                                    <span t-out="doc.write_date"
+                                          t-options="{'widget': 'date'}"/>
+                                </span>
+                            </div>
+                        </div>
+                        <a t-attf-href="/web/content?model=dms.file&amp;id=#{doc.id}&amp;field=content&amp;filename_field=name&amp;download=true"
+                           class="isic-doc-card__download"
+                           title="Telecharger">
+                            <i class="fa fa-download" title="Telecharger"/>
+                        </a>
+                    </div>
+                </t>
+            </div>
+
+            <!-- Pager -->
+            <div t-if="pager" class="d-flex justify-content-center mt-3">
+                <t t-call="portal.pager"/>
+            </div>
+        </t>
+    </template>
+
+</odoo>

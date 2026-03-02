@@ -1,0 +1,43 @@
+// ============================================================
+//  ISIC Portal — Design Tokens
+//  CSS Custom Properties + SCSS variables
+//  Loaded after isic_theme/primary_variables.scss
+// ============================================================
+
+:root {
+    // Colors (from isic_theme palette)
+    --isic-primary: #1b3a5c;
+    --isic-action: #2e86ab;
+    --isic-gold: #d4a843;
+    --isic-success: #28a745;
+    --isic-danger: #dc3545;
+    --isic-info: #4a90b8;
+    --isic-bg-light: #f0f2f5;
+    --isic-secondary: #6b7b8d;
+    --isic-link: #1b4f8c;
+
+    // Shadows
+    --isic-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+    --isic-shadow-hover: 0 4px 12px rgba(0, 0, 0, 0.12);
+    --isic-shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.1);
+
+    // Radius
+    --isic-radius: 6px;
+    --isic-radius-sm: 4px;
+    --isic-radius-lg: 12px;
+    --isic-radius-xl: 16px;
+
+    // Transitions
+    --isic-transition: 0.2s ease;
+    --isic-transition-slow: 0.4s ease;
+}
+
+// SCSS variables (for calculations & mixins)
+$isic-primary: #1b3a5c;
+$isic-action: #2e86ab;
+$isic-gold: #d4a843;
+$isic-success: #28a745;
+$isic-danger: #dc3545;
+$isic-info: #4a90b8;
+$isic-bg-light: #f0f2f5;
+$isic-secondary: #6b7b8d;

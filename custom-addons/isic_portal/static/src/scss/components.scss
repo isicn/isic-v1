@@ -1,0 +1,681 @@
+// ============================================================
+//  ISIC Portal — BEM Components
+// ============================================================
+
+// ----------------------------------------------------------
+//  Stat Card (hero stats)
+// ----------------------------------------------------------
+.isic-stat-card {
+    background: rgba(255, 255, 255, 0.12);
+    backdrop-filter: blur(8px);
+    border-radius: var(--isic-radius-lg);
+    padding: 1rem;
+    text-align: center;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+
+    &__icon {
+        font-size: 1.25rem;
+        margin-bottom: 0.5rem;
+        display: block;
+        opacity: 0.9;
+
+        &--success { color: lighten($isic-success, 15%); }
+        &--info { color: lighten($isic-info, 15%); }
+        &--gold { color: $isic-gold; }
+    }
+
+    &__value {
+        font-size: 1.75rem;
+        font-weight: 700;
+        display: block;
+        line-height: 1;
+    }
+
+    &__label {
+        font-size: 0.8rem;
+        opacity: 0.8;
+        margin-top: 0.25rem;
+        display: block;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+    }
+}
+
+// ----------------------------------------------------------
+//  Quick Action Button
+// ----------------------------------------------------------
+.isic-quick-action {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.6rem 1.25rem;
+    border-radius: var(--isic-radius);
+    font-weight: 500;
+    font-size: 0.9rem;
+    text-decoration: none;
+    background: $isic-action;
+    color: #fff;
+    border: 1px solid $isic-action;
+    cursor: pointer;
+    transition: background var(--isic-transition), transform var(--isic-transition);
+
+    &:hover {
+        background: darken($isic-action, 8%);
+        color: #fff;
+        text-decoration: none;
+        transform: translateY(-1px);
+    }
+
+    // Secondary variant (outline)
+    &--secondary {
+        background: transparent;
+        color: $isic-action;
+        border-color: $isic-action;
+
+        &:hover {
+            background: $isic-action;
+            color: #fff;
+        }
+    }
+}
+
+// ----------------------------------------------------------
+//  Dashboard Card (navigation)
+// ----------------------------------------------------------
+.isic-dashboard-card {
+    background: #fff;
+    border-radius: var(--isic-radius-lg);
+    padding: 1.5rem;
+    box-shadow: var(--isic-shadow);
+    text-decoration: none;
+    color: inherit;
+    display: flex;
+    flex-direction: column;
+    transition: transform var(--isic-transition), box-shadow var(--isic-transition);
+
+    &:hover {
+        color: inherit;
+        text-decoration: none;
+    }
+
+    &__icon-wrap {
+        width: 48px;
+        height: 48px;
+        border-radius: var(--isic-radius-lg);
+        background: lighten($isic-action, 38%);
+        color: $isic-action;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.25rem;
+        margin-bottom: 1rem;
+
+        &--info {
+            background: lighten($isic-info, 32%);
+            color: $isic-info;
+        }
+
+        &--gold {
+            background: lighten($isic-gold, 30%);
+            color: darken($isic-gold, 10%);
+        }
+
+        &--success {
+            background: lighten($isic-success, 42%);
+            color: $isic-success;
+        }
+    }
+
+    &__title {
+        font-size: 1rem;
+        font-weight: 600;
+        color: $isic-primary;
+        margin: 0 0 0.25rem;
+    }
+
+    &__desc {
+        font-size: 0.85rem;
+        color: $isic-secondary;
+        margin: 0;
+        flex-grow: 1;
+    }
+
+    &__count {
+        display: inline-block;
+        margin-top: 0.75rem;
+        font-size: 0.8rem;
+        font-weight: 600;
+        color: $isic-action;
+
+        &:empty { display: none; }
+    }
+}
+
+// ----------------------------------------------------------
+//  Status Badge
+// ----------------------------------------------------------
+.isic-status-badge {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.25rem 0.75rem;
+    border-radius: 50px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.3px;
+
+    &[data-state="draft"] {
+        background: lighten($isic-secondary, 30%);
+        color: $isic-secondary;
+    }
+
+    &[data-state="submitted"] {
+        background: lighten($isic-action, 38%);
+        color: $isic-action;
+    }
+
+    &[data-state="approved"] {
+        background: lighten($isic-success, 42%);
+        color: $isic-success;
+    }
+
+    &[data-state="rejected"] {
+        background: lighten($isic-danger, 35%);
+        color: $isic-danger;
+    }
+
+    &[data-state="cancelled"] {
+        background: lighten($isic-secondary, 30%);
+        color: $isic-secondary;
+    }
+}
+
+// ----------------------------------------------------------
+//  Pipeline (status steps)
+// ----------------------------------------------------------
+.isic-pipeline {
+    display: flex;
+    align-items: center;
+    gap: 0;
+
+    &__step {
+        flex: 1;
+        height: 4px;
+        background: #e0e0e0;
+        position: relative;
+        transition: background var(--isic-transition);
+
+        &:first-child { border-radius: 2px 0 0 2px; }
+        &:last-child { border-radius: 0 2px 2px 0; }
+
+        &--done { background: $isic-success; }
+        &--current { background: $isic-action; }
+        &--rejected { background: $isic-danger; }
+    }
+
+    // Full pipeline with labels (detail page)
+    &--full {
+        gap: 0.5rem;
+        padding: 1rem 0;
+
+        .isic-pipeline__step {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            height: auto;
+            background: none;
+            text-align: center;
+            font-size: 0.8rem;
+            color: $isic-secondary;
+
+            &::before {
+                content: "";
+                width: 32px;
+                height: 32px;
+                border-radius: 50%;
+                background: #e9ecef;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                margin-bottom: 0.5rem;
+            }
+
+            &--done::before { background: $isic-success; }
+            &--current::before { background: $isic-success; }
+            &--rejected::before { background: $isic-danger; }
+
+            &--done,
+            &--current { color: $isic-primary; font-weight: 500; }
+
+            i {
+                position: absolute;
+                top: 4px;
+                color: #fff;
+                font-size: 0.85rem;
+            }
+        }
+
+        // Connector lines between steps
+        .isic-pipeline__connector {
+            flex: 0 0 auto;
+            width: 40px;
+            height: 2px;
+            background: #e0e0e0;
+            align-self: flex-start;
+            margin-top: 15px;
+
+            &--done { background: $isic-success; }
+        }
+    }
+}
+
+// ----------------------------------------------------------
+//  Timeline (approval circuit)
+// ----------------------------------------------------------
+.isic-timeline {
+    position: relative;
+    padding-left: 2rem;
+
+    &::before {
+        content: "";
+        position: absolute;
+        left: 11px;
+        top: 0;
+        bottom: 0;
+        width: 2px;
+        background: #e0e0e0;
+    }
+
+    &__item {
+        position: relative;
+        padding-bottom: 1.5rem;
+
+        &:last-child { padding-bottom: 0; }
+
+        &--approved .isic-timeline__marker { background: $isic-success; }
+        &--rejected .isic-timeline__marker { background: $isic-danger; }
+        &--pending .isic-timeline__marker { background: $isic-gold; }
+    }
+
+    &__marker {
+        position: absolute;
+        left: -2rem;
+        top: 2px;
+        width: 24px;
+        height: 24px;
+        border-radius: 50%;
+        background: #e0e0e0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 1;
+
+        i {
+            color: #fff;
+            font-size: 0.7rem;
+        }
+    }
+
+    &__content {
+        strong { color: $isic-primary; }
+    }
+
+    &__status {
+        font-size: 0.85rem;
+        color: $isic-secondary;
+        margin-left: 0.5rem;
+    }
+
+    &__comment {
+        font-size: 0.85rem;
+        color: $isic-secondary;
+        font-style: italic;
+        margin: 0.25rem 0 0;
+    }
+}
+
+// ----------------------------------------------------------
+//  Category Card (form selection)
+// ----------------------------------------------------------
+.isic-category-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+    gap: 0.75rem;
+    margin-bottom: 1rem;
+}
+
+.isic-category-card {
+    background: #fff;
+    border: 2px solid #e0e0e0;
+    border-radius: var(--isic-radius-lg);
+    padding: 1.25rem 1rem;
+    text-align: center;
+    cursor: pointer;
+    transition: border-color var(--isic-transition), box-shadow var(--isic-transition);
+
+    &:hover {
+        border-color: $isic-action;
+    }
+
+    &--selected {
+        border-color: $isic-action;
+        box-shadow: 0 0 0 3px rgba($isic-action, 0.15);
+        background: lighten($isic-action, 42%);
+    }
+
+    &__icon {
+        font-size: 1.5rem;
+        color: $isic-action;
+        margin-bottom: 0.5rem;
+        display: block;
+    }
+
+    &__name {
+        font-size: 0.9rem;
+        font-weight: 600;
+        color: $isic-primary;
+        margin: 0;
+    }
+
+    &__desc {
+        font-size: 0.75rem;
+        color: $isic-secondary;
+        margin: 0.25rem 0 0;
+    }
+}
+
+// ----------------------------------------------------------
+//  Drop Zone (file upload)
+// ----------------------------------------------------------
+.isic-drop-zone {
+    border: 2px dashed #ccc;
+    border-radius: var(--isic-radius-lg);
+    padding: 2rem;
+    text-align: center;
+    cursor: pointer;
+    transition: border-color var(--isic-transition), background var(--isic-transition);
+    margin-bottom: 1rem;
+
+    &:hover,
+    &--active {
+        border-color: $isic-action;
+        background: lighten($isic-action, 44%);
+    }
+
+    &--has-file {
+        border-color: $isic-success;
+        background: lighten($isic-success, 48%);
+
+        .isic-drop-zone__prompt { display: none; }
+        .isic-drop-zone__clear { display: inline-block !important; }
+    }
+
+    &__prompt {
+        color: $isic-secondary;
+        font-size: 0.9rem;
+
+        i {
+            display: block;
+            font-size: 2rem;
+            color: #ccc;
+            margin-bottom: 0.5rem;
+        }
+    }
+
+    &__filename {
+        font-weight: 600;
+        color: $isic-primary;
+        display: block;
+        margin-top: 0.25rem;
+    }
+
+    &__clear {
+        display: none;
+        margin-top: 0.5rem;
+        background: none;
+        border: none;
+        color: $isic-danger;
+        cursor: pointer;
+        font-size: 0.85rem;
+    }
+
+    &__input { display: none; }
+}
+
+// ----------------------------------------------------------
+//  Demande Card (list item)
+// ----------------------------------------------------------
+.isic-demande-card {
+    background: #fff;
+    border-radius: var(--isic-radius-lg);
+    box-shadow: var(--isic-shadow);
+    overflow: hidden;
+    transition: transform var(--isic-transition), box-shadow var(--isic-transition);
+
+    &__pipeline {
+        padding: 0.5rem 1rem 0;
+    }
+
+    &__body {
+        padding: 1rem;
+    }
+
+    &__header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 0.5rem;
+
+        a {
+            font-weight: 600;
+            color: $isic-primary;
+            text-decoration: none;
+            font-size: 1rem;
+
+            &:hover { color: $isic-action; }
+        }
+    }
+
+    &__meta {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        font-size: 0.85rem;
+        color: $isic-secondary;
+    }
+
+    &__category {
+        display: flex;
+        align-items: center;
+        gap: 0.25rem;
+    }
+}
+
+// ----------------------------------------------------------
+//  Priority Tag
+// ----------------------------------------------------------
+.isic-priority {
+    display: inline-block;
+    font-size: 0.75rem;
+    font-weight: 600;
+    padding: 0.15rem 0.5rem;
+    border-radius: 50px;
+    margin-top: 0.5rem;
+
+    &--urgent { background: lighten($isic-danger, 35%); color: $isic-danger; }
+    &--warning { background: lighten($isic-gold, 30%); color: darken($isic-gold, 10%); }
+}
+
+// ----------------------------------------------------------
+//  Profile Section
+// ----------------------------------------------------------
+.isic-profile {
+    &__header {
+        display: flex;
+        align-items: center;
+        gap: 1.25rem;
+        margin-bottom: 2rem;
+        padding: 1.5rem;
+        background: #fff;
+        border-radius: var(--isic-radius-lg);
+        box-shadow: var(--isic-shadow);
+
+        h3 { margin: 0; color: $isic-primary; }
+        p { margin: 0.25rem 0 0; color: $isic-secondary; font-size: 0.9rem; }
+    }
+
+    &__avatar {
+        width: 80px;
+        height: 80px;
+        border-radius: 50%;
+        object-fit: cover;
+        border: 3px solid lighten($isic-action, 30%);
+    }
+
+    &__section {
+        background: #fff;
+        border-radius: var(--isic-radius-lg);
+        box-shadow: var(--isic-shadow);
+        padding: 1.25rem;
+        margin-bottom: 1rem;
+
+        h5 {
+            color: $isic-primary;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid lighten($isic-action, 38%);
+
+            i { margin-right: 0.5rem; color: $isic-action; }
+        }
+    }
+
+    &__field {
+        label {
+            display: block;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: $isic-secondary;
+            margin-bottom: 0.15rem;
+        }
+
+        span {
+            font-size: 0.95rem;
+            color: $isic-primary;
+        }
+    }
+}
+
+// ----------------------------------------------------------
+//  Document Card
+// ----------------------------------------------------------
+.isic-doc-card {
+    background: #fff;
+    border-radius: var(--isic-radius-lg);
+    box-shadow: var(--isic-shadow);
+    padding: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+
+    &__icon {
+        width: 44px;
+        height: 44px;
+        border-radius: var(--isic-radius);
+        background: lighten($isic-info, 32%);
+        color: $isic-info;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.1rem;
+        flex-shrink: 0;
+    }
+
+    &__content {
+        flex-grow: 1;
+        min-width: 0;
+    }
+
+    &__header {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        flex-wrap: wrap;
+    }
+
+    &__name {
+        font-weight: 600;
+        color: $isic-primary;
+        margin: 0;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+    &__meta {
+        font-size: 0.8rem;
+        color: $isic-secondary;
+        margin: 0.15rem 0 0;
+        display: flex;
+        gap: 1rem;
+        flex-wrap: wrap;
+    }
+
+    &__download {
+        flex-shrink: 0;
+        width: 36px;
+        height: 36px;
+        border-radius: 50%;
+        background: lighten($isic-action, 38%);
+        color: $isic-action;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: background 0.2s ease, color 0.2s ease;
+
+        &:hover {
+            background: $isic-action;
+            color: #fff;
+        }
+    }
+}
+
+// ----------------------------------------------------------
+//  Empty State
+// ----------------------------------------------------------
+.isic-empty-state {
+    text-align: center;
+    padding: 3rem 1rem;
+    color: $isic-secondary;
+
+    &__icon {
+        font-size: 3rem;
+        opacity: 0.3;
+        margin-bottom: 1rem;
+    }
+
+    &__title {
+        font-size: 1.1rem;
+        font-weight: 600;
+        color: $isic-primary;
+        margin-bottom: 0.5rem;
+    }
+
+    &__text {
+        font-size: 0.9rem;
+        margin-bottom: 1rem;
+    }
+}
+
+// ----------------------------------------------------------
+//  Hover Lift (utility)
+// ----------------------------------------------------------
+.isic-lift {
+    transition: transform var(--isic-transition), box-shadow var(--isic-transition);
+
+    &:hover {
+        transform: translateY(-2px);
+        box-shadow: var(--isic-shadow-hover);
+    }
+}

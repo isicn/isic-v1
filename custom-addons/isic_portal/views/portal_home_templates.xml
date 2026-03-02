@@ -1,0 +1,198 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+
+    <!-- ============================================================ -->
+    <!--  Override /my home : Hero + Stats + Dashboard                -->
+    <!-- ============================================================ -->
+
+    <template id="portal_my_home_isic" name="ISIC Portal: Home"
+              inherit_id="portal.portal_my_home" priority="99">
+
+        <!-- Enable portal_client_category container -->
+        <xpath expr="//div[hasclass('o_portal_docs')]" position="before">
+            <t t-set="portal_client_category_enable" t-value="True"/>
+        </xpath>
+
+        <!-- Replace the entire portal docs section with ISIC hero + dashboard -->
+        <xpath expr="//div[hasclass('o_portal_docs')]" position="replace">
+            <div class="isic-portal-home">
+
+                <!-- ============================== -->
+                <!--  Hero Section                  -->
+                <!-- ============================== -->
+                <section class="isic-hero isic-stagger-container">
+                    <div class="isic-hero__greeting isic-stagger-item">
+                        <img class="isic-hero__avatar"
+                             t-att-src="'/web/image/res.partner/%s/avatar_128' % request.env.user.partner_id.id"
+                             alt="Avatar"
+                             loading="lazy"/>
+                        <div>
+                            <h1 class="isic-hero__title">
+                                Bonjour, <t t-out="request.env.user.partner_id.name"/>
+                            </h1>
+                            <p class="isic-hero__subtitle">
+                                <t t-if="request.env.user.matricule">
+                                    Matricule : <strong><t t-out="request.env.user.matricule"/></strong>
+                                </t>
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- Stats row — counters loaded async via /my/counters -->
+                    <div class="isic-hero__stats isic-stagger-item">
+                        <div class="isic-stat-card isic-lift"
+                             t-attf-onclick="window.location='/my/demandes?filterby=submitted'">
+                            <div class="isic-stat-card__icon">
+                                <i class="fa fa-clock-o" title="En cours"/>
+                            </div>
+                            <div class="isic-stat-card__value" data-target="0"
+                                 t-att-data-target="demande_pending_count or 0">
+                                0
+                            </div>
+                            <div class="isic-stat-card__label">En cours</div>
+                        </div>
+
+                        <div class="isic-stat-card isic-lift"
+                             t-attf-onclick="window.location='/my/demandes?filterby=approved'">
+                            <div class="isic-stat-card__icon">
+                                <i class="fa fa-check-circle" title="Approuvees"/>
+                            </div>
+                            <div class="isic-stat-card__value" data-target="0"
+                                 t-att-data-target="demande_approved_count or 0">
+                                0
+                            </div>
+                            <div class="isic-stat-card__label">Approuvees</div>
+                        </div>
+
+                        <div class="isic-stat-card isic-lift"
+                             t-attf-onclick="window.location='/my/documents'">
+                            <div class="isic-stat-card__icon">
+                                <i class="fa fa-folder-open" title="Documents"/>
+                            </div>
+                            <div class="isic-stat-card__value" data-target="0"
+                                 t-att-data-target="document_count or 0">
+                                0
+                            </div>
+                            <div class="isic-stat-card__label">Documents</div>
+                        </div>
+                    </div>
+
+                    <!-- Quick actions -->
+                    <div class="isic-hero__actions isic-stagger-item">
+                        <a href="/my/demandes/new" class="isic-quick-action isic-lift">
+                            <i class="fa fa-plus-circle" title="Nouvelle demande"/>
+                            Nouvelle demande
+                        </a>
+                        <a href="/my/documents" class="isic-quick-action isic-quick-action--secondary isic-lift">
+                            <i class="fa fa-folder-open" title="Mes documents"/>
+                            Mes documents
+                        </a>
+                    </div>
+                </section>
+
+                <!-- ============================== -->
+                <!--  Dashboard Cards               -->
+                <!-- ============================== -->
+                <div class="isic-dashboard-grid isic-stagger-container">
+                    <!-- Demandes -->
+                    <a href="/my/demandes" class="isic-dashboard-card isic-lift isic-stagger-item">
+                        <div class="isic-dashboard-card__icon">
+                            <i class="fa fa-file-text" title="Demandes"/>
+                        </div>
+                        <div class="isic-dashboard-card__content">
+                            <h3 class="isic-dashboard-card__title">Mes demandes</h3>
+                            <p class="isic-dashboard-card__desc">
+                                Suivre vos demandes d'approbation
+                            </p>
+                        </div>
+                        <span class="isic-dashboard-card__badge"
+                              t-att-data-count="demande_count or 0">
+                            <t t-out="demande_count or 0"/>
+                        </span>
+                    </a>
+
+                    <!-- Documents -->
+                    <a href="/my/documents" class="isic-dashboard-card isic-lift isic-stagger-item">
+                        <div class="isic-dashboard-card__icon">
+                            <i class="fa fa-folder" title="Documents"/>
+                        </div>
+                        <div class="isic-dashboard-card__content">
+                            <h3 class="isic-dashboard-card__title">Mes documents</h3>
+                            <p class="isic-dashboard-card__desc">
+                                Documents academiques et administratifs
+                            </p>
+                        </div>
+                        <span class="isic-dashboard-card__badge"
+                              t-att-data-count="document_count or 0">
+                            <t t-out="document_count or 0"/>
+                        </span>
+                    </a>
+
+                    <!-- Profil -->
+                    <a href="/my/profile" class="isic-dashboard-card isic-lift isic-stagger-item">
+                        <div class="isic-dashboard-card__icon">
+                            <i class="fa fa-user" title="Profil"/>
+                        </div>
+                        <div class="isic-dashboard-card__content">
+                            <h3 class="isic-dashboard-card__title">Mon profil</h3>
+                            <p class="isic-dashboard-card__desc">
+                                Informations personnelles
+                            </p>
+                        </div>
+                    </a>
+                </div>
+
+            </div>
+        </xpath>
+    </template>
+
+    <!-- ============================================================ -->
+    <!--  Override /my/counters to include new counters               -->
+    <!-- ============================================================ -->
+
+    <template id="portal_my_home_counters" name="ISIC Portal: Home Counters"
+              inherit_id="portal.portal_my_home" priority="100">
+        <xpath expr="//div[hasclass('o_portal_my_home')]" position="attributes">
+            <attribute name="t-att-data-counters">
+                ['demande_count', 'demande_pending_count', 'demande_approved_count', 'document_count']
+            </attribute>
+        </xpath>
+    </template>
+
+    <!-- ============================================================ -->
+    <!--  Breadcrumbs for new pages                                   -->
+    <!-- ============================================================ -->
+
+    <template id="portal_breadcrumbs" name="ISIC Portal: Breadcrumbs"
+              inherit_id="portal.portal_breadcrumbs" priority="45">
+        <xpath expr="//ol[hasclass('o_portal_submenu')]" position="inside">
+            <!-- Demandes list -->
+            <li t-if="page_name == 'demandes'" class="breadcrumb-item active">
+                Mes demandes
+            </li>
+            <!-- Demande detail -->
+            <li t-if="page_name == 'demande_detail'" class="breadcrumb-item">
+                <a href="/my/demandes">Mes demandes</a>
+            </li>
+            <li t-if="page_name == 'demande_detail'" class="breadcrumb-item active">
+                <t t-out="demande.name"/>
+            </li>
+            <!-- Nouvelle demande -->
+            <li t-if="page_name == 'demande_new'" class="breadcrumb-item">
+                <a href="/my/demandes">Mes demandes</a>
+            </li>
+            <li t-if="page_name == 'demande_new'" class="breadcrumb-item active">
+                Nouvelle demande
+            </li>
+            <!-- Profil -->
+            <li t-if="page_name == 'profile'" class="breadcrumb-item active">
+                Mon profil
+            </li>
+            <!-- Documents -->
+            <li t-if="page_name == 'documents'" class="breadcrumb-item active">
+                Mes documents
+            </li>
+        </xpath>
+    </template>
+
+</odoo>

@@ -15,14 +15,42 @@ PORTAL_CATEGORY_CODES = ("ATT", "MATERIEL", "DIVERS")
 
 class IsicPortal(CustomerPortal):
     # ------------------------------------------------------------------
-    # Portal home counter
+    # Portal home counters
     # ------------------------------------------------------------------
     def _prepare_home_portal_values(self, counters):
         values = super()._prepare_home_portal_values(counters)
+        Demande = request.env["isic.approbation.demande"]
+        uid = request.env.uid
+
         if "demande_count" in counters:
-            Demande = request.env["isic.approbation.demande"]
-            values["demande_count"] = Demande.search_count([("demandeur_id", "=", request.env.uid)])
+            values["demande_count"] = Demande.search_count([("demandeur_id", "=", uid)])
+        if "demande_pending_count" in counters:
+            values["demande_pending_count"] = Demande.search_count(
+                [("demandeur_id", "=", uid), ("state", "in", ("submitted", "draft"))]
+            )
+        if "demande_approved_count" in counters:
+            values["demande_approved_count"] = Demande.search_count(
+                [("demandeur_id", "=", uid), ("state", "=", "approved")]
+            )
+        if "document_count" in counters:
+            # Count DMS files visible to user (non-draft for portal)
+            DmsFile = request.env["dms.file"]
+            domain = [("ged_state", "!=", "draft")]
+            # sudo() justified: portal user has limited DMS ACL, we count accessible files
+            values["document_count"] = DmsFile.sudo().search_count(domain)
+
         return values
+
+    # ------------------------------------------------------------------
+    # Override home() to pass counters server-side for hero display
+    # ------------------------------------------------------------------
+    @http.route(["/my", "/my/home"], type="http", auth="user", website=True)
+    def home(self, **kw):
+        values = self._prepare_portal_layout_values()
+        # Compute counters eagerly (hero renders them server-side, no async flash)
+        counter_keys = ["demande_count", "demande_pending_count", "demande_approved_count", "document_count"]
+        values.update(self._prepare_home_portal_values(counter_keys))
+        return request.render("portal.portal_my_home", values)
 
     # ------------------------------------------------------------------
     # Helpers
@@ -42,6 +70,13 @@ class IsicPortal(CustomerPortal):
             "rejected": {"label": _("Refusees"), "domain": [("state", "=", "rejected")]},
         }
 
+    def _demande_get_searchbar_inputs(self):
+        return {
+            "reference": {"input": "reference", "label": _("Reference")},
+            "categorie": {"input": "categorie", "label": _("Categorie")},
+            "all": {"input": "all", "label": _("Tout")},
+        }
+
     def _portal_categories(self):
         """Return categories available to portal students."""
         return (
@@ -59,7 +94,7 @@ class IsicPortal(CustomerPortal):
         auth="user",
         website=True,
     )
-    def portal_my_demandes(self, page=1, sortby=None, filterby=None, **kw):
+    def portal_my_demandes(self, page=1, sortby=None, filterby=None, search=None, search_in="all", **kw):
         Demande = request.env["isic.approbation.demande"]
         domain = [("demandeur_id", "=", request.env.uid)]
 
@@ -71,12 +106,25 @@ class IsicPortal(CustomerPortal):
         if not filterby or filterby not in searchbar_filters:
             filterby = "all"
 
+        searchbar_inputs = self._demande_get_searchbar_inputs()
+
+        # Apply filter
         domain += searchbar_filters[filterby]["domain"]
+
+        # Apply search
+        if search and search_in:
+            if search_in == "reference":
+                domain += [("name", "ilike", search)]
+            elif search_in == "categorie":
+                domain += [("categorie_id.name", "ilike", search)]
+            else:  # "all"
+                domain += ["|", ("name", "ilike", search), ("categorie_id.name", "ilike", search)]
+
         demande_count = Demande.search_count(domain)
 
         pager = portal_pager(
             url="/my/demandes",
-            url_args={"sortby": sortby, "filterby": filterby},
+            url_args={"sortby": sortby, "filterby": filterby, "search": search, "search_in": search_in},
             total=demande_count,
             page=page,
             step=10,
@@ -96,6 +144,9 @@ class IsicPortal(CustomerPortal):
             "sortby": sortby,
             "searchbar_filters": searchbar_filters,
             "filterby": filterby,
+            "searchbar_inputs": searchbar_inputs,
+            "search_in": search_in,
+            "search": search,
         }
         return request.render("isic_portal.portal_my_demandes", values)
 
@@ -114,10 +165,28 @@ class IsicPortal(CustomerPortal):
         except (AccessError, MissingError):
             return request.redirect("/my")
 
+        # Build pipeline steps for progress display
+        state_pipeline = [
+            ("draft", _("Brouillon")),
+            ("submitted", _("Soumise")),
+            ("approved", _("Approuvee")),
+        ]
+        if demande_sudo.state == "rejected":
+            state_pipeline = [
+                ("draft", _("Brouillon")),
+                ("submitted", _("Soumise")),
+                ("rejected", _("Refusee")),
+            ]
+
         values = {
             "demande": demande_sudo,
             "page_name": "demande_detail",
+            "state_pipeline": state_pipeline,
         }
+        # Setup chatter values (token, pid, hash for portal.message_thread)
+        values = self._get_page_view_values(
+            demande_sudo, access_token, values, "my_demandes_history", False, **kw
+        )
         return request.render("isic_portal.portal_my_demande_detail", values)
 
     # ------------------------------------------------------------------
@@ -214,3 +283,84 @@ class IsicPortal(CustomerPortal):
         demande.action_submit()
 
         return request.redirect(f"/my/demandes/{demande.id}")
+
+    # ------------------------------------------------------------------
+    # Profile: /my/profile
+    # ------------------------------------------------------------------
+    @http.route(
+        "/my/profile",
+        type="http",
+        auth="user",
+        website=True,
+    )
+    def portal_my_profile(self, **kw):
+        user = request.env.user
+        partner = user.partner_id
+        values = {
+            "page_name": "profile",
+            "partner": partner,
+            "user": user,
+        }
+        return request.render("isic_portal.portal_my_profile", values)
+
+    # ------------------------------------------------------------------
+    # Documents: /my/documents
+    # ------------------------------------------------------------------
+    @http.route(
+        ["/my/documents", "/my/documents/page/<int:page>"],
+        type="http",
+        auth="user",
+        website=True,
+    )
+    def portal_my_documents(self, page=1, doc_type=None, doc_state=None, search=None, **kw):
+        DmsFile = request.env["dms.file"]
+        DocType = request.env["isic.document.type"]
+
+        # Base domain: only non-draft for portal users
+        domain = [("ged_state", "!=", "draft")]
+
+        # Filter by document type
+        if doc_type and doc_type.isdigit():
+            domain += [("document_type_id", "=", int(doc_type))]
+
+        # Filter by state
+        if doc_state and doc_state in ("validated", "archived"):
+            domain += [("ged_state", "=", doc_state)]
+
+        # Search by name
+        if search:
+            domain += ["|", ("name", "ilike", search), ("reference", "ilike", search)]
+
+        # sudo() justified: portal DMS access is controlled by dms.access model,
+        # we only show non-draft and count via sudo
+        doc_count = DmsFile.sudo().search_count(domain)
+
+        pager = portal_pager(
+            url="/my/documents",
+            url_args={"doc_type": doc_type, "doc_state": doc_state, "search": search},
+            total=doc_count,
+            page=page,
+            step=15,
+        )
+
+        documents = DmsFile.sudo().search(
+            domain,
+            order="write_date desc",
+            limit=15,
+            offset=pager["offset"],
+        )
+
+        # Available document types for filter dropdown
+        # sudo() justified: portal user needs to see type names for filtering
+        doc_types = DocType.sudo().search([("active", "=", True)], order="sequence, name")
+
+        values = {
+            "page_name": "documents",
+            "documents": documents,
+            "pager": pager,
+            "doc_types": doc_types,
+            "doc_type": doc_type,
+            "doc_state": doc_state,
+            "search": search,
+        }
+        return request.render("isic_portal.portal_my_documents", values)

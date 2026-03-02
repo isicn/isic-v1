@@ -1,0 +1,126 @@
+// ============================================================
+//  ISIC Portal — Layout
+//  Grid systems for hero, dashboard, pages
+// ============================================================
+
+// Portal background
+.o_portal {
+    background-color: var(--isic-bg-light);
+}
+
+// Hero section layout
+.isic-hero {
+    background: linear-gradient(135deg, $isic-primary 0%, lighten($isic-primary, 12%) 100%);
+    border-radius: var(--isic-radius-xl);
+    padding: 2rem;
+    margin-bottom: 1.5rem;
+    color: #fff;
+    position: relative;
+    overflow: hidden;
+
+    // Subtle pattern overlay
+    &::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: radial-gradient(circle at 80% 20%, rgba(255, 255, 255, 0.06) 0%, transparent 60%);
+        pointer-events: none;
+    }
+
+    &__greeting {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        margin-bottom: 1.5rem;
+        position: relative;
+    }
+
+    &__avatar {
+        width: 64px;
+        height: 64px;
+        border-radius: 50%;
+        border: 3px solid rgba(255, 255, 255, 0.3);
+        object-fit: cover;
+        flex-shrink: 0;
+    }
+
+    &__title {
+        font-size: 1.5rem;
+        font-weight: 600;
+        margin: 0;
+        color: #fff;
+    }
+
+    &__subtitle {
+        margin: 0.25rem 0 0;
+        opacity: 0.85;
+        font-size: 0.9rem;
+    }
+
+    &__stats {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 1rem;
+        margin-bottom: 1.5rem;
+        position: relative;
+    }
+
+    &__actions {
+        display: flex;
+        gap: 0.75rem;
+        flex-wrap: wrap;
+        position: relative;
+
+        // Glass style for quick-action buttons inside hero (dark background)
+        .isic-quick-action {
+            background: rgba(255, 255, 255, 0.15);
+            border-color: rgba(255, 255, 255, 0.25);
+            color: #fff;
+
+            &:hover {
+                background: rgba(255, 255, 255, 0.25);
+                color: #fff;
+            }
+
+            &--secondary {
+                background: transparent;
+                border-color: rgba(255, 255, 255, 0.3);
+                color: rgba(255, 255, 255, 0.9);
+
+                &:hover {
+                    background: rgba(255, 255, 255, 0.15);
+                    color: #fff;
+                }
+            }
+        }
+    }
+}
+
+// Dashboard cards grid
+.isic-dashboard-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+}
+
+// Demandes card list
+.isic-demandes-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+// Profile sections grid
+.isic-profile__grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.75rem 1.5rem;
+}
+
+// Documents grid
+.isic-documents-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}

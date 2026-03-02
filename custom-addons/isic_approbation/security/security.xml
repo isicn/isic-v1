@@ -30,16 +30,15 @@
         <!-- ir.rule : visibilité des catégories          -->
         <!-- ============================================ -->
 
-        <!-- Utilisateurs voient catégories sans restriction OU celles de leurs groupes -->
+        <!-- Utilisateurs internes voient toutes les catégories (le filtrage par
+             groupe_demandeur_ids se fait côté contrôleur/formulaire, pas en ir.rule,
+             sinon les approbateurs ne peuvent pas lire la catégorie d'une demande
+             qui leur est soumise) -->
         <record id="rule_categorie_user" model="ir.rule">
-            <field name="name">Catégories : groupes autorisés</field>
+            <field name="name">Catégories : lecture pour tous les utilisateurs internes</field>
             <field name="model_id" ref="model_isic_approbation_categorie" />
             <field name="groups" eval="[(4, ref('base.group_user'))]" />
-            <field name="domain_force">[
-                '|',
-                ('groupe_demandeur_ids', '=', False),
-                ('groupe_demandeur_ids', 'in', user.group_ids.ids),
-            ]</field>
+            <field name="domain_force">[(1, '=', 1)]</field>
         </record>
 
         <!-- Direction voit toutes les catégories (config) -->

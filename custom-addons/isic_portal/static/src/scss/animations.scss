@@ -1,0 +1,133 @@
+// ============================================================
+//  ISIC Portal — Animations & Micro-interactions
+// ============================================================
+
+// ----------------------------------------------------------
+//  Staggered fade-in
+// ----------------------------------------------------------
+@keyframes isic-fade-in-up {
+    from {
+        opacity: 0;
+        transform: translateY(12px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.isic-stagger-item {
+    opacity: 0;
+
+    &--visible {
+        animation: isic-fade-in-up 0.4s ease forwards;
+    }
+
+    // Staggered delays (up to 12 items)
+    @for $i from 1 through 12 {
+        &--visible:nth-child(#{$i}) {
+            animation-delay: #{$i * 0.06}s;
+        }
+    }
+}
+
+// ----------------------------------------------------------
+//  Counter number appearance
+// ----------------------------------------------------------
+@keyframes isic-number-in {
+    from {
+        opacity: 0;
+        transform: translateY(6px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.isic-stat-card__value {
+    animation: isic-number-in 0.3s ease forwards;
+}
+
+// ----------------------------------------------------------
+//  Skeleton loading shimmer
+// ----------------------------------------------------------
+@keyframes isic-shimmer {
+    0% { background-position: -200% 0; }
+    100% { background-position: 200% 0; }
+}
+
+.isic-skeleton {
+    background: linear-gradient(
+        90deg,
+        #e9ecef 25%,
+        #f3f3f3 50%,
+        #e9ecef 75%
+    );
+    background-size: 200% 100%;
+    animation: isic-shimmer 1.5s ease-in-out infinite;
+    border-radius: var(--isic-radius-sm);
+
+    &--text {
+        height: 1em;
+        width: 60%;
+    }
+
+    &--circle {
+        width: 48px;
+        height: 48px;
+        border-radius: 50%;
+    }
+
+    &--card {
+        height: 100px;
+        border-radius: var(--isic-radius-lg);
+    }
+}
+
+// ----------------------------------------------------------
+//  Notification badge pulse
+// ----------------------------------------------------------
+@keyframes isic-pulse {
+    0%,
+    100% { box-shadow: 0 0 0 0 rgba($isic-action, 0.4); }
+    50% { box-shadow: 0 0 0 6px rgba($isic-action, 0); }
+}
+
+.isic-pulse {
+    animation: isic-pulse 2s ease infinite;
+}
+
+// ----------------------------------------------------------
+//  Reduced motion (accessibility)
+// ----------------------------------------------------------
+@media (prefers-reduced-motion: reduce) {
+    .isic-stagger-item {
+        opacity: 1;
+        animation: none !important;
+
+        &--visible { animation: none !important; }
+    }
+
+    .isic-lift:hover {
+        transform: none;
+    }
+
+    .isic-stat-card__value {
+        animation: none;
+    }
+
+    .isic-skeleton {
+        animation: none;
+    }
+
+    .isic-pulse {
+        animation: none;
+    }
+
+    .isic-quick-action:hover {
+        transform: none;
+    }
+}

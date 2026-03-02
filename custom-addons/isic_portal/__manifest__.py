@@ -1,7 +1,7 @@
 {
     "name": "ISIC - Portail Etudiant",
     "summary": "Portail self-service pour les etudiants ISIC",
-    "version": "19.0.1.0.0",
+    "version": "19.0.2.0.0",
     "category": "Education",
     "author": "ISIC Rabat",
     "website": "https://isic.ac.ma",
@@ -11,12 +11,20 @@
     "data": [
         "security/isic_portal_security.xml",
         "security/ir.model.access.csv",
-        "views/portal_templates.xml",
+        "views/portal_home_templates.xml",
+        "views/portal_demandes_templates.xml",
+        "views/portal_profile_templates.xml",
         "views/portal_dms_templates.xml",
     ],
     "assets": {
         "web.assets_frontend": [
-            "isic_portal/static/src/scss/portal.scss",
+            "isic_portal/static/src/scss/variables.scss",
+            "isic_portal/static/src/scss/layout.scss",
+            "isic_portal/static/src/scss/components.scss",
+            "isic_portal/static/src/scss/pages.scss",
+            "isic_portal/static/src/scss/animations.scss",
+            "isic_portal/static/src/scss/responsive.scss",
+            "isic_portal/static/src/js/portal_interactions.js",
         ],
     },
     "installable": True,
