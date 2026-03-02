@@ -243,4 +243,9 @@
     <record id="dms.main_menu_dms" model="ir.ui.menu">
         <field name="active" eval="False" />
     </record>
+
+    <!-- Hide "Migrer" action (technical, confusing for end users) -->
+    <record id="dms.action_dms_attachment_migrate" model="ir.actions.server">
+        <field name="binding_model_id" eval="False" />
+    </record>
 </odoo>

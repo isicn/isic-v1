@@ -165,6 +165,31 @@ class DmsFile(models.Model):
         }
 
     # ==================================================================
+    # Thumbnail refresh
+    # ==================================================================
+
+    def _recompute_thumbnail(self):
+        """Force thumbnail update after content change.
+
+        The base DMS compute depends on 'content' (a non-stored field),
+        which doesn't reliably trigger recomputation of the stored image_1920.
+        """
+        self.ensure_one()
+        try:
+            from PIL import Image as PILImage
+
+            mime = self.mimetype or ""
+            supported = {*PILImage.MIME.values(), "image/svg+xml"} - {"application/pdf"}
+            if mime in supported and self.content:
+                self.image_1920 = self.content
+            else:
+                # Non-image file (PDF, DOCX, etc.) — clear stale thumbnail
+                if self.image_1920:
+                    self.image_1920 = False
+        except Exception:
+            pass
+
+    # ==================================================================
     # GED workflow (v1)
     # ==================================================================
 
@@ -469,6 +494,11 @@ class DmsFile(models.Model):
             self._create_version()
 
         res = super().write(vals)
+
+        # Force thumbnail refresh when content changes
+        if "content" in vals:
+            for rec in self:
+                rec._recompute_thumbnail()
 
         # Re-classify if name or directory changed
         if ("name" in vals or "directory_id" in vals) and not self.env.context.get("_isic_skip_version"):
