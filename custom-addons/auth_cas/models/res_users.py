@@ -272,10 +272,19 @@ class ResUsers(models.Model):
         Synchronise les attributs LDAP (reçus via CAS) vers le res.partner associé.
 
         Champs synchronisés :
-        - sn (surname) → pas de champ séparé, contribue au name
-        - givenName → pas de champ séparé, contribue au name
         - title → function (fonction/poste)
         - employeeType → is_enseignant (si 'faculty')
+        - isicCIN → cin
+        - isicDateNaissance → date_naissance (YYYY-MM-DD)
+        - isicLieuNaissance → lieu_naissance
+        - isicGenre → genre (M/F)
+        - isicNationalite → nationalite_id (code ISO → res.country)
+        - isicSituationFamiliale → situation_familiale
+        - mobile → telephone_personnel
+        - telephoneNumber → phone
+        - homePostalAddress → adresse_personnelle
+        - isicContactUrgenceNom → contact_urgence_nom
+        - isicContactUrgenceTel → contact_urgence_tel
         - ldap_synced → True (flag de synchronisation)
         """
         self.ensure_one()
@@ -295,7 +304,62 @@ class ResUsers(models.Model):
         if employee_type:
             partner_vals["is_enseignant"] = employee_type.lower() == "faculty"
 
+        # Identité
+        cin = self._cas_extract_attr(validation, "isicCIN")
+        if cin:
+            partner_vals["cin"] = cin
+
+        date_naissance = self._cas_extract_attr(validation, "isicDateNaissance")
+        if date_naissance:
+            try:
+                from datetime import date as dt_date
+
+                partner_vals["date_naissance"] = dt_date.fromisoformat(date_naissance)
+            except ValueError:
+                _logger.warning("Invalid date format for isicDateNaissance: %s", date_naissance)
+
+        lieu_naissance = self._cas_extract_attr(validation, "isicLieuNaissance")
+        if lieu_naissance:
+            partner_vals["lieu_naissance"] = lieu_naissance
+
+        genre = self._cas_extract_attr(validation, "isicGenre")
+        if genre and genre.upper() in ("M", "F"):
+            partner_vals["genre"] = genre.upper()
+
+        nationalite_code = self._cas_extract_attr(validation, "isicNationalite")
+        if nationalite_code:
+            country = self.env["res.country"].sudo().search([("code", "=", nationalite_code.upper())], limit=1)
+            if country:
+                partner_vals["nationalite_id"] = country.id
+
+        situation = self._cas_extract_attr(validation, "isicSituationFamiliale")
+        if situation:
+            partner_vals["situation_familiale"] = situation
+
+        # Contact
+        phone = self._cas_extract_attr(validation, "telephoneNumber")
+        if phone:
+            partner_vals["phone"] = phone
+
+        mobile = self._cas_extract_attr(validation, "mobile")
+        if mobile:
+            partner_vals["telephone_personnel"] = mobile
+
+        address = self._cas_extract_attr(validation, "homePostalAddress")
+        if address:
+            partner_vals["adresse_personnelle"] = address
+
+        # Contact d'urgence
+        urgence_nom = self._cas_extract_attr(validation, "isicContactUrgenceNom")
+        if urgence_nom:
+            partner_vals["contact_urgence_nom"] = urgence_nom
+
+        urgence_tel = self._cas_extract_attr(validation, "isicContactUrgenceTel")
+        if urgence_tel:
+            partner_vals["contact_urgence_tel"] = urgence_tel
+
         partner.sudo().write(partner_vals)
+        _logger.info("CAS sync partner fields for %s: %d fields updated", self.login, len(partner_vals) - 1)
 
     @staticmethod
     def _cas_extract_attr(validation, attr_name):
