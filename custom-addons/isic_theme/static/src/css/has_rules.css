@@ -6,8 +6,8 @@
 /* Navbar transparent when apps menu dropdown is open (like Enterprise).
  * The .mk_app_menu element only exists in the DOM when the popover is open
  * (Odoo Dropdown uses OWL popover, element is created/destroyed on toggle).
- * The dropdown is extended to top:0 / 100vh in backend.scss so the gradient
- * covers the full viewport. The navbar sits on top with transparent bg. */
+ * The dropdown is extended to top:0 / 100vh in backend.scss so the
+ * background covers the full viewport. The navbar sits on top. */
 body:has(.mk_app_menu) .o_main_navbar {
     background: transparent !important;
     background-image: none !important;
@@ -24,7 +24,7 @@ body:has(.mk_app_menu) .o_main_navbar .o_menu_sections {
     pointer-events: none;
 }
 
-/* Force all navbar text/icons to white when apps menu is open */
+/* Navbar icons adapt to background — dark by default (light backgrounds) */
 body:has(.mk_app_menu) .o_main_navbar .o_menu_systray .o_nav_entry,
 body:has(.mk_app_menu) .o_main_navbar .o_menu_systray .dropdown-toggle,
 body:has(.mk_app_menu) .o_main_navbar .o_navbar_apps_menu .dropdown-toggle,
@@ -32,5 +32,15 @@ body:has(.mk_app_menu) .o_main_navbar .o_menu_systray,
 body:has(.mk_app_menu) .o_main_navbar .badge,
 body:has(.mk_app_menu) .o_main_navbar span,
 body:has(.mk_app_menu) .o_main_navbar i {
-    color: #fff !important;
+    color: #374151 !important;
+}
+
+/* Waffle button — subtle like Enterprise */
+.o_navbar_apps_menu .dropdown-toggle {
+    opacity: 0.7;
+    transition: opacity 0.15s ease;
+}
+
+.o_navbar_apps_menu .dropdown-toggle:hover {
+    opacity: 1;
 }

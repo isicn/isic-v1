@@ -100,7 +100,8 @@
     }
 
     // Notification badges — action color on white navbar
-    .badge {
+    // Exclude presence status dots (.rounded-circle with bg-success/warning/danger)
+    .badge:not(.rounded-circle) {
         background-color: $o-action !important;
         color: #fff !important;
     }
@@ -402,37 +403,45 @@
 // Note: navbar :has() rule for apps menu open state is in webclient_templates.xml
 // (raw CSS to bypass SCSS compiler which strips :has())
 
-// MuK dropdown apps menu — full viewport, behind transparent navbar
+// MuK dropdown apps menu — Enterprise-like grid
 .mk_app_menu.dropdown-menu {
     align-content: center !important;
     justify-content: center !important;
-    background: url("/isic_theme/static/src/img/apps_bg.webp") center / cover no-repeat !important;
     top: 0 !important;
     min-height: 100vh !important;
-    padding-top: 50px !important;
+    padding-top: 60px !important;
     padding-bottom: 0 !important;
 
     .o_app {
-        transition: transform 0.2s ease;
+        transition: transform 0.15s ease;
+
+        &:hover {
+            transform: translateY(-2px);
+        }
 
         > a .mk_app_icon {
-            border-radius: 12px !important;
-            box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.2), 0 2px 8px rgba(0, 0, 0, 0.15) !important;
+            border-radius: 16px !important;
+            width: 72px !important;
+            height: 72px !important;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08) !important;
+            background-color: #fff;
         }
 
         &:hover > a .mk_app_icon {
-            box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.2), 0 4px 16px rgba(0, 0, 0, 0.25) !important;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12) !important;
         }
 
         > a .mk_app_name {
             font-weight: 500;
+            font-size: 0.8125rem;
+            color: #374151 !important;
+            margin-top: 6px;
         }
     }
 }
 
-// Standard Odoo home view (fallback)
+// Standard Odoo home view (fallback — no !important, MuK settings can override)
 .o_home_menu {
-    background: linear-gradient(135deg, #1B3A5C 0%, #0F2236 100%);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -443,24 +452,28 @@
     }
 
     .o_app {
-        transition: transform 0.2s ease;
+        transition: transform 0.15s ease;
 
         &:hover {
-            transform: translateY(-3px);
+            transform: translateY(-2px);
         }
 
         .o_app_icon {
-            border-radius: 12px;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
-            transition: box-shadow 0.2s ease;
+            border-radius: 16px;
+            width: 72px;
+            height: 72px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+            transition: box-shadow 0.15s ease;
         }
 
         &:hover .o_app_icon {
-            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.25);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
         }
 
         .o_caption {
             font-weight: 500;
+            font-size: 0.8125rem;
+            color: #374151;
         }
     }
 }
