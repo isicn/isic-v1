@@ -272,6 +272,7 @@ class ResUsers(models.Model):
         Synchronise les attributs LDAP (reçus via CAS) vers le res.partner associé.
 
         Champs synchronisés :
+        - mail → email
         - title → function (fonction/poste)
         - employeeType → is_enseignant (si 'faculty')
         - isicCIN → cin
@@ -293,6 +294,11 @@ class ResUsers(models.Model):
             return
 
         partner_vals = {"ldap_synced": True}
+
+        # Synchroniser l'email depuis LDAP mail
+        email = self._cas_extract_attr(validation, "mail") or self._cas_extract_attr(validation, "email")
+        if email:
+            partner_vals["email"] = email
 
         # Synchroniser la fonction depuis LDAP title
         title = self._cas_extract_attr(validation, "title")
