@@ -8,6 +8,22 @@
         <field name="model">dms.file</field>
         <field name="inherit_id" ref="dms.view_dms_file_form" />
         <field name="arch" type="xml">
+            <!-- Make base DMS fields readonly when validated/archived -->
+            <xpath expr="//div[@class='oe_title']//field[@name='name']" position="attributes">
+                <attribute name="readonly">ged_state != 'draft'</attribute>
+            </xpath>
+            <xpath expr="//group[@name='content']//field[@name='content']" position="attributes">
+                <attribute name="readonly">ged_state != 'draft'</attribute>
+            </xpath>
+            <xpath expr="//group[@name='settings']//field[@name='directory_id']" position="attributes">
+                <attribute name="readonly">ged_state != 'draft'</attribute>
+            </xpath>
+            <xpath expr="//group[@name='settings']//field[@name='category_id']" position="attributes">
+                <attribute name="readonly">ged_state != 'draft'</attribute>
+            </xpath>
+            <xpath expr="//group[@name='settings']//field[@name='tag_ids']" position="attributes">
+                <attribute name="readonly">ged_state != 'draft'</attribute>
+            </xpath>
             <!-- Workflow buttons in header -->
             <xpath expr="//header" position="inside">
                 <button
@@ -44,13 +60,13 @@
                 <page string="Métadonnées GED" name="page_ged_metadata">
                     <group>
                         <group>
-                            <field name="document_type_id" />
-                            <field name="reference" />
+                            <field name="document_type_id" readonly="ged_state != 'draft'" />
+                            <field name="reference" readonly="ged_state != 'draft'" />
                             <field name="auto_classified" invisible="not auto_classified" />
                         </group>
                         <group>
-                            <field name="date_document" />
-                            <field name="annee_academique_id" />
+                            <field name="date_document" readonly="ged_state != 'draft'" />
+                            <field name="annee_academique_id" readonly="ged_state != 'draft'" />
                         </group>
                     </group>
                 </page>

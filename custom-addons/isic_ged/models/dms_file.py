@@ -489,7 +489,17 @@ class DmsFile(models.Model):
         return records
 
     # Fields protected when document is validated/archived
-    _PROTECTED_FIELDS = {"content", "name"}
+    _PROTECTED_FIELDS = {
+        "content",
+        "name",
+        "directory_id",
+        "document_type_id",
+        "tag_ids",
+        "category_id",
+        "reference",
+        "date_document",
+        "annee_academique_id",
+    }
 
     def write(self, vals):
         # ------ Protection: validated/archived documents ------
