@@ -112,7 +112,7 @@ class CASAuthController(http.Controller):
 
         request.session["cas_provider_id"] = provider.id
         auth_link = f"{cas_login_url}?service={urllib.parse.quote(service_url, safe='')}"
-        return request.redirect(auth_link)
+        return request.redirect(auth_link, local=False)
 
     @http.route("/auth_cas/callback", type="http", auth="none", csrf=False)
     def cas_callback(self, **kw):
