@@ -13,30 +13,30 @@
 
                 <!-- ── Profil personnel ── -->
                 <page name="isic_profil" string="Profil Personnel">
+                    <field name="ldap_synced" invisible="1" />
+                    <div invisible="not ldap_synced" class="alert alert-info mb-3">
+                        <i class="fa fa-lock" title="LDAP" />
+                        Les champs grisés sont synchronisés depuis le référentiel
+                        LDAP. Pour les modifier, utilisez phpLDAPadmin — les
+                        changements seront propagés à la prochaine connexion CAS.
+                    </div>
                     <group>
                         <group name="profil_identite">
-                            <field name="cin" />
-                            <field name="genre" />
-                            <field name="date_naissance" />
-                            <field name="lieu_naissance" />
-                            <field name="nationalite_id" options="{'no_create': True}" />
-                            <field name="situation_familiale" />
+                            <field name="cin" readonly="ldap_synced" />
+                            <field name="genre" readonly="ldap_synced" />
+                            <field name="date_naissance" readonly="ldap_synced" />
+                            <field name="lieu_naissance" readonly="ldap_synced" />
+                            <field name="nationalite_id" readonly="ldap_synced"
+                                   options="{'no_create': True}" />
+                            <field name="situation_familiale" readonly="ldap_synced" />
                         </group>
                         <group name="profil_contact">
-                            <field name="adresse_personnelle" />
-                            <field name="telephone_personnel" />
+                            <field name="adresse_personnelle" readonly="ldap_synced" />
+                            <field name="telephone_personnel" readonly="ldap_synced" />
                             <separator string="Contact d'urgence" />
-                            <field name="contact_urgence_nom" />
-                            <field name="contact_urgence_tel" />
+                            <field name="contact_urgence_nom" readonly="ldap_synced" />
+                            <field name="contact_urgence_tel" readonly="ldap_synced" />
                         </group>
-                    </group>
-                    <group invisible="not ldap_synced" class="text-muted small">
-                        <div colspan="2">
-                            <i class="fa fa-info-circle" title="Info LDAP" />
-                            Les champs Nom, Email et Fonction sont synchronisés
-                            depuis le référentiel LDAP à chaque connexion CAS.
-                        </div>
-                        <field name="ldap_synced" invisible="1" />
                     </group>
                 </page>
 
@@ -74,6 +74,17 @@
                     </group>
                 </page>
 
+            </xpath>
+
+            <!-- Champs header : readonly si synchronisé LDAP -->
+            <xpath expr="//field[@name='email']" position="attributes">
+                <attribute name="readonly">ldap_synced</attribute>
+            </xpath>
+            <xpath expr="//field[@name='phone']" position="attributes">
+                <attribute name="readonly">ldap_synced</attribute>
+            </xpath>
+            <xpath expr="//field[@name='function']" position="attributes">
+                <attribute name="readonly">ldap_synced</attribute>
             </xpath>
 
             <!-- Checkbox Enseignant dans le header du formulaire -->
