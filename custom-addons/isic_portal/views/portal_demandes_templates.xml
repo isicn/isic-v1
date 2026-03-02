@@ -53,11 +53,13 @@
                             <t t-set="states" t-value="['draft', 'submitted', 'approved']"/>
                             <t t-if="dem.state == 'rejected'"
                                t-set="states" t-value="['draft', 'submitted', 'rejected']"/>
+                            <t t-if="dem.state == 'cancelled'"
+                               t-set="states" t-value="['draft', 'cancelled']"/>
                             <t t-foreach="states" t-as="st">
                                 <span t-attf-class="isic-pipeline__step
                                     #{'isic-pipeline__step--done' if states.index(st) &lt; states.index(dem.state) else ''}
                                     #{'isic-pipeline__step--current' if st == dem.state else ''}
-                                    #{'isic-pipeline__step--rejected' if st == 'rejected' and dem.state == 'rejected' else ''}"
+                                    #{'isic-pipeline__step--rejected' if st in ('rejected', 'cancelled') and dem.state == st else ''}"
                                     t-att-title="st"/>
                             </t>
                         </div>
