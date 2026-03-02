@@ -8,11 +8,6 @@
     <template id="portal_my_home_isic" name="ISIC Portal: Home"
               inherit_id="portal.portal_my_home" priority="99">
 
-        <!-- Disable the sidebar (avatar + "Modifier les informations") so hero uses full width -->
-        <xpath expr="//t[@t-set='my_details']" position="attributes">
-            <attribute name="t-value">False</attribute>
-        </xpath>
-
         <!-- Enable portal_client_category container -->
         <xpath expr="//div[hasclass('o_portal_docs')]" position="before">
             <t t-set="portal_client_category_enable" t-value="True"/>
@@ -197,6 +192,77 @@
             <li t-if="page_name == 'documents'" class="breadcrumb-item active">
                 Mes documents
             </li>
+        </xpath>
+    </template>
+
+    <!-- ============================================================ -->
+    <!--  Override sidebar: academic info instead of default contact   -->
+    <!-- ============================================================ -->
+
+    <template id="portal_side_content_isic" name="ISIC Portal: Sidebar"
+              inherit_id="portal.side_content" priority="99">
+        <xpath expr="//div[hasclass('o_portal_my_details')]/.." position="replace">
+            <div t-attf-class="{{'offcanvas-body' if isOffcanvas else 'mt-3 mw-100'}}">
+                <!-- Profile card -->
+                <div class="isic-sidebar-profile">
+                    <img class="isic-sidebar-profile__avatar rounded"
+                         t-att-src="image_data_uri(user_id.partner_id.avatar_128)"
+                         alt="Avatar" width="50"/>
+                    <div>
+                        <h6 class="mb-0" t-out="user_id.name"/>
+                        <small class="text-muted" t-if="user_id.matricule"
+                               t-out="user_id.matricule"/>
+                    </div>
+                </div>
+
+                <!-- Academic info -->
+                <div class="isic-sidebar-section mt-3">
+                    <h6 class="isic-sidebar-section__title">
+                        <i class="fa fa-graduation-cap" title="Academique"/> Annee academique
+                    </h6>
+                    <t t-set="current_year" t-value="request.env['isic.annee.academique'].sudo()._get_current()"/>
+                    <p class="mb-1" t-if="current_year">
+                        <strong><t t-out="current_year.name"/></strong>
+                    </p>
+                    <p class="mb-0 text-muted" t-else="">
+                        Non definie
+                    </p>
+                </div>
+
+                <!-- Quick nav -->
+                <div class="isic-sidebar-section mt-3">
+                    <h6 class="isic-sidebar-section__title">
+                        <i class="fa fa-compass" title="Navigation"/> Navigation
+                    </h6>
+                    <ul class="isic-sidebar-nav">
+                        <li>
+                            <a href="/my/demandes">
+                                <i class="fa fa-file-text" title="Demandes"/> Mes demandes
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/my/documents">
+                                <i class="fa fa-folder" title="Documents"/> Mes documents
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/my/profile">
+                                <i class="fa fa-user" title="Profil"/> Mon profil
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/my/demandes/new">
+                                <i class="fa fa-plus-circle" title="Nouvelle demande"/> Nouvelle demande
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Edit info link -->
+                <a role="button" href="/my/account" class="btn btn-link p-0 mt-3">
+                    <i class="fa fa-pencil" title="Modifier"/> Modifier les informations
+                </a>
+            </div>
         </xpath>
     </template>
 
