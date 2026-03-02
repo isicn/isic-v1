@@ -41,10 +41,12 @@ def _post_init_cleanup(env):
         isic_menus.write({"parent_id": website_root.id})
 
     # Delete all non-ISIC child menus of the website root
-    default_menus = env["website.menu"].search([
-        ("parent_id", "=", website_root.id),
-        ("website_id", "=", website.id),
-        ("id", "not in", isic_menus.ids),
-    ])
+    default_menus = env["website.menu"].search(
+        [
+            ("parent_id", "=", website_root.id),
+            ("website_id", "=", website.id),
+            ("id", "not in", isic_menus.ids),
+        ]
+    )
     if default_menus:
         default_menus.unlink()

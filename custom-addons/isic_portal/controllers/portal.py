@@ -184,9 +184,7 @@ class IsicPortal(CustomerPortal):
             "state_pipeline": state_pipeline,
         }
         # Setup chatter values (token, pid, hash for portal.message_thread)
-        values = self._get_page_view_values(
-            demande_sudo, access_token, values, "my_demandes_history", False, **kw
-        )
+        values = self._get_page_view_values(demande_sudo, access_token, values, "my_demandes_history", False, **kw)
         return request.render("isic_portal.portal_my_demande_detail", values)
 
     # ------------------------------------------------------------------
