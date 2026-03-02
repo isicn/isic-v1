@@ -201,7 +201,7 @@
 
     <template id="portal_side_content_isic" name="ISIC Portal: Sidebar"
               inherit_id="portal.side_content" priority="99">
-        <xpath expr="//div[hasclass('o_portal_my_details')]/.." position="replace">
+        <xpath expr="//div[@t-attf-class]" position="replace">
             <div t-attf-class="{{'offcanvas-body' if isOffcanvas else 'mt-3 mw-100'}}">
                 <!-- Profile card -->
                 <div class="isic-sidebar-profile">
