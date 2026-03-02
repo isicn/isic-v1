@@ -1,0 +1,122 @@
+// ============================================================
+//  ISIC Website — Page: Contact
+// ============================================================
+
+.isic-www-contact {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 3rem;
+    align-items: start;
+}
+
+.isic-www-contact-info {
+    &__item {
+        display: flex;
+        gap: 1rem;
+        margin-bottom: 1.5rem;
+
+        &:last-child {
+            margin-bottom: 0;
+        }
+    }
+
+    &__icon {
+        flex-shrink: 0;
+        width: 44px;
+        height: 44px;
+        border-radius: var(--isic-radius);
+        background: rgba($isic-action, 0.1);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: var(--isic-action);
+    }
+
+    &__label {
+        font-size: 0.8rem;
+        color: var(--isic-text-light);
+        text-transform: uppercase;
+        letter-spacing: 0.03em;
+        margin-bottom: 0.15rem;
+    }
+
+    &__value {
+        font-size: 0.95rem;
+        color: var(--isic-primary);
+        font-weight: 500;
+
+        a {
+            color: var(--isic-action);
+            text-decoration: none;
+
+            &:hover {
+                text-decoration: underline;
+            }
+        }
+    }
+}
+
+.isic-www-map {
+    border-radius: var(--isic-radius-lg);
+    overflow: hidden;
+    box-shadow: var(--isic-shadow);
+    margin-top: 2rem;
+
+    iframe {
+        width: 100%;
+        height: 350px;
+        border: 0;
+    }
+}
+
+// Success message
+.isic-www-success {
+    text-align: center;
+    padding: 3rem;
+    background: rgba($isic-success, 0.05);
+    border-radius: var(--isic-radius-lg);
+    border: 1px solid rgba($isic-success, 0.2);
+
+    &__icon {
+        font-size: 3rem;
+        color: var(--isic-success);
+        margin-bottom: 1rem;
+    }
+
+    &__title {
+        font-size: 1.25rem;
+        font-weight: 700;
+        color: var(--isic-primary);
+        margin-bottom: 0.5rem;
+    }
+
+    &__text {
+        font-size: 0.95rem;
+        color: var(--isic-text-light);
+    }
+}
+
+// Social links
+.isic-www-social {
+    display: flex;
+    gap: 0.75rem;
+    margin-top: 1.5rem;
+
+    &__link {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        background: var(--isic-bg-light);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: var(--isic-primary);
+        text-decoration: none;
+        transition: all var(--isic-transition);
+
+        &:hover {
+            background: var(--isic-action);
+            color: #fff;
+        }
+    }
+}

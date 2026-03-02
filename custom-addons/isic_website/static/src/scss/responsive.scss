@@ -1,0 +1,164 @@
+// ============================================================
+//  ISIC Website — Responsive (mobile-first)
+// ============================================================
+
+// ----------------------------------------------------------
+//  Small screens (< 576px)
+// ----------------------------------------------------------
+@media (max-width: 575.98px) {
+    .isic-www-hero {
+        min-height: 70vh;
+        padding: 2rem 0;
+
+        &__title { font-size: 1.75rem; }
+        &__subtitle { font-size: 0.95rem; }
+        &__actions { flex-direction: column; }
+    }
+
+    .isic-www-figures .isic-container {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .isic-www-stat {
+        padding: 1rem 0.5rem;
+
+        &__value { font-size: 1.75rem; }
+        &__label { font-size: 0.75rem; }
+    }
+
+    .isic-www-directeur {
+        grid-template-columns: 1fr;
+        text-align: center;
+
+        &__photo {
+            width: 150px;
+            height: 180px;
+            margin: 0 auto;
+        }
+
+        &__quote {
+            padding-left: 0;
+
+            &::before { display: none; }
+        }
+    }
+
+    .isic-www-formations-grid,
+    .isic-www-news-grid,
+    .isic-www-blog-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .isic-grid--2,
+    .isic-grid--3,
+    .isic-grid--4 {
+        grid-template-columns: 1fr;
+    }
+
+    .isic-www-gouvernance,
+    .isic-www-professeurs {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .isic-www-mission {
+        grid-template-columns: 1fr;
+    }
+
+    .isic-www-lmd {
+        flex-direction: column;
+        padding: 1.5rem;
+
+        &__arrow { transform: rotate(90deg); }
+    }
+
+    .isic-www-masters-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .isic-www-admission {
+        flex-direction: column;
+    }
+
+    .isic-www-clubs-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .isic-www-equip-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .isic-www-gallery {
+        grid-template-columns: repeat(2, 1fr);
+
+        &__item:first-child {
+            grid-column: span 2;
+            grid-row: span 1;
+        }
+    }
+
+    .isic-www-contact {
+        grid-template-columns: 1fr;
+    }
+
+    .isic-www-club {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .isic-page-banner {
+        padding: 2rem 0;
+
+        &__title { font-size: 1.5rem; }
+    }
+
+    .isic-section {
+        padding: 2.5rem 0;
+
+        &__title { font-size: 1.5rem; }
+    }
+}
+
+// ----------------------------------------------------------
+//  Medium screens (576px - 767px)
+// ----------------------------------------------------------
+@media (min-width: 576px) and (max-width: 767.98px) {
+    .isic-www-hero__title { font-size: 2.25rem; }
+
+    .isic-www-formations-grid,
+    .isic-www-news-grid,
+    .isic-www-blog-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .isic-grid--3,
+    .isic-grid--4 {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .isic-www-gouvernance,
+    .isic-www-professeurs {
+        grid-template-columns: repeat(3, 1fr);
+    }
+
+    .isic-www-equip-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+// ----------------------------------------------------------
+//  Large screens (>= 768px)
+// ----------------------------------------------------------
+@media (min-width: 768px) {
+    .isic-www-hero {
+        padding: 4rem 0;
+    }
+}
+
+// ----------------------------------------------------------
+//  Extra-large (>= 992px)
+// ----------------------------------------------------------
+@media (min-width: 992px) {
+    .isic-www-hero__title {
+        font-size: 3.25rem;
+    }
+}

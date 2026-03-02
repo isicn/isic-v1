@@ -1,0 +1,48 @@
+// ============================================================
+//  ISIC Website — Page: Vie Etudiante
+// ============================================================
+
+// Clubs grid
+.isic-www-clubs-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.25rem;
+}
+
+// Equipment grid
+.isic-www-equip-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+}
+
+// Gallery placeholder
+.isic-www-gallery {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0.5rem;
+
+    &__item {
+        aspect-ratio: 1;
+        border-radius: var(--isic-radius);
+        overflow: hidden;
+        background: var(--isic-bg-light);
+        cursor: pointer;
+        transition: transform var(--isic-transition);
+
+        &:hover {
+            transform: scale(1.03);
+        }
+
+        &:first-child {
+            grid-column: span 2;
+            grid-row: span 2;
+        }
+
+        img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+    }
+}

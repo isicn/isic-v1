@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data noupdate="1">
+
+        <!-- ========== Blog ========== -->
+        <record id="blog_isic" model="blog.blog">
+            <field name="name">ISIC Actualités</field>
+            <field name="subtitle">Actualités et événements de l'Institut</field>
+            <field name="website_id" ref="website.default_website"/>
+        </record>
+
+        <!-- ========== Blog Tags ========== -->
+        <record id="tag_concours" model="blog.tag">
+            <field name="name">Concours</field>
+        </record>
+        <record id="tag_laureats" model="blog.tag">
+            <field name="name">Lauréats</field>
+        </record>
+        <record id="tag_partenariats" model="blog.tag">
+            <field name="name">Partenariats</field>
+        </record>
+        <record id="tag_conferences" model="blog.tag">
+            <field name="name">Conférences</field>
+        </record>
+        <record id="tag_ateliers" model="blog.tag">
+            <field name="name">Ateliers</field>
+        </record>
+        <record id="tag_evenements" model="blog.tag">
+            <field name="name">Événements</field>
+        </record>
+        <record id="tag_cooperation" model="blog.tag">
+            <field name="name">Coopération</field>
+        </record>
+
+    </data>
+</odoo>

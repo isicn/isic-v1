@@ -1,0 +1,52 @@
+// ============================================================
+//  ISIC Website — Page: L'Institut
+// ============================================================
+
+// Gouvernance grid
+.isic-www-gouvernance {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1.5rem;
+}
+
+// Corps professoral grid
+.isic-www-professeurs {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1rem;
+}
+
+// Stats dashboard
+.isic-www-stats-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+}
+
+// Mission / Vision cards
+.isic-www-mission {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 2rem;
+
+    &__item {
+        padding: 2rem;
+        background: #fff;
+        border-radius: var(--isic-radius-lg);
+        box-shadow: var(--isic-shadow);
+        border-left: 4px solid var(--isic-action);
+    }
+
+    &__title {
+        font-size: 1.15rem;
+        font-weight: 700;
+        color: var(--isic-primary);
+        margin-bottom: 0.75rem;
+    }
+
+    &__text {
+        font-size: 0.9rem;
+        color: var(--isic-text-light);
+        line-height: 1.6;
+    }
+}

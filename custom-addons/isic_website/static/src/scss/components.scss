@@ -1,0 +1,596 @@
+// ============================================================
+//  ISIC Website — BEM Components
+// ============================================================
+
+// ----------------------------------------------------------
+//  Stat Card (chiffres cles)
+// ----------------------------------------------------------
+.isic-www-stat {
+    text-align: center;
+    padding: 1.5rem 1rem;
+
+    &__icon {
+        font-size: 2rem;
+        color: var(--isic-gold);
+        margin-bottom: 0.75rem;
+    }
+
+    &__value {
+        font-size: 2.5rem;
+        font-weight: 700;
+        color: #fff;
+        line-height: 1;
+    }
+
+    &__label {
+        font-size: 0.9rem;
+        color: rgba(255, 255, 255, 0.8);
+        margin-top: 0.25rem;
+    }
+}
+
+// ----------------------------------------------------------
+//  Card (generic)
+// ----------------------------------------------------------
+.isic-www-card {
+    background: #fff;
+    border-radius: var(--isic-radius-lg);
+    box-shadow: var(--isic-shadow);
+    overflow: hidden;
+    transition: transform var(--isic-transition), box-shadow var(--isic-transition);
+
+    &:hover {
+        transform: translateY(-4px);
+        box-shadow: var(--isic-shadow-hover);
+    }
+
+    &__img {
+        width: 100%;
+        height: 200px;
+        object-fit: cover;
+        background: var(--isic-bg-light);
+    }
+
+    &__body {
+        padding: 1.5rem;
+    }
+
+    &__title {
+        font-size: 1.15rem;
+        font-weight: 600;
+        color: var(--isic-primary);
+        margin-bottom: 0.5rem;
+    }
+
+    &__text {
+        font-size: 0.9rem;
+        color: var(--isic-text-light);
+        line-height: 1.6;
+    }
+
+    &__footer {
+        padding: 1rem 1.5rem;
+        border-top: 1px solid var(--isic-border);
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+    }
+
+    &--flat {
+        box-shadow: none;
+        border: 1px solid var(--isic-border);
+
+        &:hover {
+            transform: none;
+            border-color: var(--isic-action);
+        }
+    }
+}
+
+// ----------------------------------------------------------
+//  Button
+// ----------------------------------------------------------
+.isic-www-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.75rem 1.5rem;
+    border-radius: var(--isic-radius);
+    font-weight: 600;
+    font-size: 0.9rem;
+    text-decoration: none;
+    transition: all var(--isic-transition);
+    border: 2px solid transparent;
+    cursor: pointer;
+
+    &--primary {
+        background: var(--isic-action);
+        color: #fff;
+        border-color: var(--isic-action);
+
+        &:hover {
+            background: darken($isic-action, 8%);
+            border-color: darken($isic-action, 8%);
+            color: #fff;
+        }
+    }
+
+    &--outline {
+        background: transparent;
+        color: var(--isic-action);
+        border-color: var(--isic-action);
+
+        &:hover {
+            background: var(--isic-action);
+            color: #fff;
+        }
+    }
+
+    &--white {
+        background: #fff;
+        color: var(--isic-primary);
+        border-color: #fff;
+
+        &:hover {
+            background: rgba(255, 255, 255, 0.9);
+            color: var(--isic-primary);
+        }
+    }
+
+    &--ghost {
+        background: rgba(255, 255, 255, 0.15);
+        color: #fff;
+        border-color: rgba(255, 255, 255, 0.3);
+
+        &:hover {
+            background: rgba(255, 255, 255, 0.25);
+            color: #fff;
+        }
+    }
+
+    &--lg {
+        padding: 1rem 2rem;
+        font-size: 1rem;
+    }
+}
+
+// ----------------------------------------------------------
+//  Badge
+// ----------------------------------------------------------
+.isic-www-badge {
+    display: inline-block;
+    padding: 0.25rem 0.75rem;
+    border-radius: 50px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.02em;
+
+    &--gold {
+        background: rgba($isic-gold, 0.15);
+        color: darken($isic-gold, 10%);
+    }
+
+    &--action {
+        background: rgba($isic-action, 0.1);
+        color: $isic-action;
+    }
+}
+
+// ----------------------------------------------------------
+//  Timeline
+// ----------------------------------------------------------
+.isic-www-timeline {
+    position: relative;
+    padding-left: 2rem;
+
+    &::before {
+        content: "";
+        position: absolute;
+        left: 0.5rem;
+        top: 0;
+        bottom: 0;
+        width: 2px;
+        background: var(--isic-border);
+    }
+
+    &__item {
+        position: relative;
+        padding-bottom: 2rem;
+        padding-left: 1.5rem;
+
+        &::before {
+            content: "";
+            position: absolute;
+            left: -1.55rem;
+            top: 0.35rem;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: var(--isic-action);
+            border: 2px solid #fff;
+            box-shadow: 0 0 0 2px var(--isic-action);
+        }
+
+        &:last-child {
+            padding-bottom: 0;
+        }
+    }
+
+    &__date {
+        font-size: 0.85rem;
+        font-weight: 700;
+        color: var(--isic-action);
+        margin-bottom: 0.25rem;
+    }
+
+    &__title {
+        font-size: 1.1rem;
+        font-weight: 600;
+        color: var(--isic-primary);
+        margin-bottom: 0.25rem;
+    }
+
+    &__text {
+        font-size: 0.9rem;
+        color: var(--isic-text-light);
+        line-height: 1.5;
+    }
+}
+
+// ----------------------------------------------------------
+//  Partner logo grid
+// ----------------------------------------------------------
+.isic-www-partners {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    gap: 2rem;
+
+    &__logo {
+        height: 48px;
+        max-width: 140px;
+        object-fit: contain;
+        filter: grayscale(100%);
+        opacity: 0.6;
+        transition: all var(--isic-transition);
+
+        &:hover {
+            filter: grayscale(0%);
+            opacity: 1;
+        }
+    }
+}
+
+// ----------------------------------------------------------
+//  Team member card
+// ----------------------------------------------------------
+.isic-www-member {
+    text-align: center;
+    padding: 1.5rem 1rem;
+
+    &__photo {
+        width: 100px;
+        height: 100px;
+        border-radius: 50%;
+        object-fit: cover;
+        margin: 0 auto 1rem;
+        border: 3px solid var(--isic-border);
+        background: var(--isic-bg-light);
+    }
+
+    &__name {
+        font-size: 1rem;
+        font-weight: 600;
+        color: var(--isic-primary);
+        margin-bottom: 0.25rem;
+    }
+
+    &__title {
+        font-size: 0.85rem;
+        color: var(--isic-text-light);
+    }
+}
+
+// ----------------------------------------------------------
+//  Club card
+// ----------------------------------------------------------
+.isic-www-club {
+    display: flex;
+    gap: 1.25rem;
+    padding: 1.5rem;
+    background: #fff;
+    border-radius: var(--isic-radius-lg);
+    box-shadow: var(--isic-shadow);
+    transition: box-shadow var(--isic-transition);
+
+    &:hover {
+        box-shadow: var(--isic-shadow-hover);
+    }
+
+    &__icon {
+        flex-shrink: 0;
+        width: 56px;
+        height: 56px;
+        border-radius: var(--isic-radius);
+        background: rgba($isic-action, 0.1);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.5rem;
+        color: var(--isic-action);
+    }
+
+    &__name {
+        font-size: 1.05rem;
+        font-weight: 600;
+        color: var(--isic-primary);
+        margin-bottom: 0.25rem;
+    }
+
+    &__desc {
+        font-size: 0.85rem;
+        color: var(--isic-text-light);
+        line-height: 1.5;
+    }
+}
+
+// ----------------------------------------------------------
+//  Equipment card
+// ----------------------------------------------------------
+.isic-www-equip {
+    background: #fff;
+    border-radius: var(--isic-radius-lg);
+    box-shadow: var(--isic-shadow);
+    overflow: hidden;
+
+    &__img {
+        width: 100%;
+        height: 180px;
+        object-fit: cover;
+        background: var(--isic-bg-light);
+    }
+
+    &__body {
+        padding: 1.25rem;
+    }
+
+    &__title {
+        font-size: 1.05rem;
+        font-weight: 600;
+        color: var(--isic-primary);
+        margin-bottom: 0.5rem;
+    }
+
+    &__list {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+
+        li {
+            font-size: 0.85rem;
+            color: var(--isic-text-light);
+            padding: 0.2rem 0;
+            padding-left: 1.2rem;
+            position: relative;
+
+            &::before {
+                content: "\f00c"; // fa-check
+                font-family: "Font Awesome 6 Free";
+                font-weight: 900;
+                position: absolute;
+                left: 0;
+                color: var(--isic-success);
+                font-size: 0.75rem;
+            }
+        }
+    }
+}
+
+// ----------------------------------------------------------
+//  Blog card (listing override)
+// ----------------------------------------------------------
+.isic-www-blog-card {
+    background: #fff;
+    border-radius: var(--isic-radius-lg);
+    box-shadow: var(--isic-shadow);
+    overflow: hidden;
+    transition: transform var(--isic-transition), box-shadow var(--isic-transition);
+
+    &:hover {
+        transform: translateY(-4px);
+        box-shadow: var(--isic-shadow-hover);
+    }
+
+    &__img {
+        width: 100%;
+        height: 200px;
+        object-fit: cover;
+        background: var(--isic-bg-light);
+    }
+
+    &__body {
+        padding: 1.25rem;
+    }
+
+    &__meta {
+        font-size: 0.8rem;
+        color: var(--isic-text-light);
+        margin-bottom: 0.5rem;
+    }
+
+    &__title {
+        font-size: 1.1rem;
+        font-weight: 600;
+        color: var(--isic-primary);
+        margin-bottom: 0.5rem;
+
+        a {
+            color: inherit;
+            text-decoration: none;
+
+            &:hover {
+                color: var(--isic-action);
+            }
+        }
+    }
+
+    &__excerpt {
+        font-size: 0.9rem;
+        color: var(--isic-text-light);
+        line-height: 1.5;
+    }
+
+    &__tags {
+        padding: 0.75rem 1.25rem;
+        border-top: 1px solid var(--isic-border);
+    }
+}
+
+// ----------------------------------------------------------
+//  Footer
+// ----------------------------------------------------------
+// Override Odoo's #footer styles that set dark link colors
+#footer .isic-www-footer {
+    background: $isic-primary !important;
+    color: rgba(255, 255, 255, 0.8) !important;
+
+    // Force all links white (Odoo sets #footer a to theme primary color)
+    a {
+        color: rgba(255, 255, 255, 0.7) !important;
+        text-decoration: none;
+
+        &:hover {
+            color: #fff !important;
+        }
+    }
+
+    // Social links in footer: white icons on semi-transparent circles
+    .isic-www-social__link {
+        background: rgba(255, 255, 255, 0.15) !important;
+        color: #fff !important;
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1rem;
+        transition: background 0.2s ease;
+
+        &:hover {
+            background: $isic-gold !important;
+            color: #fff !important;
+        }
+    }
+
+    // Force all text white
+    p,
+    li,
+    span {
+        color: rgba(255, 255, 255, 0.8) !important;
+    }
+
+    h6 {
+        color: #fff !important;
+    }
+}
+
+.isic-www-footer {
+    background: $isic-primary;
+    color: rgba(255, 255, 255, 0.8);
+
+    &__title {
+        font-size: 1rem;
+        font-weight: 700;
+        color: #fff;
+        margin-bottom: 1rem;
+    }
+
+    &__text {
+        font-size: 0.85rem;
+        line-height: 1.6;
+    }
+
+    &__links {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+
+        li {
+            padding: 0.25rem 0;
+            font-size: 0.85rem;
+        }
+
+        a {
+            color: rgba(255, 255, 255, 0.7);
+            text-decoration: none;
+            transition: color var(--isic-transition);
+
+            &:hover {
+                color: #fff;
+            }
+        }
+
+        &--contact li {
+            display: flex;
+            align-items: flex-start;
+            gap: 0;
+        }
+    }
+
+    &__bottom {
+        border-top: 1px solid rgba(255, 255, 255, 0.1);
+        padding: 1.25rem 0;
+        text-align: center;
+        font-size: 0.8rem;
+        color: rgba(255, 255, 255, 0.5);
+    }
+}
+
+// ----------------------------------------------------------
+//  Contact form
+// ----------------------------------------------------------
+.isic-www-form {
+    &__group {
+        margin-bottom: 1.25rem;
+
+        label {
+            display: block;
+            font-weight: 600;
+            font-size: 0.9rem;
+            color: var(--isic-primary);
+            margin-bottom: 0.4rem;
+        }
+
+        input,
+        select,
+        textarea {
+            width: 100%;
+            padding: 0.65rem 0.85rem;
+            border: 1px solid var(--isic-border);
+            border-radius: var(--isic-radius);
+            font-size: 0.9rem;
+            transition: border-color var(--isic-transition);
+
+            &:focus {
+                outline: none;
+                border-color: var(--isic-action);
+                box-shadow: 0 0 0 3px rgba($isic-action, 0.1);
+            }
+        }
+
+        textarea {
+            min-height: 120px;
+            resize: vertical;
+        }
+
+        &--error {
+            input,
+            textarea {
+                border-color: var(--isic-danger);
+            }
+        }
+    }
+}

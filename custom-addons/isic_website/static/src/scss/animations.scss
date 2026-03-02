@@ -1,0 +1,138 @@
+// ============================================================
+//  ISIC Website — Animations
+// ============================================================
+
+// ----------------------------------------------------------
+//  Scroll reveal (fade-in-up)
+// ----------------------------------------------------------
+@keyframes isic-www-fade-in-up {
+    from {
+        opacity: 0;
+        transform: translateY(24px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.isic-www-reveal {
+    opacity: 0;
+    transform: translateY(24px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+
+    &--visible {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+// Staggered reveal items
+.isic-www-stagger {
+    opacity: 0;
+
+    &--visible {
+        animation: isic-www-fade-in-up 0.5s ease forwards;
+    }
+
+    @for $i from 1 through 12 {
+        &--visible:nth-child(#{$i}) {
+            animation-delay: #{$i * 0.08}s;
+        }
+    }
+}
+
+// ----------------------------------------------------------
+//  Counter number
+// ----------------------------------------------------------
+@keyframes isic-www-number-in {
+    from {
+        opacity: 0;
+        transform: scale(0.8);
+    }
+
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+.isic-www-stat__value {
+    animation: isic-www-number-in 0.4s ease forwards;
+}
+
+// ----------------------------------------------------------
+//  Card hover lift
+// ----------------------------------------------------------
+.isic-www-lift {
+    transition: transform var(--isic-transition), box-shadow var(--isic-transition);
+
+    &:hover {
+        transform: translateY(-4px);
+        box-shadow: var(--isic-shadow-hover);
+    }
+}
+
+// ----------------------------------------------------------
+//  Partners scroll
+// ----------------------------------------------------------
+@keyframes isic-www-scroll-x {
+    from {
+        transform: translateX(0);
+    }
+
+    to {
+        transform: translateX(-50%);
+    }
+}
+
+.isic-www-partners-scroll {
+    overflow: hidden;
+    position: relative;
+
+    &__track {
+        display: flex;
+        gap: 3rem;
+        animation: isic-www-scroll-x 30s linear infinite;
+        width: max-content;
+    }
+
+    &:hover .isic-www-partners-scroll__track {
+        animation-play-state: paused;
+    }
+}
+
+// ----------------------------------------------------------
+//  Reduced motion
+// ----------------------------------------------------------
+@media (prefers-reduced-motion: reduce) {
+    .isic-www-reveal {
+        opacity: 1;
+        transform: none;
+        transition: none;
+    }
+
+    .isic-www-stagger {
+        opacity: 1;
+        animation: none !important;
+
+        &--visible { animation: none !important; }
+    }
+
+    .isic-www-stat__value {
+        animation: none;
+    }
+
+    .isic-www-lift:hover {
+        transform: none;
+    }
+
+    .isic-www-partners-scroll__track {
+        animation: none;
+    }
+
+    .isic-www-card:hover {
+        transform: none;
+    }
+}

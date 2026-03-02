@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+
+    <!-- ========== ISIC Navigation Menus ========== -->
+    <!-- noupdate=0 to ensure menus are always correct after update -->
+    <data noupdate="0">
+
+        <record id="menu_home" model="website.menu">
+            <field name="name">Accueil</field>
+            <field name="url">/</field>
+            <field name="parent_id" ref="website.main_menu"/>
+            <field name="sequence">10</field>
+            <field name="website_id" ref="website.default_website"/>
+        </record>
+
+        <record id="menu_institut" model="website.menu">
+            <field name="name">L'Institut</field>
+            <field name="url">/institut</field>
+            <field name="parent_id" ref="website.main_menu"/>
+            <field name="sequence">20</field>
+            <field name="website_id" ref="website.default_website"/>
+        </record>
+
+        <record id="menu_formations" model="website.menu">
+            <field name="name">Formations</field>
+            <field name="url">/formations</field>
+            <field name="parent_id" ref="website.main_menu"/>
+            <field name="sequence">30</field>
+            <field name="website_id" ref="website.default_website"/>
+        </record>
+
+        <record id="menu_vie_etudiante" model="website.menu">
+            <field name="name">Vie Étudiante</field>
+            <field name="url">/vie-etudiante</field>
+            <field name="parent_id" ref="website.main_menu"/>
+            <field name="sequence">40</field>
+            <field name="website_id" ref="website.default_website"/>
+        </record>
+
+        <record id="menu_recherche" model="website.menu">
+            <field name="name">Recherche</field>
+            <field name="url">/recherche</field>
+            <field name="parent_id" ref="website.main_menu"/>
+            <field name="sequence">50</field>
+            <field name="website_id" ref="website.default_website"/>
+        </record>
+
+        <record id="menu_actualites" model="website.menu">
+            <field name="name">Actualités</field>
+            <field name="url">/blog</field>
+            <field name="parent_id" ref="website.main_menu"/>
+            <field name="sequence">60</field>
+            <field name="website_id" ref="website.default_website"/>
+        </record>
+
+        <record id="menu_contact" model="website.menu">
+            <field name="name">Contact</field>
+            <field name="url">/contact</field>
+            <field name="parent_id" ref="website.main_menu"/>
+            <field name="sequence">70</field>
+            <field name="website_id" ref="website.default_website"/>
+        </record>
+
+    </data>
+</odoo>

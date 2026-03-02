@@ -1,0 +1,86 @@
+// ============================================================
+//  ISIC Website — Page: Recherche et Cooperation
+// ============================================================
+
+// Partners section with national / international tabs
+.isic-www-partners-section {
+    &__tabs {
+        display: flex;
+        gap: 1rem;
+        margin-bottom: 2rem;
+        justify-content: center;
+
+        button {
+            padding: 0.6rem 1.5rem;
+            border: 2px solid var(--isic-border);
+            background: #fff;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            color: var(--isic-text-light);
+            cursor: pointer;
+            transition: all var(--isic-transition);
+
+            &.active,
+            &:hover {
+                border-color: var(--isic-action);
+                color: var(--isic-action);
+                background: rgba($isic-action, 0.05);
+            }
+        }
+    }
+}
+
+// Partner detail card
+.isic-www-partner-card {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1rem 1.25rem;
+    background: #fff;
+    border-radius: var(--isic-radius);
+    border: 1px solid var(--isic-border);
+    transition: border-color var(--isic-transition);
+
+    &:hover {
+        border-color: var(--isic-action);
+    }
+
+    &__logo {
+        width: 48px;
+        height: 48px;
+        object-fit: contain;
+        flex-shrink: 0;
+    }
+
+    &__name {
+        font-size: 0.9rem;
+        font-weight: 600;
+        color: var(--isic-primary);
+    }
+
+    &__type {
+        font-size: 0.8rem;
+        color: var(--isic-text-light);
+    }
+}
+
+// Convention highlight
+.isic-www-convention {
+    padding: 1.5rem;
+    background: rgba($isic-action, 0.05);
+    border-left: 4px solid var(--isic-action);
+    border-radius: 0 var(--isic-radius) var(--isic-radius) 0;
+    margin-bottom: 1rem;
+
+    &__title {
+        font-weight: 600;
+        color: var(--isic-primary);
+        margin-bottom: 0.25rem;
+    }
+
+    &__desc {
+        font-size: 0.9rem;
+        color: var(--isic-text-light);
+    }
+}

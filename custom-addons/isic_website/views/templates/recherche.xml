@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+
+    <!-- ========================================================
+         ISIC Website — Page: Recherche et Coopération
+    ========================================================= -->
+    <template id="page_recherche" name="ISIC: Recherche et Coopération">
+        <t t-call="website.layout">
+            <t t-set="additional_title">ISIC - Recherche et Coopération</t>
+
+            <div id="wrap">
+
+                <!-- Banner -->
+                <section class="isic-page-banner">
+                    <div class="isic-container">
+                        <h1 class="isic-page-banner__title">Recherche et Coopération</h1>
+                        <div class="isic-page-banner__breadcrumb">
+                            <a href="/">Accueil</a> <span>/</span> Recherche et Coopération
+                        </div>
+                    </div>
+                </section>
+
+                <!-- ======== PARTENAIRES NATIONAUX ======== -->
+                <section class="isic-section isic-www-reveal">
+                    <div class="isic-container">
+                        <div class="isic-section__header">
+                            <h2 class="isic-section__title">Partenaires Nationaux</h2>
+                            <p class="isic-section__subtitle">
+                                17 institutions et organisations marocaines
+                            </p>
+                        </div>
+                        <div class="isic-grid isic-grid--3 isic-www-stagger-container">
+                            <t t-foreach="[
+                                ('SNRT', 'Société Nationale de Radiodiffusion et de Télévision', 'snrt'),
+                                ('HACA', 'Haute Autorité de la Communication Audiovisuelle', 'haca'),
+                                ('MAP', 'Maghreb Arabe Presse', 'map'),
+                                ('SNMP', 'Syndicat National de la Presse Marocaine', 'snmp'),
+                                ('FMEJ', 'Fédération Marocaine des Éditeurs de Journaux', 'fmej'),
+                                ('UM5', 'Université Mohammed V de Rabat', 'uvmed5'),
+                                ('FSJES Settat', 'Faculté des Sciences Juridiques, Économiques et Sociales', 'fsjes'),
+                                ('USMBA', 'Université Sidi Mohamed Ben Abdellah, Fès', 'umbaf'),
+                                ('ISMAC', 'Institut Sup. Métiers Audiovisuel et Cinéma', 'ismac'),
+                                ('ILCS', 'Institute for Leadership and Communication Studies', 'ilcs'),
+                                ('DGCT', 'Direction Générale des Collectivités Territoriales', 'dgc'),
+                                ('ANLCA', 'Agence Nationale de Lutte Contre l Analphabétisme', 'anlca'),
+                                ('PMP', 'Présidence du Ministère Public', 'iri'),
+                                ('CCME', 'Conseil de la Communauté Marocaine à l Étranger', 'ccme'),
+                                ('Ribat El Fath', 'Association pour le Développement Durable', 'arfdc'),
+                                ('AMPF', 'Association Marocaine de la Planification Familiale', 'amof'),
+                                ('UP Marrakech', 'Université Privée de Marrakech', 'upm'),
+                            ]" t-as="partner">
+                                <div class="isic-www-partner-card isic-www-stagger">
+                                    <div class="isic-www-partner-card__logo"
+                                         style="width:48px;height:48px;background:#f0f2f5;border-radius:8px;display:flex;align-items:center;justify-content:center;flex-shrink:0;overflow:hidden;">
+                                        <img t-attf-src="/isic_website/static/img/partners/{{ partner[2] }}.png"
+                                             t-att-alt="partner[0]"
+                                             style="max-width:100%;max-height:100%;object-fit:contain;"
+                                             loading="lazy"/>
+                                    </div>
+                                    <div>
+                                        <div class="isic-www-partner-card__name" t-out="partner[0]"/>
+                                        <div class="isic-www-partner-card__type" t-out="partner[1]"/>
+                                    </div>
+                                </div>
+                            </t>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- ======== PARTENAIRES INTERNATIONAUX ======== -->
+                <section class="isic-section isic-section--light isic-www-reveal">
+                    <div class="isic-container">
+                        <div class="isic-section__header">
+                            <h2 class="isic-section__title">Coopération Internationale</h2>
+                            <p class="isic-section__subtitle">
+                                14 partenaires internationaux sur 4 continents
+                            </p>
+                        </div>
+                        <div class="isic-grid isic-grid--3 isic-www-stagger-container">
+                            <t t-foreach="[
+                                ('IHECS', 'Belgique', 'Institut des Hautes Études des Communications Sociales', 'ihecs'),
+                                ('Univ. Kalmar', 'Suède', 'Université de Kalmar', 'liu'),
+                                ('CESTI', 'Sénégal', 'Centre d Études des Sciences et Techniques de l Information', 'cesti'),
+                                ('Al Jazeera', 'Qatar', 'Al Jazeera Media Network', 'aljazeera'),
+                                ('France Média', 'France', 'Groupe France Média', 'ifm'),
+                                ('Deutsche Welle', 'Allemagne', 'Deutsche Welle', 'dw'),
+                                ('OIM', 'International', 'Organisation Internationale pour les Migrations', 'oim'),
+                                ('UNHCR', 'International', 'Haut Commissariat des Nations Unies pour les Réfugiés', 'unhcr'),
+                                ('F. Naumann', 'Allemagne', 'Fondation Friedrich Naumann', 'naumann'),
+                                ('UNESCO', 'International', 'Organisation des Nations Unies pour l Éducation', 'unesco'),
+                                ('Institut Français', 'France', 'Institut Français', 'ifm'),
+                                ('Linnaeus Univ.', 'Suède', 'Linnaeus University, Dept. Média et Journalisme', 'liu'),
+                                ('Univ. Málaga', 'Espagne', 'Universidad de Málaga', 'umalaga'),
+                                ('CGLU Afrique', 'International', 'Cités et Gouvernements Locaux Unis d Afrique', 'cglu'),
+                            ]" t-as="partner">
+                                <div class="isic-www-partner-card isic-www-stagger">
+                                    <div class="isic-www-partner-card__logo"
+                                         style="width:48px;height:48px;background:#f0f2f5;border-radius:8px;display:flex;align-items:center;justify-content:center;flex-shrink:0;overflow:hidden;">
+                                        <img t-attf-src="/isic_website/static/img/partners/{{ partner[3] }}.png"
+                                             t-att-alt="partner[0]"
+                                             style="max-width:100%;max-height:100%;object-fit:contain;"
+                                             loading="lazy"/>
+                                    </div>
+                                    <div>
+                                        <div class="isic-www-partner-card__name">
+                                            <t t-out="partner[0]"/> <small style="color:#6b7b8d;">(<t t-out="partner[1]"/>)</small>
+                                        </div>
+                                        <div class="isic-www-partner-card__type" t-out="partner[2]"/>
+                                    </div>
+                                </div>
+                            </t>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- ======== CONVENTIONS ======== -->
+                <section class="isic-section isic-www-reveal">
+                    <div class="isic-container">
+                        <div class="isic-section__header">
+                            <h2 class="isic-section__title">Conventions Actives</h2>
+                        </div>
+                        <div class="isic-www-convention">
+                            <div class="isic-www-convention__title">IHECS (Belgique) — Convention de coopération</div>
+                            <div class="isic-www-convention__desc">
+                                Collaboration pédagogique et de recherche, échanges d'étudiants
+                                et d'enseignants, projets communs sur l'avenir de l'enseignement du journalisme.
+                            </div>
+                        </div>
+                        <div class="isic-www-convention">
+                            <div class="isic-www-convention__title">Deutsche Welle (Allemagne) — Partenariat média</div>
+                            <div class="isic-www-convention__desc">
+                                Formations conjointes, ateliers de production journalistique,
+                                accompagnement en media training.
+                            </div>
+                        </div>
+                        <div class="isic-www-convention">
+                            <div class="isic-www-convention__title">UNESCO — Coopération internationale</div>
+                            <div class="isic-www-convention__desc">
+                                Projets liés à la liberté de la presse, la lutte contre la désinformation
+                                et le renforcement des capacités médiatiques en Afrique.
+                            </div>
+                        </div>
+                        <div class="isic-www-convention">
+                            <div class="isic-www-convention__title">UNHCR / OIM — Médias et Migrations</div>
+                            <div class="isic-www-convention__desc">
+                                Partenariat dans le cadre du Master Médias et Migrations,
+                                couverture éthique des phénomènes migratoires.
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+            </div>
+        </t>
+    </template>
+
+</odoo>

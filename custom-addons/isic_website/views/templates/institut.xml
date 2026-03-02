@@ -1,0 +1,248 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+
+    <!-- ========================================================
+         ISIC Website — Page: L'Institut
+    ========================================================= -->
+    <template id="page_institut" name="ISIC: L'Institut">
+        <t t-call="website.layout">
+            <t t-set="additional_title">ISIC - L'Institut</t>
+
+            <div id="wrap">
+
+                <!-- Banner -->
+                <section class="isic-page-banner">
+                    <div class="isic-container">
+                        <h1 class="isic-page-banner__title">L'Institut</h1>
+                        <div class="isic-page-banner__breadcrumb">
+                            <a href="/">Accueil</a> <span>/</span> L'Institut
+                        </div>
+                    </div>
+                </section>
+
+                <!-- ======== PRESENTATION ======== -->
+                <section class="isic-section isic-www-reveal">
+                    <div class="isic-container">
+                        <div class="isic-section__header">
+                            <h2 class="isic-section__title">Présentation</h2>
+                            <p class="isic-section__subtitle">
+                                Le seul établissement public d'enseignement supérieur
+                                spécialisé en journalisme et communication au Maroc
+                            </p>
+                        </div>
+                        <div class="isic-www-mission">
+                            <div class="isic-www-mission__item">
+                                <h3 class="isic-www-mission__title">
+                                    <i class="fa fa-bullseye me-2" title="Mission"/> Mission
+                                </h3>
+                                <p class="isic-www-mission__text">
+                                    Former des professionnels compétents dans les domaines de l'information,
+                                    du journalisme et de la communication, capables d'exercer dans un
+                                    environnement médiatique en constante évolution.
+                                </p>
+                            </div>
+                            <div class="isic-www-mission__item">
+                                <h3 class="isic-www-mission__title">
+                                    <i class="fa fa-eye me-2" title="Vision"/> Vision
+                                </h3>
+                                <p class="isic-www-mission__text">
+                                    Devenir la plateforme essentielle du paysage médiatique marocain,
+                                    en formant les leaders de l'information et de la communication
+                                    ancrés dans les valeurs constitutionnelles de 2011.
+                                </p>
+                            </div>
+                            <div class="isic-www-mission__item">
+                                <h3 class="isic-www-mission__title">
+                                    <i class="fa fa-university me-2" title="Statut"/> Statut
+                                </h3>
+                                <p class="isic-www-mission__text">
+                                    Établissement public d'enseignement supérieur, rattaché à
+                                    l'Université Mohammed V de Rabat et au Ministère de la Jeunesse,
+                                    de la Culture et de la Communication.
+                                </p>
+                            </div>
+                            <div class="isic-www-mission__item">
+                                <h3 class="isic-www-mission__title">
+                                    <i class="fa fa-star me-2" title="Valeurs"/> Valeurs
+                                </h3>
+                                <p class="isic-www-mission__text">
+                                    Excellence académique, éthique journalistique, ouverture internationale,
+                                    engagement citoyen, lutte contre les fake news et les discours de haine.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- ======== MOT DU DIRECTEUR ======== -->
+                <section class="isic-section isic-section--light isic-www-reveal" id="mot-directeur">
+                    <div class="isic-container">
+                        <div class="isic-section__header">
+                            <h2 class="isic-section__title">Mot du Directeur</h2>
+                        </div>
+                        <div class="isic-www-directeur">
+                            <div class="isic-www-directeur__photo">
+                                <img src="/isic_website/static/img/team/directeur.jpg"
+                                     alt="Abdellatif Bensfia - Directeur de l'ISIC"
+                                     loading="lazy"
+                                     style="width:100%;height:100%;object-fit:cover;border-radius:8px;"/>
+                            </div>
+                            <div>
+                                <p class="isic-www-directeur__quote">
+                                    Ensemble, pour le même dessein. L'ISIC est une institution académique
+                                    de référence disposant d'une expérience suffisante et d'une expertise requise.
+                                    Nous nous engageons à renforcer les vocations académiques et professionnelles,
+                                    à digitaliser les services administratifs et pédagogiques, à soutenir les
+                                    initiatives de rayonnement institutionnel, et à positionner l'ISIC comme
+                                    plateforme essentielle du paysage médiatique marocain.
+                                </p>
+                                <p class="mt-3 mb-1" style="font-size:0.95rem;color:#6b7b8d;line-height:1.6;">
+                                    Face aux défis de la transition numérique, de l'adaptation pédagogique
+                                    et de l'évolution du rôle des médias dans la société, l'ISIC s'engage
+                                    à améliorer sa capacité communicationnelle et à lutter contre la
+                                    prolifération des fake news et des discours de haine, ancré dans les
+                                    valeurs constitutionnelles marocaines de 2011.
+                                </p>
+                                <p class="isic-www-directeur__name mt-3">Abdellatif Bensfia</p>
+                                <p class="isic-www-directeur__role">Directeur de l'ISIC</p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- ======== HISTOIRE ======== -->
+                <section class="isic-section isic-www-reveal" id="histoire">
+                    <div class="isic-container">
+                        <div class="isic-section__header">
+                            <h2 class="isic-section__title">Notre Histoire</h2>
+                            <p class="isic-section__subtitle">
+                                Plus d'un demi-siècle au service du journalisme marocain
+                            </p>
+                        </div>
+                        <div class="isic-www-timeline">
+                            <div class="isic-www-timeline__item">
+                                <div class="isic-www-timeline__date">1969</div>
+                                <div class="isic-www-timeline__title">Création du Centre de Formation des Journalistes</div>
+                                <div class="isic-www-timeline__text">
+                                    Avec l'appui de la Fondation Friedrich Naumann (Allemagne).
+                                    Focus initial : recyclage et perfectionnement des journalistes en exercice.
+                                </div>
+                            </div>
+                            <div class="isic-www-timeline__item">
+                                <div class="isic-www-timeline__date">1996</div>
+                                <div class="isic-www-timeline__title">Transformation en Institut</div>
+                                <div class="isic-www-timeline__text">
+                                    Le centre évolue en Institut Supérieur de l'Information et de la Communication,
+                                    rattaché à l'Université Mohammed V de Rabat.
+                                </div>
+                            </div>
+                            <div class="isic-www-timeline__item">
+                                <div class="isic-www-timeline__date">2011</div>
+                                <div class="isic-www-timeline__title">Passage au système LMD</div>
+                                <div class="isic-www-timeline__text">
+                                    Adoption du système Licence-Master-Doctorat conformément à la loi 01/00,
+                                    avec création de la licence fondamentale en Information et Communication.
+                                </div>
+                            </div>
+                            <div class="isic-www-timeline__item">
+                                <div class="isic-www-timeline__date">2015</div>
+                                <div class="isic-www-timeline__title">Ouverture des Masters spécialisés</div>
+                                <div class="isic-www-timeline__text">
+                                    Lancement de masters en Communication Politique, Production Audiovisuelle
+                                    et Numérique, Médias et Migrations.
+                                </div>
+                            </div>
+                            <div class="isic-www-timeline__item">
+                                <div class="isic-www-timeline__date">Aujourd'hui</div>
+                                <div class="isic-www-timeline__title">Plus de 2000 lauréats</div>
+                                <div class="isic-www-timeline__text">
+                                    L'ISIC compte plus de 2000 lauréats marocains et étrangers,
+                                    5 masters spécialisés, 31+ partenaires nationaux et internationaux,
+                                    et un corps professoral de 18 enseignants permanents.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- ======== GOUVERNANCE ======== -->
+                <section class="isic-section isic-section--light isic-www-reveal" id="gouvernance">
+                    <div class="isic-container">
+                        <div class="isic-section__header">
+                            <h2 class="isic-section__title">Gouvernance</h2>
+                            <p class="isic-section__subtitle">Conseil d'Établissement</p>
+                        </div>
+
+                        <!-- Direction -->
+                        <h3 style="font-size:1.1rem;font-weight:700;color:#1b3a5c;margin-bottom:1.25rem;">Direction</h3>
+                        <div class="isic-www-gouvernance isic-www-stagger-container mb-4">
+                            <div class="isic-www-member isic-www-stagger">
+                                <div class="isic-www-member__photo"
+                                     style="display:flex;align-items:center;justify-content:center;background:#e8edf2;border-radius:50%;">
+                                    <i class="fa fa-user" style="font-size:1.5rem;color:#8899aa;" title="Photo"/></div>
+                                <div class="isic-www-member__name">Abdellatif Bensfia</div>
+                                <div class="isic-www-member__title">Directeur — Président du Conseil</div>
+                            </div>
+                            <div class="isic-www-member isic-www-stagger">
+                                <div class="isic-www-member__photo"
+                                     style="display:flex;align-items:center;justify-content:center;background:#e8edf2;border-radius:50%;">
+                                    <i class="fa fa-user" style="font-size:1.5rem;color:#8899aa;" title="Photo"/></div>
+                                <div class="isic-www-member__name">Mohcine Benzakour</div>
+                                <div class="isic-www-member__title">Dir. adjoint Affaires Pédagogiques</div>
+                            </div>
+                            <div class="isic-www-member isic-www-stagger">
+                                <div class="isic-www-member__photo"
+                                     style="display:flex;align-items:center;justify-content:center;background:#e8edf2;border-radius:50%;">
+                                    <i class="fa fa-user" style="font-size:1.5rem;color:#8899aa;" title="Photo"/></div>
+                                <div class="isic-www-member__name">Abdessamad Moutei</div>
+                                <div class="isic-www-member__title">Dir. adjoint FC et Stages</div>
+                            </div>
+                        </div>
+
+                        <!-- Chefs de département -->
+                        <h3 style="font-size:1.1rem;font-weight:700;color:#1b3a5c;margin-bottom:1.25rem;">Chefs de Département</h3>
+                        <div class="isic-www-gouvernance isic-www-stagger-container mb-4">
+                            <div class="isic-www-member isic-www-stagger">
+                                <div class="isic-www-member__photo"
+                                     style="display:flex;align-items:center;justify-content:center;background:#e8edf2;border-radius:50%;">
+                                    <i class="fa fa-user" style="font-size:1.5rem;color:#8899aa;" title="Photo"/></div>
+                                <div class="isic-www-member__name">Mehdi Amri</div>
+                                <div class="isic-www-member__title">Chef Dept. Communication</div>
+                            </div>
+                            <div class="isic-www-member isic-www-stagger">
+                                <div class="isic-www-member__photo"
+                                     style="display:flex;align-items:center;justify-content:center;background:#e8edf2;border-radius:50%;">
+                                    <i class="fa fa-user" style="font-size:1.5rem;color:#8899aa;" title="Photo"/></div>
+                                <div class="isic-www-member__name">Mohamed Allali</div>
+                                <div class="isic-www-member__title">Chef Dept. Presse Écrite</div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- ======== CORPS PROFESSORAL ======== -->
+                <section class="isic-section isic-www-reveal" id="professeurs">
+                    <div class="isic-container">
+                        <div class="isic-section__header">
+                            <h2 class="isic-section__title">Corps Professoral</h2>
+                            <p class="isic-section__subtitle">18 enseignants permanents</p>
+                        </div>
+                        <div class="isic-www-professeurs isic-www-stagger-container">
+                            <t t-foreach="['Abdellatif Bensfia', 'Nadia Lamhaidi', 'Mohamed El Allali', 'Abdelouahhab Errami', 'Jaafar Akil', 'Mohsine Benzakour', 'Abdessamad Moutei', 'Mahdi Amri', 'Aicha Tazi', 'Ismail Menkari', 'Lala Mariam Hajouji Idrissi', 'Afafe Annich', 'Mariam Aitbelhoucine', 'Saber Shouli', 'Manal El Akhdari', 'Marwa Khouya', 'Ilham Bouriqui', 'Hatim Boumhaouad']"
+                                         t-as="prof">
+                                <div class="isic-www-member isic-www-stagger">
+                                    <div class="isic-www-member__photo"
+                                         style="display:flex;align-items:center;justify-content:center;font-size:0.65rem;color:#999;">Photo</div>
+                                    <div class="isic-www-member__name" t-out="prof"/>
+                                    <div class="isic-www-member__title">Enseignant permanent</div>
+                                </div>
+                            </t>
+                        </div>
+                    </div>
+                </section>
+
+            </div>
+        </t>
+    </template>
+
+</odoo>

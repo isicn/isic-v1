@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+
+    <!-- ========================================================
+         ISIC Website — Blog Template Overrides
+         Lightweight overrides to apply ISIC design to website_blog.
+         Most styling is done via SCSS (pages/blog.scss).
+    ========================================================= -->
+
+    <!-- Add ISIC class to the blog post content area -->
+    <template id="blog_post_complete_isic" inherit_id="website_blog.blog_post_complete" name="ISIC: Blog Post Complete">
+        <xpath expr="//div[@id='o_wblog_post_content']" position="attributes">
+            <attribute name="class" add="isic-www-article__content" separator=" "/>
+        </xpath>
+    </template>
+
+</odoo>

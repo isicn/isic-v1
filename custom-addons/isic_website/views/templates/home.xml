@@ -1,0 +1,266 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+
+    <!-- ========================================================
+         ISIC Website — Page d'Accueil
+    ========================================================= -->
+    <template id="page_home" name="ISIC: Accueil">
+        <t t-call="website.layout">
+            <t t-set="additional_title">ISIC - Accueil</t>
+
+            <div id="wrap">
+
+                <!-- ======== HERO ======== -->
+                <section class="isic-www-hero">
+                    <div class="isic-container">
+                        <div class="isic-www-hero__content">
+                            <span class="isic-www-hero__label">Établissement public depuis 1969</span>
+                            <h1 class="isic-www-hero__title">
+                                Former les leaders de <em>l'information</em> et de la <em>communication</em>
+                            </h1>
+                            <p class="isic-www-hero__subtitle">
+                                L'Institut Supérieur de l'Information et de la Communication est le seul
+                                établissement public d'enseignement supérieur au Maroc spécialisé dans
+                                la formation aux métiers du journalisme et de la communication.
+                            </p>
+                            <div class="isic-www-hero__actions">
+                                <a href="/formations" class="isic-www-btn isic-www-btn--white isic-www-btn--lg">
+                                    <i class="fa fa-graduation-cap" title="Formations"/> Découvrir nos formations
+                                </a>
+                                <a href="/contact" class="isic-www-btn isic-www-btn--ghost isic-www-btn--lg">
+                                    <i class="fa fa-envelope" title="Contact"/> Nous contacter
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- ======== CHIFFRES CLES ======== -->
+                <section class="isic-www-figures">
+                    <div class="isic-container">
+                        <div class="isic-www-stat">
+                            <div class="isic-www-stat__icon"><i class="fa fa-users" title="Lauréats"/></div>
+                            <div class="isic-www-stat__value" data-target="2000" data-suffix="+">0</div>
+                            <div class="isic-www-stat__label">Lauréats formés</div>
+                        </div>
+                        <div class="isic-www-stat">
+                            <div class="isic-www-stat__icon"><i class="fa fa-trophy" title="Années"/></div>
+                            <div class="isic-www-stat__value" data-target="55" data-suffix="+">0</div>
+                            <div class="isic-www-stat__label">Ans d'excellence</div>
+                        </div>
+                        <div class="isic-www-stat">
+                            <div class="isic-www-stat__icon"><i class="fa fa-book" title="Masters"/></div>
+                            <div class="isic-www-stat__value" data-target="5">0</div>
+                            <div class="isic-www-stat__label">Masters spécialisés</div>
+                        </div>
+                        <div class="isic-www-stat">
+                            <div class="isic-www-stat__icon"><i class="fa fa-handshake-o" title="Partenaires"/></div>
+                            <div class="isic-www-stat__value" data-target="31" data-suffix="+">0</div>
+                            <div class="isic-www-stat__label">Partenaires</div>
+                        </div>
+                        <div class="isic-www-stat">
+                            <div class="isic-www-stat__icon"><i class="fa fa-chalkboard-teacher" title="Enseignants"/></div>
+                            <div class="isic-www-stat__value" data-target="18">0</div>
+                            <div class="isic-www-stat__label">Enseignants permanents</div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- ======== MOT DU DIRECTEUR ======== -->
+                <section class="isic-section isic-www-reveal">
+                    <div class="isic-container">
+                        <div class="isic-section__header">
+                            <h2 class="isic-section__title">Mot du Directeur</h2>
+                            <p class="isic-section__subtitle">Ensemble, pour le même dessein</p>
+                        </div>
+                        <div class="isic-www-directeur">
+                            <div class="isic-www-directeur__photo">
+                                <img src="/isic_website/static/img/team/directeur.jpg"
+                                     alt="Abdellatif Bensfia - Directeur de l'ISIC"
+                                     loading="lazy"
+                                     style="width:100%;height:100%;object-fit:cover;border-radius:8px;"/>
+                            </div>
+                            <div>
+                                <p class="isic-www-directeur__quote">
+                                    L'ISIC est une institution académique de référence disposant d'une expérience
+                                    suffisante et d'une expertise requise. Nous nous engageons à renforcer
+                                    les vocations académiques et professionnelles, à digitaliser nos services
+                                    et à positionner l'ISIC comme plateforme essentielle du paysage médiatique marocain.
+                                </p>
+                                <p class="isic-www-directeur__name">Abdellatif Bensfia</p>
+                                <p class="isic-www-directeur__role">Directeur de l'ISIC</p>
+                                <a href="/institut" class="isic-www-btn isic-www-btn--outline mt-3">
+                                    En savoir plus <i class="fa fa-arrow-right ms-1" title="Flèche"/>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- ======== FORMATIONS ======== -->
+                <section class="isic-section isic-section--light isic-www-reveal">
+                    <div class="isic-container">
+                        <div class="isic-section__header">
+                            <h2 class="isic-section__title">Nos Formations</h2>
+                            <p class="isic-section__subtitle">
+                                Un parcours LMD complet en information et communication
+                            </p>
+                        </div>
+                        <div class="isic-www-formations-grid isic-www-stagger-container">
+
+                            <!-- Licence -->
+                            <a href="/formations#licence" class="isic-www-card isic-www-stagger" style="text-decoration:none;">
+                                <div class="isic-www-card__img">
+                                    <img src="/isic_website/static/img/formations/licence.jpg"
+                                         alt="Licence Information et Communication"
+                                         loading="lazy"
+                                         style="width:100%;height:100%;object-fit:cover;"/>
+                                </div>
+                                <div class="isic-www-card__body">
+                                    <span class="isic-www-badge isic-www-badge--action">Licence - 3 ans</span>
+                                    <h3 class="isic-www-card__title mt-2">Information et Communication</h3>
+                                    <p class="isic-www-card__text">
+                                        Sections arabophone, francophone et anglophone.
+                                        Formation aux métiers des médias, du journalisme et de la communication.
+                                    </p>
+                                </div>
+                            </a>
+
+                            <!-- Master IPROCAN -->
+                            <a href="/formations#masters" class="isic-www-card isic-www-stagger" style="text-decoration:none;">
+                                <div class="isic-www-card__img">
+                                    <img src="/isic_website/static/img/formations/master.jpg"
+                                         alt="Master Innovation et Production Audiovisuelle"
+                                         loading="lazy"
+                                         style="width:100%;height:100%;object-fit:cover;"/>
+                                </div>
+                                <div class="isic-www-card__body">
+                                    <span class="isic-www-badge isic-www-badge--gold">Master - 2 ans</span>
+                                    <h3 class="isic-www-card__title mt-2">Innovation et Production Audiovisuelle</h3>
+                                    <p class="isic-www-card__text">
+                                        Contenus audiovisuels et numériques. Production, réalisation et innovation médiatique.
+                                    </p>
+                                </div>
+                            </a>
+
+                            <!-- Master Communication Politique -->
+                            <a href="/formations#masters" class="isic-www-card isic-www-stagger" style="text-decoration:none;">
+                                <div class="isic-www-card__img">
+                                    <img src="/isic_website/static/img/formations/master-comm.jpg"
+                                         alt="Master Communication Publique et Politique"
+                                         loading="lazy"
+                                         style="width:100%;height:100%;object-fit:cover;"/>
+                                </div>
+                                <div class="isic-www-card__body">
+                                    <span class="isic-www-badge isic-www-badge--gold">Master - 2 ans</span>
+                                    <h3 class="isic-www-card__title mt-2">Communication Publique et Politique</h3>
+                                    <p class="isic-www-card__text">
+                                        Stratégies de communication institutionnelle, relations publiques et médias.
+                                    </p>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="text-center mt-4">
+                            <a href="/formations" class="isic-www-btn isic-www-btn--primary">
+                                Voir toutes les formations <i class="fa fa-arrow-right ms-1" title="Flèche"/>
+                            </a>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- ======== ACTUALITES ======== -->
+                <section class="isic-section isic-www-reveal">
+                    <div class="isic-container">
+                        <div class="isic-section__header">
+                            <h2 class="isic-section__title">Actualités</h2>
+                            <p class="isic-section__subtitle">Dernières nouvelles de l'Institut</p>
+                        </div>
+                        <div class="isic-www-news-grid isic-www-stagger-container">
+                            <t t-foreach="latest_posts" t-as="post">
+                                <div class="isic-www-blog-card isic-www-stagger">
+                                    <div class="isic-www-blog-card__img"
+                                         t-attf-style="background-image: url({{ post.website_meta_og_img or '/web/image/blog.post/%s/image_1920' % post.id }}); background-size: cover; background-position: center;"/>
+                                    <div class="isic-www-blog-card__body">
+                                        <div class="isic-www-blog-card__meta">
+                                            <t t-out="post.published_date"/>
+                                        </div>
+                                        <h3 class="isic-www-blog-card__title">
+                                            <a t-attf-href="/blog/{{ slug(post.blog_id) }}/{{ slug(post) }}">
+                                                <t t-out="post.name"/>
+                                            </a>
+                                        </h3>
+                                        <p class="isic-www-blog-card__excerpt">
+                                            <t t-out="post.subtitle or ''"/>
+                                        </p>
+                                    </div>
+                                </div>
+                            </t>
+                            <!-- Empty state if no posts -->
+                            <t t-if="not latest_posts">
+                                <div class="text-center py-4" style="grid-column: 1 / -1;">
+                                    <p class="text-muted">Aucune actualité publiée pour le moment.</p>
+                                </div>
+                            </t>
+                        </div>
+                        <div class="text-center mt-4">
+                            <a href="/blog" class="isic-www-btn isic-www-btn--outline">
+                                Toutes les actualités <i class="fa fa-arrow-right ms-1" title="Flèche"/>
+                            </a>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- ======== PARTENAIRES ======== -->
+                <section class="isic-section isic-section--light isic-www-reveal">
+                    <div class="isic-container">
+                        <div class="isic-section__header">
+                            <h2 class="isic-section__title">Nos Partenaires</h2>
+                            <p class="isic-section__subtitle">
+                                31 partenaires nationaux et internationaux
+                            </p>
+                        </div>
+                        <div class="isic-www-partners-scroll">
+                            <div class="isic-www-partners-scroll__track">
+                                <img class="isic-www-partners__logo" src="/isic_website/static/img/partners/snrt.png" alt="SNRT" title="SNRT" loading="lazy"/>
+                                <img class="isic-www-partners__logo" src="/isic_website/static/img/partners/haca.png" alt="HACA" title="HACA" loading="lazy"/>
+                                <img class="isic-www-partners__logo" src="/isic_website/static/img/partners/map.png" alt="MAP" title="MAP" loading="lazy"/>
+                                <img class="isic-www-partners__logo" src="/isic_website/static/img/partners/aljazeera.png" alt="Al Jazeera" title="Al Jazeera" loading="lazy"/>
+                                <img class="isic-www-partners__logo" src="/isic_website/static/img/partners/unesco.png" alt="UNESCO" title="UNESCO" loading="lazy"/>
+                                <img class="isic-www-partners__logo" src="/isic_website/static/img/partners/ihecs.png" alt="IHECS" title="IHECS" loading="lazy"/>
+                                <img class="isic-www-partners__logo" src="/isic_website/static/img/partners/dw.png" alt="Deutsche Welle" title="Deutsche Welle" loading="lazy"/>
+                                <img class="isic-www-partners__logo" src="/isic_website/static/img/partners/unhcr.png" alt="UNHCR" title="UNHCR" loading="lazy"/>
+                                <img class="isic-www-partners__logo" src="/isic_website/static/img/partners/naumann.png" alt="Friedrich Naumann" title="Friedrich Naumann" loading="lazy"/>
+                                <img class="isic-www-partners__logo" src="/isic_website/static/img/partners/uvmed5.png" alt="Université Mohammed V" title="Université Mohammed V" loading="lazy"/>
+                                <img class="isic-www-partners__logo" src="/isic_website/static/img/partners/fmej.png" alt="FMEJ" title="FMEJ" loading="lazy"/>
+                                <img class="isic-www-partners__logo" src="/isic_website/static/img/partners/oim.png" alt="OIM" title="OIM" loading="lazy"/>
+                                <img class="isic-www-partners__logo" src="/isic_website/static/img/partners/cesti.png" alt="CESTI Dakar" title="CESTI Dakar" loading="lazy"/>
+                                <img class="isic-www-partners__logo" src="/isic_website/static/img/partners/ifm.png" alt="Institut Français" title="Institut Français" loading="lazy"/>
+                                <img class="isic-www-partners__logo" src="/isic_website/static/img/partners/ismac.png" alt="ISMAC" title="ISMAC" loading="lazy"/>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- ======== CTA ======== -->
+                <section class="isic-section isic-section--gold">
+                    <div class="isic-container text-center">
+                        <h2 style="font-size:2rem;font-weight:700;margin-bottom:0.75rem;">Rejoignez l'ISIC</h2>
+                        <p style="font-size:1.1rem;opacity:0.9;margin-bottom:2rem;max-width:500px;margin-left:auto;margin-right:auto;">
+                            Intégrez le seul institut public marocain dédié au journalisme et à la communication.
+                        </p>
+                        <div class="d-flex gap-3 justify-content-center flex-wrap">
+                            <a href="/formations" class="isic-www-btn isic-www-btn--white isic-www-btn--lg">
+                                <i class="fa fa-graduation-cap" title="Formations"/> Nos formations
+                            </a>
+                            <a href="/contact" class="isic-www-btn isic-www-btn--ghost isic-www-btn--lg">
+                                <i class="fa fa-envelope" title="Contact"/> Nous contacter
+                            </a>
+                        </div>
+                    </div>
+                </section>
+
+            </div>
+        </t>
+    </template>
+
+</odoo>

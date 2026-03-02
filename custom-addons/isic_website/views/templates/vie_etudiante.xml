@@ -1,0 +1,231 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+
+    <!-- ========================================================
+         ISIC Website — Page: Vie Étudiante
+    ========================================================= -->
+    <template id="page_vie_etudiante" name="ISIC: Vie Étudiante">
+        <t t-call="website.layout">
+            <t t-set="additional_title">ISIC - Vie Étudiante</t>
+
+            <div id="wrap">
+
+                <!-- Banner -->
+                <section class="isic-page-banner">
+                    <div class="isic-container">
+                        <h1 class="isic-page-banner__title">Vie Étudiante</h1>
+                        <div class="isic-page-banner__breadcrumb">
+                            <a href="/">Accueil</a> <span>/</span> Vie Étudiante
+                        </div>
+                    </div>
+                </section>
+
+                <!-- ======== CLUBS ======== -->
+                <section class="isic-section isic-www-reveal">
+                    <div class="isic-container">
+                        <div class="isic-section__header">
+                            <h2 class="isic-section__title">Clubs Étudiants</h2>
+                            <p class="isic-section__subtitle">
+                                5 clubs pour épanouir vos talents au-delà des cours
+                            </p>
+                        </div>
+                        <div class="isic-www-clubs-grid isic-www-stagger-container">
+                            <div class="isic-www-club isic-www-stagger">
+                                <div class="isic-www-club__icon"><i class="fa fa-theater-masks" title="Théâtre"/></div>
+                                <div>
+                                    <div class="isic-www-club__name">Club de Théâtre</div>
+                                    <div class="isic-www-club__desc">
+                                        Ateliers d'improvisation et performances théâtrales.
+                                        Développez vos aptitudes scéniques et votre confiance en vous.
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="isic-www-club isic-www-stagger">
+                                <div class="isic-www-club__icon"><i class="fa fa-film" title="Cinéma"/></div>
+                                <div>
+                                    <div class="isic-www-club__name">Club de Cinéma</div>
+                                    <div class="isic-www-club__desc">
+                                        Ateliers de création cinématographique et rencontres avec des réalisateurs.
+                                        Explorez le septième art par la pratique.
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="isic-www-club isic-www-stagger">
+                                <div class="isic-www-club__icon"><i class="fa fa-futbol-o" title="Sport"/></div>
+                                <div>
+                                    <div class="isic-www-club__name">Club de Sport</div>
+                                    <div class="isic-www-club__desc">
+                                        Tournois de football et événements sportifs.
+                                        Cultivez la forme physique et l'esprit d'équipe.
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="isic-www-club isic-www-stagger">
+                                <div class="isic-www-club__icon"><i class="fa fa-paint-brush" title="Arts"/></div>
+                                <div>
+                                    <div class="isic-www-club__name">ArtISIC</div>
+                                    <div class="isic-www-club__desc">
+                                        Open Stage et expression artistique libre.
+                                        Concerts, performances et spectacles pour révéler vos talents.
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="isic-www-club isic-www-stagger" style="grid-column: 1 / -1;">
+                                <div class="isic-www-club__icon"><i class="fa fa-heart" title="Associatif"/></div>
+                                <div>
+                                    <div class="isic-www-club__name">Club Associatif</div>
+                                    <div class="isic-www-club__desc">
+                                        Actions caritatives, distribution de repas et engagement civique.
+                                        Cultivez votre sens de la responsabilité sociale et de la solidarité.
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- ======== EQUIPEMENTS ======== -->
+                <section class="isic-section isic-section--light isic-www-reveal">
+                    <div class="isic-container">
+                        <div class="isic-section__header">
+                            <h2 class="isic-section__title">Équipements et Installations</h2>
+                            <p class="isic-section__subtitle">
+                                Des infrastructures professionnelles pour une formation pratique
+                            </p>
+                        </div>
+                        <div class="isic-www-equip-grid isic-www-stagger-container">
+
+                            <!-- Studios Radio -->
+                            <div class="isic-www-equip isic-www-stagger">
+                                <div class="isic-www-equip__img">
+                                    <img src="/isic_website/static/img/equipment/radio-studio.jpg"
+                                         alt="Studios Radio ISIC" loading="lazy"
+                                         style="width:100%;height:100%;object-fit:cover;"/>
+                                </div>
+                                <div class="isic-www-equip__body">
+                                    <h3 class="isic-www-equip__title">
+                                        <i class="fa fa-podcast me-2" title="Radio"/> Studios Radio
+                                    </h3>
+                                    <ul class="isic-www-equip__list">
+                                        <li>2 studios numériques centralisés</li>
+                                        <li>Console audio + Adobe Audition</li>
+                                        <li>Mairlist 4.3 pour la diffusion</li>
+                                        <li>8 enregistreurs portables</li>
+                                    </ul>
+                                </div>
+                            </div>
+
+                            <!-- Studio TV -->
+                            <div class="isic-www-equip isic-www-stagger">
+                                <div class="isic-www-equip__img">
+                                    <img src="/isic_website/static/img/equipment/tv-studio.jpg"
+                                         alt="Studio Télévision ISIC" loading="lazy"
+                                         style="width:100%;height:100%;object-fit:cover;"/>
+                                </div>
+                                <div class="isic-www-equip__body">
+                                    <h3 class="isic-www-equip__title">
+                                        <i class="fa fa-television me-2" title="TV"/> Studio Télévision
+                                    </h3>
+                                    <ul class="isic-www-equip__list">
+                                        <li>2 caméras plateau semi-pro</li>
+                                        <li>3 caméras CCD sur trépieds Dolly</li>
+                                        <li>Régie mixage audio/vidéo</li>
+                                        <li>Éclairage variable + microphones</li>
+                                    </ul>
+                                </div>
+                            </div>
+
+                            <!-- Montage Video -->
+                            <div class="isic-www-equip isic-www-stagger">
+                                <div class="isic-www-equip__img">
+                                    <img src="/isic_website/static/img/equipment/video-editing.jpg"
+                                         alt="Salle de montage ISIC" loading="lazy"
+                                         style="width:100%;height:100%;object-fit:cover;"/>
+                                </div>
+                                <div class="isic-www-equip__body">
+                                    <h3 class="isic-www-equip__title">
+                                        <i class="fa fa-scissors me-2" title="Montage"/> Montage et Post-production
+                                    </h3>
+                                    <ul class="isic-www-equip__list">
+                                        <li>10 iMac + Final Cut Pro</li>
+                                        <li>5 stations montage radio (Audition CS6)</li>
+                                        <li>11 iMac photojournalisme (27")</li>
+                                        <li>Salle presse écrite (7 iMac)</li>
+                                    </ul>
+                                </div>
+                            </div>
+
+                            <!-- Salles de cours -->
+                            <div class="isic-www-equip isic-www-stagger">
+                                <div class="isic-www-equip__img">
+                                    <img src="/isic_website/static/img/equipment/amphitheatre.jpg"
+                                         alt="Amphithéâtre ISIC" loading="lazy"
+                                         style="width:100%;height:100%;object-fit:cover;"/>
+                                </div>
+                                <div class="isic-www-equip__body">
+                                    <h3 class="isic-www-equip__title">
+                                        <i class="fa fa-university me-2" title="Salles"/> Salles de Formation
+                                    </h3>
+                                    <ul class="isic-www-equip__list">
+                                        <li>11 salles de cours avec vidéoprojection</li>
+                                        <li>2 amphithéâtres avec sonorisation</li>
+                                        <li>1 salle de conférence (3e étage)</li>
+                                        <li>15 PC HP ProDesk (salle informatique)</li>
+                                    </ul>
+                                </div>
+                            </div>
+
+                            <!-- Informatique -->
+                            <div class="isic-www-equip isic-www-stagger">
+                                <div class="isic-www-equip__img">
+                                    <img src="/isic_website/static/img/equipment/computer-lab.jpg"
+                                         alt="Salle informatique ISIC" loading="lazy"
+                                         style="width:100%;height:100%;object-fit:cover;"/>
+                                </div>
+                                <div class="isic-www-equip__body">
+                                    <h3 class="isic-www-equip__title">
+                                        <i class="fa fa-desktop me-2" title="Informatique"/> Salles Spécialisées
+                                    </h3>
+                                    <ul class="isic-www-equip__list">
+                                        <li>Salle communication (10 iMac 21.5")</li>
+                                        <li>Salle formation continue (11 iMac)</li>
+                                        <li>Salle informatique (15 HP ProDesk)</li>
+                                        <li>Logiciels professionnels</li>
+                                    </ul>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </section>
+
+                <!-- ======== LAUREATS ======== -->
+                <section class="isic-section isic-section--dark isic-www-reveal">
+                    <div class="isic-container text-center">
+                        <h2 style="font-size:2rem;font-weight:700;margin-bottom:1rem;">Nos Lauréats</h2>
+                        <p style="opacity:0.8;max-width:600px;margin:0 auto 2rem;">
+                            Plus de 2000 lauréats marocains et étrangers, la majorité intégrée
+                            dans le circuit professionnel des médias et de la communication.
+                        </p>
+                        <div class="d-flex gap-4 justify-content-center flex-wrap">
+                            <div class="isic-www-stat">
+                                <div class="isic-www-stat__value" data-target="90">0</div>
+                                <div class="isic-www-stat__label">Lauréats 2023-2024</div>
+                            </div>
+                            <div class="isic-www-stat">
+                                <div class="isic-www-stat__value" data-target="75" data-suffix="%">0</div>
+                                <div class="isic-www-stat__label">Filles</div>
+                            </div>
+                            <div class="isic-www-stat">
+                                <div class="isic-www-stat__value" data-target="2000" data-suffix="+">0</div>
+                                <div class="isic-www-stat__label">Total historique</div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+            </div>
+        </t>
+    </template>
+
+</odoo>

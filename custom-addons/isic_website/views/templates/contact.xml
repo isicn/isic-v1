@@ -1,0 +1,208 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+
+    <!-- ========================================================
+         ISIC Website — Page: Contact
+    ========================================================= -->
+    <template id="page_contact" name="ISIC: Contact">
+        <t t-call="website.layout">
+            <t t-set="additional_title">ISIC - Contact</t>
+
+            <div id="wrap">
+
+                <!-- Banner -->
+                <section class="isic-page-banner">
+                    <div class="isic-container">
+                        <h1 class="isic-page-banner__title">Contact</h1>
+                        <div class="isic-page-banner__breadcrumb">
+                            <a href="/">Accueil</a> <span>/</span> Contact
+                        </div>
+                    </div>
+                </section>
+
+                <!-- ======== SUCCESS MESSAGE ======== -->
+                <t t-if="success">
+                    <section class="isic-section">
+                        <div class="isic-container">
+                            <div class="isic-www-contact-success">
+                                <div class="isic-www-contact-success__icon">
+                                    <i class="fa fa-check-circle" title="Succès"/>
+                                </div>
+                                <h2 class="isic-www-contact-success__title">Message envoyé avec succès</h2>
+                                <p class="isic-www-contact-success__text">
+                                    Merci de nous avoir contactés. Nous vous répondrons dans les meilleurs délais.
+                                </p>
+                                <a href="/" class="isic-www-btn isic-www-btn--primary mt-3">
+                                    <i class="fa fa-home" title="Accueil"/> Retour à l'accueil
+                                </a>
+                            </div>
+                        </div>
+                    </section>
+                </t>
+
+                <!-- ======== CONTACT FORM + INFO ======== -->
+                <t t-if="not success">
+
+                    <section class="isic-section isic-www-reveal">
+                        <div class="isic-container">
+                            <div class="isic-www-contact-layout">
+
+                                <!-- Left: Form -->
+                                <div class="isic-www-contact-form-wrap">
+                                    <h2 style="font-size:1.5rem;font-weight:700;color:#1b3a5c;margin-bottom:0.5rem;">
+                                        Envoyez-nous un message
+                                    </h2>
+                                    <p style="color:#6b7b8d;margin-bottom:2rem;">
+                                        Remplissez le formulaire ci-dessous et nous vous répondrons rapidement.
+                                    </p>
+
+                                    <form action="/contact/submit" method="POST" class="isic-www-form">
+                                        <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
+
+                                        <div class="isic-www-form__group">
+                                            <label class="isic-www-form__label" for="contact_name">
+                                                Nom complet <span class="text-danger">*</span>
+                                            </label>
+                                            <input type="text" id="contact_name" name="name"
+                                                   class="isic-www-form__input"
+                                                   t-att-class="'isic-www-form__input' + (' isic-www-form__input--error' if error.get('name') else '')"
+                                                   t-att-value="name if name else ''"
+                                                   placeholder="Votre nom complet"/>
+                                            <t t-if="error.get('name')">
+                                                <div class="isic-www-form__error" t-out="error['name']"/>
+                                            </t>
+                                        </div>
+
+                                        <div class="isic-www-form__group">
+                                            <label class="isic-www-form__label" for="contact_email">
+                                                Email <span class="text-danger">*</span>
+                                            </label>
+                                            <input type="email" id="contact_email" name="email"
+                                                   t-att-class="'isic-www-form__input' + (' isic-www-form__input--error' if error.get('email') else '')"
+                                                   t-att-value="email if email else ''"
+                                                   placeholder="votre.email@exemple.com"/>
+                                            <t t-if="error.get('email')">
+                                                <div class="isic-www-form__error" t-out="error['email']"/>
+                                            </t>
+                                        </div>
+
+                                        <div class="isic-www-form__group">
+                                            <label class="isic-www-form__label" for="contact_subject">
+                                                Objet
+                                            </label>
+                                            <input type="text" id="contact_subject" name="subject"
+                                                   class="isic-www-form__input"
+                                                   t-att-value="subject if subject else ''"
+                                                   placeholder="Objet de votre message"/>
+                                        </div>
+
+                                        <div class="isic-www-form__group">
+                                            <label class="isic-www-form__label" for="contact_message">
+                                                Message <span class="text-danger">*</span>
+                                            </label>
+                                            <textarea id="contact_message" name="message"
+                                                      t-att-class="'isic-www-form__textarea' + (' isic-www-form__input--error' if error.get('message') else '')"
+                                                      rows="6"
+                                                      placeholder="Votre message..."><t t-if="message" t-out="message"/></textarea>
+                                            <t t-if="error.get('message')">
+                                                <div class="isic-www-form__error" t-out="error['message']"/>
+                                            </t>
+                                        </div>
+
+                                        <button type="submit" class="isic-www-btn isic-www-btn--primary isic-www-btn--lg w-100">
+                                            <i class="fa fa-paper-plane" title="Envoyer"/> Envoyer le message
+                                        </button>
+                                    </form>
+                                </div>
+
+                                <!-- Right: Contact Info -->
+                                <div class="isic-www-contact-info-wrap">
+
+                                    <!-- Coordonnées -->
+                                    <div class="isic-www-contact-info-card">
+                                        <h3 class="isic-www-contact-info-card__title">
+                                            <i class="fa fa-map-marker" title="Adresse"/> Adresse
+                                        </h3>
+                                        <p>
+                                            Avenue Allal El Fassi<br/>
+                                            Madinat Al Irfane<br/>
+                                            Rabat, Maroc
+                                        </p>
+                                    </div>
+
+                                    <div class="isic-www-contact-info-card">
+                                        <h3 class="isic-www-contact-info-card__title">
+                                            <i class="fa fa-phone" title="Téléphone"/> Téléphone
+                                        </h3>
+                                        <p>
+                                            (+212) 0537 773 340<br/>
+                                            (+212) 0537 772 789
+                                        </p>
+                                    </div>
+
+                                    <div class="isic-www-contact-info-card">
+                                        <h3 class="isic-www-contact-info-card__title">
+                                            <i class="fa fa-envelope" title="Email"/> Email
+                                        </h3>
+                                        <p>
+                                            <a href="mailto:contact@isic.ac.ma">contact@isic.ac.ma</a>
+                                        </p>
+                                    </div>
+
+                                    <div class="isic-www-contact-info-card">
+                                        <h3 class="isic-www-contact-info-card__title">
+                                            <i class="fa fa-graduation-cap" title="Formation Continue"/> Formation Continue
+                                        </h3>
+                                        <p>
+                                            <a href="mailto:aziddin.himit@isic.ac.ma">aziddin.himit@isic.ac.ma</a><br/>
+                                            +212 (0) 5 377 723 69
+                                        </p>
+                                    </div>
+
+                                    <!-- Social -->
+                                    <div class="isic-www-contact-social">
+                                        <a href="https://www.facebook.com/isic.officiel" target="_blank"
+                                           rel="noopener noreferrer" class="isic-www-contact-social__link"
+                                           aria-label="Facebook ISIC">
+                                            <i class="fa fa-facebook" title="Facebook"/>
+                                        </a>
+                                        <a href="https://www.youtube.com/@isic_officiel" target="_blank"
+                                           rel="noopener noreferrer" class="isic-www-contact-social__link"
+                                           aria-label="YouTube ISIC">
+                                            <i class="fa fa-youtube-play" title="YouTube"/>
+                                        </a>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- ======== MAP ======== -->
+                    <section class="isic-section isic-section--light isic-www-reveal">
+                        <div class="isic-container">
+                            <div class="isic-section__header">
+                                <h2 class="isic-section__title">Nous Trouver</h2>
+                                <p class="isic-section__subtitle">
+                                    Avenue Allal El Fassi, Madinat Al Irfane, Rabat
+                                </p>
+                            </div>
+                            <div class="isic-www-contact-map">
+                                <iframe
+                                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3307.6!2d-6.8503!3d33.9836!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xda76c88a0f5f5f5%3A0x6f7f6f7f6f7f6f7f!2sISIC%20-%20Institut%20Sup%C3%A9rieur%20de%20l&#39;Information%20et%20de%20la%20Communication!5e0!3m2!1sfr!2sma!4v1700000000000!5m2!1sfr!2sma"
+                                    width="100%" height="450" style="border:0;border-radius:12px;"
+                                    allowfullscreen="" loading="lazy"
+                                    referrerpolicy="no-referrer-when-downgrade"
+                                    title="Carte ISIC Rabat">
+                                </iframe>
+                            </div>
+                        </div>
+                    </section>
+
+                </t>
+
+            </div>
+        </t>
+    </template>
+
+</odoo>

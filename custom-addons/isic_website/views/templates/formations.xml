@@ -1,0 +1,270 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+
+    <!-- ========================================================
+         ISIC Website — Page: Formations
+    ========================================================= -->
+    <template id="page_formations" name="ISIC: Formations">
+        <t t-call="website.layout">
+            <t t-set="additional_title">ISIC - Formations</t>
+
+            <div id="wrap">
+
+                <!-- Banner -->
+                <section class="isic-page-banner">
+                    <div class="isic-container">
+                        <h1 class="isic-page-banner__title">Formations</h1>
+                        <div class="isic-page-banner__breadcrumb">
+                            <a href="/">Accueil</a> <span>/</span> Formations
+                        </div>
+                    </div>
+                </section>
+
+                <!-- ======== PARCOURS LMD ======== -->
+                <section class="isic-section isic-www-reveal">
+                    <div class="isic-container">
+                        <div class="isic-section__header">
+                            <h2 class="isic-section__title">Parcours LMD</h2>
+                            <p class="isic-section__subtitle">
+                                Système Licence-Master-Doctorat adopté depuis 2011
+                            </p>
+                        </div>
+                        <div class="isic-www-lmd">
+                            <div class="isic-www-lmd__step isic-www-lmd__step--active">
+                                <div class="isic-www-lmd__label">Cycle 1</div>
+                                <div class="isic-www-lmd__name">Licence</div>
+                                <div class="isic-www-lmd__duration">3 ans (6 semestres)</div>
+                            </div>
+                            <div class="isic-www-lmd__arrow"><i class="fa fa-arrow-right" title="Vers Master"/></div>
+                            <div class="isic-www-lmd__step isic-www-lmd__step--active">
+                                <div class="isic-www-lmd__label">Cycle 2</div>
+                                <div class="isic-www-lmd__name">Master</div>
+                                <div class="isic-www-lmd__duration">2 ans (4 semestres)</div>
+                            </div>
+                            <div class="isic-www-lmd__arrow"><i class="fa fa-arrow-right" title="Vers Doctorat"/></div>
+                            <div class="isic-www-lmd__step">
+                                <div class="isic-www-lmd__label">Cycle 3</div>
+                                <div class="isic-www-lmd__name">Doctorat</div>
+                                <div class="isic-www-lmd__duration">3 ans minimum</div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- ======== LICENCE ======== -->
+                <section class="isic-section isic-section--light isic-www-reveal" id="licence">
+                    <div class="isic-container">
+                        <div class="isic-section__header">
+                            <h2 class="isic-section__title">Licence Fondamentale</h2>
+                            <p class="isic-section__subtitle">Information et Communication — 3 ans</p>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-lg-7">
+                                <h3 style="font-size:1.15rem;font-weight:700;color:#1b3a5c;margin-bottom:1rem;">Objectifs</h3>
+                                <p style="color:#6b7b8d;line-height:1.7;margin-bottom:1.5rem;">
+                                    Former aux métiers des médias, de l'information et de la communication.
+                                    Fournir des professionnels du journalisme aux médias écrits, audiovisuels
+                                    et numériques. Professionnaliser les carrières en communication et journalisme.
+                                </p>
+
+                                <h3 style="font-size:1.15rem;font-weight:700;color:#1b3a5c;margin-bottom:1rem;">Compétences acquises</h3>
+                                <ul style="color:#6b7b8d;line-height:1.8;">
+                                    <li>Techniques journalistiques, investigation et reportage</li>
+                                    <li>Production médiatique multi-supports</li>
+                                    <li>Analyse documentaire, synthèse et rédaction</li>
+                                    <li>Communication professionnelle et stratégie</li>
+                                    <li>Maîtrise des outils numériques et multimédia</li>
+                                </ul>
+
+                                <h3 style="font-size:1.15rem;font-weight:700;color:#1b3a5c;margin-bottom:1rem;margin-top:1.5rem;">Sections linguistiques</h3>
+                                <div class="d-flex gap-2 flex-wrap mb-3">
+                                    <span class="isic-www-badge isic-www-badge--action">Arabophone</span>
+                                    <span class="isic-www-badge isic-www-badge--action">Francophone</span>
+                                    <span class="isic-www-badge isic-www-badge--action">Anglophone</span>
+                                </div>
+                            </div>
+                            <div class="col-lg-5">
+                                <div style="background:#fff;border-radius:12px;padding:2rem;box-shadow:0 1px 3px rgba(0,0,0,0.08);">
+                                    <h3 style="font-size:1.15rem;font-weight:700;color:#1b3a5c;margin-bottom:1.25rem;">
+                                        <i class="fa fa-sign-in me-2" title="Admission"/> Admission
+                                    </h3>
+
+                                    <div class="isic-www-admission mb-4">
+                                        <div class="isic-www-admission__step">
+                                            <div class="isic-www-admission__label">Dossier</div>
+                                            <div class="isic-www-admission__desc">Bac + mention Bien (14/20)</div>
+                                        </div>
+                                        <div class="isic-www-admission__step">
+                                            <div class="isic-www-admission__label">Écrit</div>
+                                            <div class="isic-www-admission__desc">Culture générale + langues</div>
+                                        </div>
+                                        <div class="isic-www-admission__step">
+                                            <div class="isic-www-admission__label">Oral</div>
+                                            <div class="isic-www-admission__desc">Motivation et actualité</div>
+                                        </div>
+                                    </div>
+
+                                    <h4 style="font-size:0.95rem;font-weight:600;color:#1b3a5c;margin-bottom:0.75rem;">
+                                        <i class="fa fa-briefcase me-2" title="Débouchés"/> Débouchés
+                                    </h4>
+                                    <ul style="color:#6b7b8d;font-size:0.9rem;line-height:1.7;">
+                                        <li>Journaliste (presse, TV, radio, web)</li>
+                                        <li>Rédacteur / Reporter</li>
+                                        <li>Chargé de communication</li>
+                                        <li>Attaché de presse</li>
+                                        <li>Community manager</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- ======== MASTERS ======== -->
+                <section class="isic-section isic-www-reveal" id="masters">
+                    <div class="isic-container">
+                        <div class="isic-section__header">
+                            <h2 class="isic-section__title">Masters Spécialisés</h2>
+                            <p class="isic-section__subtitle">5 masters de 2 ans chacun</p>
+                        </div>
+                        <div class="isic-www-masters-grid isic-www-stagger-container">
+
+                            <div class="isic-www-card isic-www-card--flat isic-www-stagger">
+                                <div class="isic-www-card__body">
+                                    <span class="isic-www-badge isic-www-badge--gold">Français</span>
+                                    <h3 class="isic-www-card__title mt-2">Innovation et Production des Contenus Audiovisuels et Numériques</h3>
+                                    <p class="isic-www-card__text">
+                                        Formation en production, réalisation et innovation dans les contenus
+                                        audiovisuels et numériques. Approche professionnelle et créative.
+                                    </p>
+                                </div>
+                            </div>
+
+                            <div class="isic-www-card isic-www-card--flat isic-www-stagger">
+                                <div class="isic-www-card__body">
+                                    <span class="isic-www-badge isic-www-badge--gold">Interdisciplinaire</span>
+                                    <h3 class="isic-www-card__title mt-2">Médias et Migrations</h3>
+                                    <p class="isic-www-card__text">
+                                        Analyse du traitement médiatique des phénomènes migratoires.
+                                        Approche transnationale et droits humains.
+                                    </p>
+                                </div>
+                            </div>
+
+                            <div class="isic-www-card isic-www-card--flat isic-www-stagger">
+                                <div class="isic-www-card__body">
+                                    <span class="isic-www-badge isic-www-badge--gold">Français</span>
+                                    <h3 class="isic-www-card__title mt-2">Communication Publique et Politique</h3>
+                                    <p class="isic-www-card__text">
+                                        Stratégies de communication institutionnelle, relations publiques,
+                                        communication politique et médias.
+                                    </p>
+                                </div>
+                            </div>
+
+                            <div class="isic-www-card isic-www-card--flat isic-www-stagger">
+                                <div class="isic-www-card__body">
+                                    <span class="isic-www-badge isic-www-badge--gold">Arabe</span>
+                                    <h3 class="isic-www-card__title mt-2">Communication Politique et Sociale</h3>
+                                    <p class="isic-www-card__text">
+                                        Communication dans les contextes politiques et sociaux.
+                                        Analyse des discours et stratégies médiatiques.
+                                    </p>
+                                </div>
+                            </div>
+
+                            <div class="isic-www-card isic-www-card--flat isic-www-stagger">
+                                <div class="isic-www-card__body">
+                                    <span class="isic-www-badge isic-www-badge--gold">Arabe</span>
+                                    <h3 class="isic-www-card__title mt-2">Journalisme Sportif</h3>
+                                    <p class="isic-www-card__text">
+                                        Spécialisation en journalisme sportif : couverture événementielle,
+                                        analyse tactique, médias sportifs.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div style="background:#f0f2f5;border-radius:12px;padding:1.5rem 2rem;margin-top:2rem;">
+                            <h4 style="font-size:1rem;font-weight:700;color:#1b3a5c;margin-bottom:0.5rem;">Conditions d'accès aux Masters</h4>
+                            <p style="color:#6b7b8d;font-size:0.9rem;line-height:1.6;margin:0;">
+                                Diplôme ISIC ou équivalent en médias/communication, sociologie, droit public,
+                                sciences politiques, psychologie, philosophie ou linguistique.
+                                Moyenne minimum 12/20. Sélection sur dossier + entretien.
+                            </p>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- ======== FORMATION CONTINUE ======== -->
+                <section class="isic-section isic-section--light isic-www-reveal" id="fc">
+                    <div class="isic-container">
+                        <div class="isic-section__header">
+                            <h2 class="isic-section__title">Formation Continue</h2>
+                            <p class="isic-section__subtitle">
+                                Développez vos compétences en information et communication
+                            </p>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-8">
+                                <div class="isic-grid isic-grid--2 isic-www-stagger-container">
+                                    <div class="isic-www-club isic-www-stagger">
+                                        <div class="isic-www-club__icon"><i class="fa fa-certificate" title="Certifiant"/></div>
+                                        <div>
+                                            <div class="isic-www-club__name">Formations certifiantes</div>
+                                            <div class="isic-www-club__desc">En partenariat avec les institutions médiatiques</div>
+                                        </div>
+                                    </div>
+                                    <div class="isic-www-club isic-www-stagger">
+                                        <div class="isic-www-club__icon"><i class="fa fa-microphone" title="Media"/></div>
+                                        <div>
+                                            <div class="isic-www-club__name">Media Training</div>
+                                            <div class="isic-www-club__desc">Prise de parole, gestion de crise médiatique</div>
+                                        </div>
+                                    </div>
+                                    <div class="isic-www-club isic-www-stagger">
+                                        <div class="isic-www-club__icon"><i class="fa fa-language" title="Langues"/></div>
+                                        <div>
+                                            <div class="isic-www-club__name">Media English</div>
+                                            <div class="isic-www-club__desc">Anglais spécialisé médias et communication</div>
+                                        </div>
+                                    </div>
+                                    <div class="isic-www-club isic-www-stagger">
+                                        <div class="isic-www-club__icon"><i class="fa fa-video-camera" title="Production"/></div>
+                                        <div>
+                                            <div class="isic-www-club__name">Ateliers Production</div>
+                                            <div class="isic-www-club__desc">Production journalistique multi-supports</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-4">
+                                <div style="background:#fff;border-radius:12px;padding:1.5rem;box-shadow:0 1px 3px rgba(0,0,0,0.08);">
+                                    <h4 style="font-size:1rem;font-weight:700;color:#1b3a5c;margin-bottom:0.75rem;">
+                                        <i class="fa fa-users me-2" title="Public cible"/> Public cible
+                                    </h4>
+                                    <ul style="color:#6b7b8d;font-size:0.9rem;line-height:1.7;">
+                                        <li>Fonctionnaires</li>
+                                        <li>Salariés</li>
+                                        <li>Demandeurs d'emploi</li>
+                                        <li>Entrepreneurs</li>
+                                        <li>Jeunes diplômés</li>
+                                    </ul>
+                                    <hr/>
+                                    <p style="font-size:0.85rem;color:#6b7b8d;margin-bottom:0.5rem;">
+                                        <strong>Contact FC :</strong><br/>
+                                        <a href="mailto:aziddin.himit@isic.ac.ma">aziddin.himit@isic.ac.ma</a><br/>
+                                        +212 (0) 5 377 723 69
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+            </div>
+        </t>
+    </template>
+
+</odoo>

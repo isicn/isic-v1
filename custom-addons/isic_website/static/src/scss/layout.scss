@@ -1,0 +1,221 @@
+// ============================================================
+//  ISIC Website — Layout
+//  Grid systems, sections, page structure
+// ============================================================
+
+// ----------------------------------------------------------
+//  Navbar — ISIC branded header
+// ----------------------------------------------------------
+header#top.o_header_standard {
+    // Desktop navbar
+    nav.navbar {
+        background: #fff !important;
+        border-bottom: 2px solid $isic-gold;
+        padding: 0;
+        min-height: 60px;
+
+        // Logo area
+        .navbar-brand.logo {
+            padding: 0.5rem 0;
+
+            img {
+                max-height: 44px;
+                width: auto;
+            }
+        }
+
+        // Menu links
+        #top_menu.navbar-nav {
+            .nav-item {
+                position: relative;
+
+                .nav-link {
+                    color: $isic-primary !important;
+                    font-weight: 600;
+                    font-size: 0.9rem;
+                    letter-spacing: 0.02em;
+                    padding: 1.1rem 0.85rem !important;
+                    transition: color 0.2s ease, background-color 0.2s ease;
+                    position: relative;
+
+                    // Gold underline on hover
+                    &::after {
+                        content: "";
+                        position: absolute;
+                        bottom: 0;
+                        left: 50%;
+                        width: 0;
+                        height: 2px;
+                        background: $isic-gold;
+                        transition: width 0.3s ease, left 0.3s ease;
+                    }
+
+                    &:hover {
+                        color: $isic-gold !important;
+
+                        &::after {
+                            width: 100%;
+                            left: 0;
+                        }
+                    }
+
+                    &.active {
+                        color: $isic-gold !important;
+                        font-weight: 700;
+
+                        &::after {
+                            width: 100%;
+                            left: 0;
+                        }
+                    }
+                }
+            }
+        }
+
+        // Right-side items (search, language, login)
+        .navbar-nav:not(#top_menu) {
+            .nav-link {
+                color: $isic-primary !important;
+                font-size: 0.85rem;
+                font-weight: 500;
+                padding: 0.5rem 0.6rem !important;
+                border-radius: 4px;
+                transition: background-color 0.2s ease;
+
+                &:hover {
+                    background-color: rgba($isic-primary, 0.06);
+                }
+            }
+
+            // "Se connecter" button
+            a[href="/web/login"],
+            a[href*="/web/login"] {
+                background: $isic-primary;
+                color: #fff !important;
+                border-radius: 4px;
+                padding: 0.45rem 1rem !important;
+                font-weight: 600;
+
+                &:hover {
+                    background: darken($isic-primary, 8%);
+                }
+            }
+        }
+    }
+}
+
+// Generic page section
+.isic-section {
+    padding: 4rem 0;
+
+    &--light {
+        background-color: var(--isic-bg-light);
+    }
+
+    &--dark {
+        background-color: var(--isic-primary);
+        color: #fff;
+    }
+
+    &--gold {
+        background: linear-gradient(135deg, $isic-gold 0%, darken($isic-gold, 8%) 100%);
+        color: #fff;
+    }
+
+    &__header {
+        text-align: center;
+        margin-bottom: 3rem;
+    }
+
+    &__title {
+        font-size: 2rem;
+        font-weight: 700;
+        color: var(--isic-primary);
+        margin-bottom: 0.5rem;
+
+        .isic-section--dark & {
+            color: #fff;
+        }
+    }
+
+    &__subtitle {
+        font-size: 1.1rem;
+        color: var(--isic-text-light);
+        max-width: 600px;
+        margin: 0 auto;
+
+        .isic-section--dark & {
+            color: rgba(255, 255, 255, 0.8);
+        }
+    }
+}
+
+// Container override for website pages
+.isic-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 1.5rem;
+}
+
+// Grid utilities
+.isic-grid {
+    display: grid;
+    gap: 1.5rem;
+
+    &--2 {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    &--3 {
+        grid-template-columns: repeat(3, 1fr);
+    }
+
+    &--4 {
+        grid-template-columns: repeat(4, 1fr);
+    }
+}
+
+// Page banner (breadcrumbs area)
+.isic-page-banner {
+    background: linear-gradient(135deg, $isic-primary 0%, lighten($isic-primary, 10%) 100%);
+    padding: 3rem 0;
+    color: #fff;
+    position: relative;
+    overflow: hidden;
+
+    &::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: radial-gradient(circle at 80% 20%, rgba(255, 255, 255, 0.06) 0%, transparent 60%);
+        pointer-events: none;
+    }
+
+    &__title {
+        font-size: 2.25rem;
+        font-weight: 700;
+        margin: 0;
+        position: relative;
+    }
+
+    &__breadcrumb {
+        margin-top: 0.5rem;
+        font-size: 0.9rem;
+        opacity: 0.8;
+        position: relative;
+
+        a {
+            color: rgba(255, 255, 255, 0.9);
+            text-decoration: none;
+
+            &:hover {
+                color: #fff;
+                text-decoration: underline;
+            }
+        }
+
+        span {
+            margin: 0 0.4rem;
+        }
+    }
+}

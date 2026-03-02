@@ -1,0 +1,51 @@
+// ============================================================
+//  ISIC Website — Design Tokens
+//  Reuses the same tokens as isic_portal for consistency
+// ============================================================
+
+:root {
+    // Colors (from isic_theme palette)
+    --isic-primary: #1b3a5c;
+    --isic-primary-light: #264d7a;
+    --isic-action: #2e86ab;
+    --isic-gold: #d4a843;
+    --isic-success: #28a745;
+    --isic-danger: #dc3545;
+    --isic-info: #4a90b8;
+    --isic-bg-light: #f0f2f5;
+    --isic-bg-white: #ffffff;
+    --isic-secondary: #6b7b8d;
+    --isic-link: #1b4f8c;
+    --isic-text: #2d3748;
+    --isic-text-light: #718096;
+    --isic-border: #e2e8f0;
+
+    // Shadows
+    --isic-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+    --isic-shadow-hover: 0 4px 12px rgba(0, 0, 0, 0.12);
+    --isic-shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.1);
+    --isic-shadow-xl: 0 16px 48px rgba(0, 0, 0, 0.12);
+
+    // Radius
+    --isic-radius: 6px;
+    --isic-radius-sm: 4px;
+    --isic-radius-lg: 12px;
+    --isic-radius-xl: 16px;
+
+    // Transitions
+    --isic-transition: 0.2s ease;
+    --isic-transition-slow: 0.4s ease;
+}
+
+// SCSS variables (for calculations & mixins)
+$isic-primary: #1b3a5c;
+$isic-primary-light: #264d7a;
+$isic-action: #2e86ab;
+$isic-gold: #d4a843;
+$isic-success: #28a745;
+$isic-danger: #dc3545;
+$isic-info: #4a90b8;
+$isic-bg-light: #f0f2f5;
+$isic-secondary: #6b7b8d;
+$isic-text: #2d3748;
+$isic-text-light: #718096;
