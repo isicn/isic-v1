@@ -642,8 +642,10 @@ button.close {
 /* ============================================
    ISIC CAS Authentication - Custom Theme
    ============================================
-   Charte graphique ISIC (https://isic.ac.ma)
-   Couleurs: #0077c8 (bleu), #f7941d (orange)
+   Design System ISIC — Universite professionnelle
+   Primary: #1B3A5C | Dark: #0F2236
+   Accent Gold: #D4A843 | Action: #2E86AB
+   Font: Inter
    ============================================ */
 
 /* ---- Reset & Base ---- */
@@ -654,8 +656,11 @@ button.close {
 }
 
 body {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background: linear-gradient(135deg, #0077c8 0%, #1a1a2e 100%);
+    font-family: 'Inter', 'Segoe UI', system-ui, -apple-system, sans-serif;
+    background:
+        radial-gradient(circle at 25% 25%, rgba(255, 255, 255, 0.03), transparent 50%),
+        radial-gradient(circle at 75% 75%, rgba(255, 255, 255, 0.03), transparent 50%),
+        linear-gradient(135deg, #1B3A5C 0%, #0F2236 100%);
     min-height: 100vh;
     display: flex;
     justify-content: center;
@@ -668,10 +673,19 @@ body {
 header.mdc-toolbar,
 .mdc-toolbar,
 nav,
-footer#cas-footer,
+footer,
+.footer,
+#cas-footer,
+.cas-footer,
+[id*="footer"]:not(.isic-login-footer),
 #notices,
 .service-ui {
     display: none !important;
+    visibility: hidden !important;
+    height: 0 !important;
+    overflow: hidden !important;
+    margin: 0 !important;
+    padding: 0 !important;
 }
 
 #content {
@@ -679,6 +693,7 @@ footer#cas-footer,
     max-width: 100%;
     padding: 0;
     margin: 0;
+    box-shadow: none;
 }
 
 /* ---- Wrapper ---- */
@@ -708,20 +723,35 @@ footer#cas-footer,
     font-weight: 600;
     margin: 0;
     text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    position: relative;
+    display: inline-block;
+    padding-bottom: 0.75rem;
+}
+
+.isic-title::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 40px;
+    height: 3px;
+    background: #D4A843;
+    border-radius: 2px;
 }
 
 .isic-subtitle {
     color: rgba(255, 255, 255, 0.85);
     font-size: 0.9rem;
-    margin-top: 0.4rem;
+    margin-top: 0.6rem;
     font-weight: 300;
 }
 
 /* ---- Card ---- */
 .isic-login-card {
     background: white;
-    border-radius: 16px;
-    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+    border-radius: 12px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.25);
     padding: 2rem;
     overflow: hidden;
 }
@@ -731,11 +761,11 @@ footer#cas-footer,
     display: flex;
     align-items: flex-start;
     gap: 12px;
-    background: #e8f4fd;
+    background: #EBF5FB;
     padding: 1rem;
     border-radius: 10px;
     margin-bottom: 1.5rem;
-    border-left: 4px solid #0077c8;
+    border-left: 4px solid #2E86AB;
 }
 
 .isic-service-icon {
@@ -745,7 +775,7 @@ footer#cas-footer,
 }
 
 .isic-service-info strong {
-    color: #1a1a2e;
+    color: #1B3A5C;
     font-size: 0.95rem;
 }
 
@@ -792,9 +822,10 @@ footer#cas-footer,
 .isic-label {
     display: block;
     font-weight: 500;
-    color: #1a1a2e;
+    color: #1B3A5C;
     margin-bottom: 0.5rem;
     font-size: 0.9rem;
+    letter-spacing: 0.01em;
 }
 
 .isic-input {
@@ -803,6 +834,7 @@ footer#cas-footer,
     border: 2px solid #e2e8f0;
     border-radius: 8px;
     font-size: 0.95rem;
+    font-family: inherit;
     color: #333;
     transition: border-color 0.3s ease, box-shadow 0.3s ease;
     outline: none;
@@ -810,8 +842,8 @@ footer#cas-footer,
 }
 
 .isic-input:focus {
-    border-color: #0077c8;
-    box-shadow: 0 0 0 3px rgba(0, 119, 200, 0.12);
+    border-color: #2E86AB;
+    box-shadow: 0 0 0 3px rgba(46, 134, 171, 0.15);
 }
 
 .isic-input::placeholder {
@@ -836,16 +868,17 @@ footer#cas-footer,
     display: flex;
     align-items: center;
     justify-content: center;
-    background: #1a1a2e;
+    background: #1B3A5C;
     border: none;
     border-radius: 0 8px 8px 0;
     cursor: pointer;
     color: white;
+    font-size: 1rem;
     transition: background 0.2s ease;
 }
 
 .isic-toggle-password:hover {
-    background: #0077c8;
+    background: #2E86AB;
 }
 
 /* ---- Submit Button ---- */
@@ -853,11 +886,12 @@ footer#cas-footer,
     display: block;
     width: 100%;
     padding: 0.875rem 1.5rem;
-    background: linear-gradient(135deg, #0077c8 0%, #005a9e 100%);
+    background: #1B3A5C;
     color: white;
     border: none;
     border-radius: 8px;
     font-size: 1rem;
+    font-family: inherit;
     font-weight: 600;
     letter-spacing: 1px;
     cursor: pointer;
@@ -866,12 +900,14 @@ footer#cas-footer,
 }
 
 .isic-btn-primary:hover {
+    background: #152E4A;
     transform: translateY(-2px);
-    box-shadow: 0 6px 20px rgba(0, 119, 200, 0.4);
+    box-shadow: 0 6px 20px rgba(27, 58, 92, 0.35);
 }
 
 .isic-btn-primary:active {
     transform: translateY(0);
+    box-shadow: none;
 }
 
 /* ---- Links ---- */
@@ -886,7 +922,7 @@ footer#cas-footer,
 }
 
 .isic-link {
-    color: #0077c8;
+    color: #2E86AB;
     text-decoration: none;
     font-size: 0.9rem;
     display: inline-flex;
@@ -896,7 +932,7 @@ footer#cas-footer,
 }
 
 .isic-link:hover {
-    color: #005a9e;
+    color: #1B3A5C;
     text-decoration: underline;
 }
 
@@ -909,7 +945,7 @@ footer#cas-footer,
 }
 
 .isic-security-notice a {
-    color: #0077c8;
+    color: #2E86AB;
     text-decoration: none;
 }
 
@@ -968,7 +1004,7 @@ footer#cas-footer,
 
     .isic-login-card {
         padding: 1.5rem;
-        border-radius: 12px;
+        border-radius: 10px;
     }
 
     .isic-logo {
@@ -983,7 +1019,7 @@ footer#cas-footer,
 /* ---- Dark Mode ---- */
 @media (prefers-color-scheme: dark) {
     .isic-login-card {
-        background: #1f2937;
+        background: #1E293B;
     }
 
     .isic-label {
@@ -991,8 +1027,8 @@ footer#cas-footer,
     }
 
     .isic-input {
-        background: #374151;
-        border-color: #4b5563;
+        background: #334155;
+        border-color: #475569;
         color: #f3f4f6;
     }
 
@@ -1005,8 +1041,8 @@ footer#cas-footer,
     }
 
     .isic-service-info {
-        background: #1e3a5f;
-        border-color: #0077c8;
+        background: rgba(46, 134, 171, 0.15);
+        border-color: #2E86AB;
     }
 
     .isic-service-info strong {
@@ -1022,6 +1058,6 @@ footer#cas-footer,
     }
 
     .isic-divider {
-        border-color: #4b5563;
+        border-color: #475569;
     }
 }

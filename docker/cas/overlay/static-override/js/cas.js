@@ -153,30 +153,104 @@ function resourceLoadedSuccessfully() {
 }
 /**
  * ISIC CAS Theme Loader
- * Injecte le CSS ISIC et modifie le DOM pour le branding ISIC
+ * Charge la police Inter, modifie le DOM pour le branding ISIC,
+ * supprime le footer Apereo, et ajoute le toggle mot de passe.
  */
 (function() {
     'use strict';
 
-    // 1. Injecter le CSS ISIC
-    var link = document.createElement('link');
-    link.rel = 'stylesheet';
-    link.type = 'text/css';
-    link.href = '/cas/themes/isic/css/isic-cas.css';
-    document.head.appendChild(link);
+    // 1. Charger la police Inter depuis Google Fonts
+    var fontLink = document.createElement('link');
+    fontLink.rel = 'stylesheet';
+    fontLink.href = 'https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap';
+    document.head.appendChild(fontLink);
 
-    // 2. Attendre que le DOM soit pret
+    // Preconnect pour performance
+    var preconnect = document.createElement('link');
+    preconnect.rel = 'preconnect';
+    preconnect.href = 'https://fonts.googleapis.com';
+    document.head.insertBefore(preconnect, document.head.firstChild);
+    var preconnectGstatic = document.createElement('link');
+    preconnectGstatic.rel = 'preconnect';
+    preconnectGstatic.href = 'https://fonts.gstatic.com';
+    preconnectGstatic.crossOrigin = 'anonymous';
+    document.head.insertBefore(preconnectGstatic, document.head.firstChild);
+
+    // 2. Supprimer le footer Apereo de maniere agressive
+    function removeApereoFooter() {
+        var selectors = 'footer, .cas-footer, #cas-footer, [class*="cas-footer"]';
+        document.querySelectorAll(selectors).forEach(function(el) {
+            // Ne pas supprimer notre propre footer ISIC
+            if (el.id === 'isic-footer' || el.classList.contains('isic-login-footer')) return;
+            el.style.display = 'none';
+            el.remove();
+        });
+    }
+
+    // Observer pour attraper les footers charges en async par CAS
+    function observeFooterRemoval() {
+        if (typeof MutationObserver === 'undefined') return;
+        var observer = new MutationObserver(function(mutations) {
+            mutations.forEach(function(mutation) {
+                mutation.addedNodes.forEach(function(node) {
+                    if (node.nodeType !== 1) return;
+                    if (node.tagName === 'FOOTER' ||
+                        (node.id && node.id.indexOf('footer') !== -1 && node.id !== 'isic-footer') ||
+                        (node.className && typeof node.className === 'string' && node.className.indexOf('cas-footer') !== -1)) {
+                        node.remove();
+                    }
+                });
+            });
+        });
+        observer.observe(document.body || document.documentElement, { childList: true, subtree: true });
+    }
+
+    // 3. Ajouter le toggle mot de passe
+    function addPasswordToggle() {
+        var passwordInput = document.getElementById('password');
+        if (!passwordInput || document.getElementById('isic-pwd-toggle')) return;
+
+        var wrapper = passwordInput.parentElement;
+        if (!wrapper) return;
+
+        // Ajouter la classe wrapper
+        wrapper.classList.add('isic-password-wrapper');
+
+        // Creer le bouton toggle
+        var toggleBtn = document.createElement('button');
+        toggleBtn.type = 'button';
+        toggleBtn.id = 'isic-pwd-toggle';
+        toggleBtn.className = 'isic-toggle-password';
+        toggleBtn.setAttribute('aria-label', 'Afficher/masquer le mot de passe');
+        toggleBtn.innerHTML = '\uD83D\uDC41';
+        toggleBtn.addEventListener('click', function(e) {
+            e.preventDefault();
+            if (passwordInput.type === 'password') {
+                passwordInput.type = 'text';
+                toggleBtn.innerHTML = '\uD83D\uDC41\u200D\uD83D\uDDE8';
+            } else {
+                passwordInput.type = 'password';
+                toggleBtn.innerHTML = '\uD83D\uDC41';
+            }
+        });
+        wrapper.appendChild(toggleBtn);
+    }
+
+    // 4. Appliquer le branding ISIC
     function applyISICBranding() {
-        // Remplacer le logo CAS par le logo ISIC
+        // Supprimer footer Apereo
+        removeApereoFooter();
+
+        // Remplacer le logo CAS par le logo ISIC (SVG blanc)
         var casLogo = document.getElementById('cas-logo');
         if (casLogo) {
-            casLogo.src = '/cas/images/isic-logo.png';
+            casLogo.src = '/cas/images/isic-logo-white.svg';
             casLogo.title = 'ISIC';
             casLogo.style.maxWidth = '120px';
             casLogo.style.filter = 'none';
         }
 
-        // Changer le titre dans la barre de navigation
+        // Cacher le drawer (barre laterale CAS)
         var drawerTitle = document.querySelector('.mdc-drawer__title');
         if (drawerTitle) {
             drawerTitle.textContent = 'ISIC';
@@ -187,7 +261,7 @@ function resourceLoadedSuccessfully() {
         }
 
         // Changer le titre de la page
-        document.title = 'ISIC - Authentification';
+        document.title = 'ISIC \u2014 Authentification';
 
         // Ajouter le header ISIC avant le formulaire de login
         var loginCard = document.querySelector('.mdc-card-content');
@@ -195,7 +269,7 @@ function resourceLoadedSuccessfully() {
             var header = document.createElement('div');
             header.id = 'isic-header';
             header.className = 'isic-login-header';
-            header.innerHTML = '<img src="/cas/images/isic-logo.png" alt="ISIC" class="isic-logo"/>'
+            header.innerHTML = '<img src="/cas/images/isic-logo-white.svg" alt="ISIC" class="isic-logo"/>'
                 + '<h1 class="isic-title">Espace Num\u00e9rique ISIC</h1>'
                 + '<p class="isic-subtitle">Institut Sup\u00e9rieur de l\u2019Information et de la Communication</p>';
             loginCard.parentNode.insertBefore(header, loginCard);
@@ -207,13 +281,13 @@ function resourceLoadedSuccessfully() {
             var footer = document.createElement('div');
             footer.id = 'isic-footer';
             footer.className = 'isic-login-footer';
-            footer.innerHTML = '<p>Plateforme de gestion acad\u00e9mique <strong>ISIC</strong></p>'
+            footer.innerHTML = '<p><strong>ISIC</strong> \u00b7 isic.ac.ma</p>'
                 + '<div class="isic-footer-links">'
-                + '<a href="https://isic.ac.ma" target="_blank">isic.ac.ma</a>'
+                + '<a href="https://isic.ac.ma" target="_blank" rel="noopener">isic.ac.ma</a>'
                 + ' <span>|</span> '
-                + '<a href="https://isic.ac.ma/contact" target="_blank">Contact</a>'
+                + '<a href="https://isic.ac.ma/contact" target="_blank" rel="noopener">Contact</a>'
                 + ' <span>|</span> '
-                + '<a href="https://isic.ac.ma/faq" target="_blank">Aide</a>'
+                + '<a href="https://isic.ac.ma/faq" target="_blank" rel="noopener">Aide</a>'
                 + '</div>';
             mainContent.appendChild(footer);
         }
@@ -251,15 +325,23 @@ function resourceLoadedSuccessfully() {
         if (forgotPwd) {
             forgotPwd.textContent = 'Mot de passe oubli\u00e9 ?';
         }
+
+        // Ajouter le password toggle
+        addPasswordToggle();
     }
 
     // Appliquer au chargement
     if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', applyISICBranding);
+        document.addEventListener('DOMContentLoaded', function() {
+            applyISICBranding();
+            observeFooterRemoval();
+        });
     } else {
         applyISICBranding();
+        observeFooterRemoval();
     }
 
     // Re-appliquer apres un court delai (certains elements CAS sont charges en async)
     setTimeout(applyISICBranding, 500);
+    setTimeout(removeApereoFooter, 1000);
 })();
