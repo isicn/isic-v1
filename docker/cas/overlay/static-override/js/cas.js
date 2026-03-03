@@ -268,10 +268,26 @@ function resourceLoadedSuccessfully() {
         header.id = 'isic-header';
         header.className = 'isic-login-header';
         header.innerHTML = '<img src="/cas/images/isic-logo.png" alt="ISIC" class="isic-logo"/>';
+        // Titre en SVG inline — immunise contre les overrides CSS color de MDC
         var titleEl = document.createElement('div');
         titleEl.className = 'isic-title';
-        titleEl.textContent = 'l\u2019Espace Num\u00e9rique de l\u2019ISIC Rabat';
-        titleEl.style.cssText = 'color:#FFFFFF !important;-webkit-text-fill-color:#FFFFFF !important;opacity:1 !important;display:inline-block !important;visibility:visible !important;font-size:1.5rem;font-weight:700;position:relative;padding-bottom:0.75rem;';
+        var svgNS = 'http://www.w3.org/2000/svg';
+        var svg = document.createElementNS(svgNS, 'svg');
+        svg.setAttribute('viewBox', '0 0 420 35');
+        svg.setAttribute('width', '100%');
+        svg.setAttribute('height', '35');
+        svg.style.cssText = 'display:block;max-width:420px;margin:0 auto;';
+        var txt = document.createElementNS(svgNS, 'text');
+        txt.setAttribute('x', '50%');
+        txt.setAttribute('y', '26');
+        txt.setAttribute('fill', '#FFFFFF');
+        txt.setAttribute('font-family', 'Inter, Segoe UI, sans-serif');
+        txt.setAttribute('font-size', '21');
+        txt.setAttribute('font-weight', '700');
+        txt.setAttribute('text-anchor', 'middle');
+        txt.textContent = "l\u2019Espace Num\u00e9rique de l\u2019ISIC Rabat";
+        svg.appendChild(txt);
+        titleEl.appendChild(svg);
         header.appendChild(titleEl);
         wrapper.appendChild(header);
 

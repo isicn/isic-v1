@@ -726,19 +726,12 @@ footer,
     filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.2));
 }
 
-h1.isic-title,
-.isic-login-header .isic-title,
 .isic-title {
-    color: #FFFFFF !important;
-    font-size: 1.5rem;
-    font-weight: 700;
-    margin: 0;
-    text-shadow: none;
     position: relative;
-    display: inline-block;
+    display: block;
+    text-align: center;
     padding-bottom: 0.75rem;
-    opacity: 1 !important;
-    -webkit-text-fill-color: #FFFFFF;
+    margin: 0;
 }
 
 .isic-title::after {
@@ -926,8 +919,8 @@ h1.isic-title,
         max-width: 140px;
     }
 
-    .isic-title {
-        font-size: 1.2rem;
+    .isic-title svg {
+        height: 28px;
     }
 
     .isic-subtitle {
