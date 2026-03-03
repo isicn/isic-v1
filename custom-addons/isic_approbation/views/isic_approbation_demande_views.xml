@@ -62,10 +62,13 @@
                         <group name="info_left">
                             <field name="categorie_id"
                                 readonly="state != 'draft'" />
-                            <field name="demandeur_id" />
+                            <field name="demandeur_id"
+                                readonly="state != 'draft'" />
                             <field name="priorite"
-                                widget="priority" />
-                            <field name="annee_academique_id" />
+                                widget="priority"
+                                readonly="state in ('approved', 'rejected', 'cancelled')" />
+                            <field name="annee_academique_id"
+                                readonly="state != 'draft'" />
                         </group>
                         <group name="info_right">
                             <field name="date_demande"
@@ -85,10 +88,12 @@
                             </group>
                             <group>
                                 <field name="observations"
+                                    readonly="state in ('approved', 'rejected', 'cancelled')"
                                     placeholder="Observations complémentaires..." />
                             </group>
                             <group>
-                                <field name="piece_jointe" filename="nom_fichier" />
+                                <field name="piece_jointe" filename="nom_fichier"
+                                    readonly="state in ('approved', 'rejected', 'cancelled')" />
                                 <field name="nom_fichier" invisible="1" />
                             </group>
                             <!-- Décision -->
