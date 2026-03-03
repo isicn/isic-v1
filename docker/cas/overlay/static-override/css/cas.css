@@ -729,32 +729,7 @@ footer,
     filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.2));
 }
 
-.isic-title {
-    position: relative;
-    display: block;
-    text-align: center;
-    padding-bottom: 0.75rem;
-    margin: 0;
-}
-
-.isic-title::after {
-    content: '';
-    position: absolute;
-    bottom: 0;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 40px;
-    height: 3px;
-    background: #D4A843;
-    border-radius: 2px;
-}
-
-.isic-subtitle {
-    color: #FFFFFF;
-    font-size: 0.9rem;
-    margin-top: 0.6rem;
-    font-weight: 400;
-}
+/* (title removed — logo only in header) */
 
 /* ---- Card (white on navy background) ---- */
 .isic-login-card {
@@ -922,12 +897,8 @@ footer,
         max-width: 140px;
     }
 
-    .isic-title svg {
-        height: 28px;
-    }
-
-    .isic-subtitle {
-        font-size: 0.8rem;
+    .isic-logo {
+        max-width: 180px;
     }
 }
 

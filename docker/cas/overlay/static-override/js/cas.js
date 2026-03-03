@@ -263,25 +263,11 @@ function resourceLoadedSuccessfully() {
         var wrapper = document.createElement('div');
         wrapper.className = 'isic-login-wrapper';
 
-        // Header ISIC
+        // Header ISIC — logo seul, pas de titre
         var header = document.createElement('div');
         header.id = 'isic-header';
         header.className = 'isic-login-header';
         header.innerHTML = '<img src="/cas/images/isic-logo.png" alt="ISIC" class="isic-logo"/>';
-        // Titre comme <img> SVG data URI — opaque, aucun CSS ne peut affecter le rendu interne
-        var titleEl = document.createElement('div');
-        titleEl.className = 'isic-title';
-        var titleImg = document.createElement('img');
-        titleImg.alt = "l\u2019Espace Num\u00e9rique de l\u2019ISIC Rabat";
-        titleImg.src = 'data:image/svg+xml,' + encodeURIComponent(
-            '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 440 40" width="440" height="40">'
-            + '<text x="220" y="30" fill="white" font-family="Inter,Segoe UI,Helvetica,Arial,sans-serif" font-size="22" font-weight="700" text-anchor="middle">'
-            + "l\u2019Espace Num\u00e9rique de l\u2019ISIC Rabat"
-            + '</text></svg>'
-        );
-        titleImg.style.cssText = 'display:block;max-width:440px;width:100%;height:auto;margin:0 auto;';
-        titleEl.appendChild(titleImg);
-        header.appendChild(titleEl);
         wrapper.appendChild(header);
 
         // Deplacer la section login dans le wrapper comme carte blanche
