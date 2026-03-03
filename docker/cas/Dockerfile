@@ -59,8 +59,9 @@ COPY overlay/static-override/css/cas.css /etc/cas/static/css/cas.css
 # JS combine (CAS original + ISIC DOM loader)
 COPY overlay/static-override/js/cas.js /etc/cas/static/js/cas.js
 
-# Logo ISIC (PNG officiel)
+# Logos ISIC (PNG + SVG blanc)
 COPY overlay/static-override/images/isic-logo.png /etc/cas/static/images/isic-logo.png
+COPY overlay/static-override/images/isic-logo-white.svg /etc/cas/static/images/isic-logo-white.svg
 
 # Configuration CAS et services
 COPY config/ /etc/cas/config/
