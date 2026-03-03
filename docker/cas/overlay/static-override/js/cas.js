@@ -259,8 +259,7 @@ function resourceLoadedSuccessfully() {
         header.id = 'isic-header';
         header.className = 'isic-login-header';
         header.innerHTML = '<img src="/cas/images/isic-logo.png" alt="ISIC" class="isic-logo"/>'
-            + '<h1 class="isic-title">Espace Num\u00e9rique ISIC</h1>'
-            + '<p class="isic-subtitle">Institut Sup\u00e9rieur de l\u2019Information et de la Communication</p>';
+            + '<h1 class="isic-title">l\u2019Espace Num\u00e9rique de l\u2019ISIC Rabat</h1>';
         wrapper.appendChild(header);
 
         // Deplacer la section login dans le wrapper comme carte blanche

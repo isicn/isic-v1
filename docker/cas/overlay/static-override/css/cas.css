@@ -721,14 +721,15 @@ footer,
 }
 
 .isic-title {
-    color: white;
-    font-size: 1.6rem;
-    font-weight: 600;
+    color: #FFFFFF !important;
+    font-size: 1.5rem;
+    font-weight: 700;
     margin: 0;
-    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
     position: relative;
     display: inline-block;
     padding-bottom: 0.75rem;
+    opacity: 1 !important;
 }
 
 .isic-title::after {
@@ -744,10 +745,10 @@ footer,
 }
 
 .isic-subtitle {
-    color: rgba(255, 255, 255, 0.85);
+    color: #FFFFFF;
     font-size: 0.9rem;
     margin-top: 0.6rem;
-    font-weight: 300;
+    font-weight: 400;
 }
 
 /* ---- Card (applied to .login-section by JS) ---- */
