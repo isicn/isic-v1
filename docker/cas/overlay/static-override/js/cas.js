@@ -258,7 +258,7 @@ function resourceLoadedSuccessfully() {
         var header = document.createElement('div');
         header.id = 'isic-header';
         header.className = 'isic-login-header';
-        header.innerHTML = '<img src="/cas/images/isic-logo-white.svg" alt="ISIC" class="isic-logo" onerror="this.src=\'/cas/images/isic-logo.png\'"/>'
+        header.innerHTML = '<img src="/cas/images/isic-logo.png" alt="ISIC" class="isic-logo"/>'
             + '<h1 class="isic-title">Espace Num\u00e9rique ISIC</h1>'
             + '<p class="isic-subtitle">Institut Sup\u00e9rieur de l\u2019Information et de la Communication</p>';
         wrapper.appendChild(header);
