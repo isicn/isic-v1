@@ -62,6 +62,7 @@
                         <group>
                             <field name="document_type_id" readonly="ged_state != 'draft'" />
                             <field name="reference" readonly="ged_state != 'draft'" />
+                            <field name="partner_id" />
                             <field name="auto_classified" invisible="not auto_classified" />
                         </group>
                         <group>
@@ -147,6 +148,7 @@
             <xpath expr="//field[@name='mimetype']" position="after">
                 <field name="document_type_id" optional="show" />
                 <field name="reference" optional="show" />
+                <field name="partner_id" optional="hide" />
                 <field name="date_document" optional="hide" />
                 <field name="ged_state" widget="badge"
                     decoration-info="ged_state == 'draft'"
@@ -169,6 +171,7 @@
             <xpath expr="//field[@name='name']" position="after">
                 <field name="document_type_id" />
                 <field name="reference" />
+                <field name="partner_id" />
             </xpath>
             <xpath expr="//filter[@name='filter_user']" position="before">
                 <filter name="filter_ged_draft" string="Brouillon" domain="[('ged_state','=','draft')]" />

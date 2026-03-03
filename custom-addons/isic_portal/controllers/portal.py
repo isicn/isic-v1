@@ -33,10 +33,11 @@ class IsicPortal(CustomerPortal):
                 [("demandeur_id", "=", uid), ("state", "=", "approved")]
             )
         if "document_count" in counters:
-            # Count DMS files visible to user (non-draft for portal)
+            # Count DMS files belonging to this user's partner (non-draft)
             DmsFile = request.env["dms.file"]
-            domain = [("ged_state", "!=", "draft")]
-            # sudo() justified: portal user has limited DMS ACL, we count accessible files
+            partner_id = request.env.user.partner_id.id
+            domain = [("partner_id", "=", partner_id), ("ged_state", "!=", "draft")]
+            # sudo() justified: portal user has no DMS ACL, we filter by partner_id
             values["document_count"] = DmsFile.sudo().search_count(domain)
 
         return values
@@ -314,8 +315,9 @@ class IsicPortal(CustomerPortal):
         DmsFile = request.env["dms.file"]
         DocType = request.env["isic.document.type"]
 
-        # Base domain: only non-draft for portal users
-        domain = [("ged_state", "!=", "draft")]
+        # Base domain: only documents belonging to this user's partner (non-draft)
+        partner_id = request.env.user.partner_id.id
+        domain = [("partner_id", "=", partner_id), ("ged_state", "!=", "draft")]
 
         # Filter by document type
         if doc_type and doc_type.isdigit():

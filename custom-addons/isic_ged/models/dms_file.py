@@ -26,6 +26,14 @@ class DmsFile(models.Model):
     # ------------------------------------------------------------------
     # GED fields (v1 — existing)
     # ------------------------------------------------------------------
+    partner_id = fields.Many2one(
+        "res.partner",
+        string="Destinataire",
+        tracking=True,
+        ondelete="set null",
+        index=True,
+        help="Personne concernée par ce document (étudiant, enseignant, etc.)",
+    )
     document_type_id = fields.Many2one(
         "isic.document.type",
         string="Type de document",
