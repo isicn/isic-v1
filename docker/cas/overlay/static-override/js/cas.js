@@ -322,14 +322,18 @@ function resourceLoadedSuccessfully() {
         if (passwordLabel) {
             passwordLabel.textContent = 'Mot de passe :';
         }
-        var securityNotice = document.querySelector('#content p:last-of-type');
-        if (securityNotice && securityNotice.textContent.indexOf('security') !== -1) {
-            securityNotice.innerHTML = 'Pour des raisons de s\u00e9curit\u00e9, veuillez vous <a href="logout">d\u00e9connecter</a> et fermer votre navigateur lorsque vous avez fini d\u2019acc\u00e9der aux services authentifi\u00e9s.';
-        }
-        var forgotPwd = document.querySelector('a[href*="pswdreset"]');
-        if (forgotPwd) {
-            forgotPwd.textContent = 'Mot de passe oubli\u00e9 ?';
-        }
+        // Traduire tous les paragraphes contenant "security"
+        document.querySelectorAll('p').forEach(function(p) {
+            if (p.textContent.indexOf('security') !== -1 || p.textContent.indexOf('Security') !== -1) {
+                p.innerHTML = 'Pour des raisons de s\u00e9curit\u00e9, veuillez vous <a href="logout">d\u00e9connecter</a> et fermer votre navigateur lorsque vous avez fini d\u2019acc\u00e9der aux services authentifi\u00e9s.';
+            }
+        });
+        // Traduire le lien "Forgot your password?"
+        document.querySelectorAll('a').forEach(function(a) {
+            if (a.textContent.indexOf('Forgot') !== -1 || a.href.indexOf('pswdreset') !== -1) {
+                a.textContent = 'Mot de passe oubli\u00e9 ?';
+            }
+        });
     }
 
     // 6. Appliquer tout le branding

@@ -756,36 +756,26 @@ footer,
     font-weight: 400;
 }
 
-/* ---- Card (glass effect on navy background) ---- */
+/* ---- Card (white on navy background) ---- */
 .isic-login-card {
-    background: rgba(255, 255, 255, 0.08) !important;
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
+    background: #FFFFFF !important;
     border-radius: 12px !important;
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3) !important;
-    border: 1px solid rgba(255, 255, 255, 0.12) !important;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.25) !important;
     padding: 2rem !important;
     overflow: hidden;
     width: 100%;
-    color: #FFFFFF !important;
+    border: none !important;
 }
 
 /* ---- CAS service info box ---- */
 #serviceui {
-    background: rgba(46, 134, 171, 0.15) !important;
+    background: #EBF5FB !important;
     border-left: 4px solid #2E86AB;
     border-radius: 10px;
     padding: 1rem !important;
     margin-bottom: 1.5rem;
     font-size: 0.9rem;
-    color: rgba(255, 255, 255, 0.9) !important;
-}
-
-/* ---- Text colors inside card ---- */
-.isic-login-card h1, .isic-login-card h2, .isic-login-card h3,
-.isic-login-card h4, .isic-login-card h5, .isic-login-card h6,
-.isic-login-card p, .isic-login-card span, .isic-login-card label {
-    color: rgba(255, 255, 255, 0.9) !important;
+    color: #1B3A5C;
 }
 
 /* ---- CAS MDC form overrides inside card ---- */
@@ -795,67 +785,50 @@ footer,
 
 .isic-login-card .mdc-text-field > .mdc-text-field__input,
 .isic-login-card .mdc-text-field:not(.mdc-text-field--disabled):not(.mdc-text-field--outlined):not(.mdc-text-field--textarea) > .mdc-text-field__input {
-    border: 1px solid rgba(255, 255, 255, 0.25);
+    border: 2px solid #e2e8f0;
     border-radius: 8px;
     font-family: inherit;
-    background: rgba(255, 255, 255, 0.1) !important;
-    color: #FFFFFF !important;
 }
 
 .isic-login-card .mdc-text-field--focused > .mdc-text-field__input {
-    border-color: #D4A843;
-    box-shadow: 0 0 0 3px rgba(212, 168, 67, 0.2);
-    background: rgba(255, 255, 255, 0.15) !important;
-}
-
-.isic-login-card .mdc-floating-label {
-    color: rgba(255, 255, 255, 0.7) !important;
+    border-color: #2E86AB;
+    box-shadow: 0 0 0 3px rgba(46, 134, 171, 0.15);
 }
 
 .isic-login-card .mdc-text-field--focused:not(.mdc-text-field--disabled) .mdc-floating-label {
-    color: #D4A843 !important;
+    color: #1B3A5C;
 }
 
 /* ---- CAS submit button override ---- */
 .isic-login-card .mdc-button--raised:not(:disabled) {
-    background-color: #D4A843 !important;
-    color: #0F2236 !important;
+    background-color: #1B3A5C !important;
     border-radius: 8px !important;
     width: 100%;
     padding: 0.875rem 1.5rem;
     font-size: 1rem;
-    font-weight: 700;
+    font-weight: 600;
     font-family: inherit;
     letter-spacing: 1px;
     margin: 0.5rem 0;
     transition: all 0.3s ease;
 }
 
-.isic-login-card .mdc-button--raised:not(:disabled) .mdc-button__label {
-    color: #0F2236 !important;
-}
-
 .isic-login-card .mdc-button--raised:not(:disabled):hover {
-    background-color: #C49A3A !important;
+    background-color: #152E4A !important;
     transform: translateY(-2px);
-    box-shadow: 0 6px 20px rgba(212, 168, 67, 0.4);
+    box-shadow: 0 6px 20px rgba(27, 58, 92, 0.35);
 }
 
 /* ---- CAS links override ---- */
 .isic-login-card a {
-    color: #D4A843 !important;
+    color: #2E86AB;
     transition: color 0.2s ease;
 }
 
 .isic-login-card a:hover,
 .isic-login-card a:visited,
 .isic-login-card a:active {
-    color: #E8C36A !important;
-}
-
-/* ---- Horizontal rule ---- */
-.isic-login-card hr {
-    border-color: rgba(255, 255, 255, 0.15) !important;
+    color: #1B3A5C;
 }
 
 /* ---- Password Toggle ---- */
@@ -872,7 +845,7 @@ footer,
     display: flex;
     align-items: center;
     justify-content: center;
-    background: rgba(212, 168, 67, 0.3);
+    background: #1B3A5C;
     border: none;
     border-radius: 0 8px 8px 0;
     cursor: pointer;
@@ -882,7 +855,7 @@ footer,
 }
 
 .isic-toggle-password:hover {
-    background: rgba(212, 168, 67, 0.5);
+    background: #2E86AB;
 }
 
 /* ---- Footer ---- */
