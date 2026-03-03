@@ -929,29 +929,4 @@ h1.isic-title,
     }
 }
 
-/* ---- Dark Mode ---- */
-@media (prefers-color-scheme: dark) {
-    .isic-login-card {
-        background: #1E293B !important;
-    }
-
-    .isic-login-card .mdc-text-field > .mdc-text-field__input {
-        background: #334155;
-        border-color: #475569;
-        color: #f3f4f6;
-    }
-
-    .isic-login-card .mdc-text-field--focused > .mdc-text-field__input {
-        border-color: #2E86AB;
-    }
-
-    .isic-login-card .mdc-floating-label {
-        color: #e5e7eb;
-    }
-
-    #serviceui {
-        background: rgba(46, 134, 171, 0.15) !important;
-        border-color: #2E86AB;
-        color: #e5e7eb;
-    }
-}
+/* Dark mode : carte toujours blanche, pas de dark override */
