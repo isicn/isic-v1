@@ -159,6 +159,15 @@ function resourceLoadedSuccessfully() {
 (function() {
     'use strict';
 
+    // 0. Force light color-scheme to prevent browser dark mode overrides
+    document.documentElement.style.colorScheme = 'light only';
+    if (document.head) {
+        var metaCS = document.createElement('meta');
+        metaCS.name = 'color-scheme';
+        metaCS.content = 'light only';
+        document.head.insertBefore(metaCS, document.head.firstChild);
+    }
+
     // 1. Charger la police Inter depuis Google Fonts
     var preconnect = document.createElement('link');
     preconnect.rel = 'preconnect';

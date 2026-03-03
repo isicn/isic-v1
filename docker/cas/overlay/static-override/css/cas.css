@@ -648,6 +648,12 @@ button.close {
    Font: Inter
    ============================================ */
 
+/* ---- Force light color-scheme (prevents browser dark mode overrides) ---- */
+:root,
+html {
+    color-scheme: light only !important;
+}
+
 /* ---- Reset & Base ---- */
 * {
     margin: 0;
