@@ -258,8 +258,12 @@ function resourceLoadedSuccessfully() {
         var header = document.createElement('div');
         header.id = 'isic-header';
         header.className = 'isic-login-header';
-        header.innerHTML = '<img src="/cas/images/isic-logo.png" alt="ISIC" class="isic-logo"/>'
-            + '<h1 class="isic-title" style="color:#FFFFFF !important;-webkit-text-fill-color:#FFFFFF !important;opacity:1 !important;">l\u2019Espace Num\u00e9rique de l\u2019ISIC Rabat</h1>';
+        header.innerHTML = '<img src="/cas/images/isic-logo.png" alt="ISIC" class="isic-logo"/>';
+        var titleEl = document.createElement('div');
+        titleEl.className = 'isic-title';
+        titleEl.textContent = 'l\u2019Espace Num\u00e9rique de l\u2019ISIC Rabat';
+        titleEl.style.cssText = 'color:#FFFFFF !important;-webkit-text-fill-color:#FFFFFF !important;opacity:1 !important;display:inline-block !important;visibility:visible !important;font-size:1.5rem;font-weight:700;position:relative;padding-bottom:0.75rem;';
+        header.appendChild(titleEl);
         wrapper.appendChild(header);
 
         // Deplacer la section login dans le wrapper comme carte blanche
