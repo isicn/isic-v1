@@ -340,7 +340,25 @@ class ResUsers(models.Model):
 
         situation = self._cas_extract_attr(validation, "isicSituationFamiliale")
         if situation:
-            partner_vals["situation_familiale"] = situation
+            # Normaliser les variantes (mariee→marie, divorcee→divorce, veuve→veuf, etc.)
+            situation_map = {
+                "celibataire": "celibataire",
+                "marie": "marie",
+                "mariee": "marie",
+                "marié": "marie",
+                "mariée": "marie",
+                "divorce": "divorce",
+                "divorcee": "divorce",
+                "divorcé": "divorce",
+                "divorcée": "divorce",
+                "veuf": "veuf",
+                "veuve": "veuf",
+            }
+            normalized = situation_map.get(situation.lower().strip())
+            if normalized:
+                partner_vals["situation_familiale"] = normalized
+            else:
+                _logger.warning("Unknown situation_familiale value from LDAP: %s", situation)
 
         # Contact
         phone = self._cas_extract_attr(validation, "telephoneNumber")
