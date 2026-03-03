@@ -216,7 +216,7 @@ class CASAuthController(http.Controller):
         }
 
         # Vérification SSL configurable (désactivée pour les certificats auto-signés)
-        verify_ssl = request.env["ir.config_parameter"].sudo().get_param("auth_cas.verify_ssl", "True") == "True"
+        verify_ssl = request.env["ir.config_parameter"].sudo().get_param("auth_cas.verify_ssl", "False") == "True"
 
         _logger.debug("Validating CAS ticket at: %s (verify_ssl=%s)", validate_url, verify_ssl)
 

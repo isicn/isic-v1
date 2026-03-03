@@ -57,7 +57,7 @@ class ResConfigSettings(models.TransientModel):
     cas_verify_ssl = fields.Boolean(
         string="Verify SSL Certificate",
         config_parameter="auth_cas.verify_ssl",
-        default=True,
+        default=False,
         help="Vérifier le certificat SSL du serveur CAS. Désactiver pour les certificats auto-signés.",
     )
 
