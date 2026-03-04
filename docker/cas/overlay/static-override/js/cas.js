@@ -263,11 +263,12 @@ function resourceLoadedSuccessfully() {
         var wrapper = document.createElement('div');
         wrapper.className = 'isic-login-wrapper';
 
-        // Header ISIC — logo seul, pas de titre
+        // Header ISIC — logo + sous-titre service
         var header = document.createElement('div');
         header.id = 'isic-header';
         header.className = 'isic-login-header';
-        header.innerHTML = '<img src="/cas/images/isic-logo.png" alt="ISIC" class="isic-logo"/>';
+        header.innerHTML = '<img src="/cas/images/isic-logo.png" alt="ISIC" class="isic-logo"/>'
+            + '<div class="isic-service-label">Service d\u2019Authentification Central de l\u2019ISIC</div>';
         wrapper.appendChild(header);
 
         // Deplacer la section login dans le wrapper comme carte blanche

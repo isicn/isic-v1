@@ -729,7 +729,13 @@ footer,
     filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.2));
 }
 
-/* (title removed — logo only in header) */
+.isic-service-label {
+    color: rgba(255, 255, 255, 0.9);
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin-top: 0.75rem;
+    letter-spacing: 0.02em;
+}
 
 /* ---- Card (white on navy background) ---- */
 .isic-login-card {
@@ -742,15 +748,9 @@ footer,
     border: none !important;
 }
 
-/* ---- CAS service info box ---- */
+/* ---- CAS service info box (hidden — label is in header now) ---- */
 #serviceui {
-    background: #EBF5FB !important;
-    border-left: 4px solid #2E86AB;
-    border-radius: 10px;
-    padding: 1rem !important;
-    margin-bottom: 1.5rem;
-    font-size: 0.9rem;
-    color: #1B3A5C;
+    display: none !important;
 }
 
 /* ---- CAS MDC form overrides inside card ---- */
