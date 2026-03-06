@@ -754,24 +754,60 @@ footer,
 }
 
 /* ---- CAS MDC form overrides inside card ---- */
+/* Border on the <label> container so both input AND toggle button are inside */
 .isic-login-card .mdc-text-field {
     width: 100%;
+    border: 2px solid #e2e8f0 !important;
+    border-radius: 8px !important;
+    background: #FFFFFF !important;
 }
 
-.isic-login-card .mdc-text-field > .mdc-text-field__input,
-.isic-login-card .mdc-text-field:not(.mdc-text-field--disabled):not(.mdc-text-field--outlined):not(.mdc-text-field--textarea) > .mdc-text-field__input {
-    border: 2px solid #e2e8f0;
-    border-radius: 8px;
+/* Kill MDC outlined border entirely — our border is on .mdc-text-field */
+.isic-login-card .mdc-text-field--outlined .mdc-notched-outline,
+.isic-login-card .mdc-text-field--outlined .mdc-notched-outline__leading,
+.isic-login-card .mdc-text-field--outlined .mdc-notched-outline__notch,
+.isic-login-card .mdc-text-field--outlined .mdc-notched-outline__trailing {
+    border: none !important;
+    background: transparent !important;
+}
+
+/* Input itself: no border, transparent bg — container has the border */
+.isic-login-card .mdc-text-field__input {
+    border: none !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+    outline: none !important;
     font-family: inherit;
+    padding: 0.75rem 1rem;
+    background: transparent !important;
 }
 
-.isic-login-card .mdc-text-field--focused > .mdc-text-field__input {
-    border-color: #2E86AB;
+/* Floating label: white bg so it masks the border line behind it */
+.isic-login-card .mdc-floating-label {
+    background: #FFFFFF !important;
+    padding: 0 5px !important;
+    left: 10px !important;
+    z-index: 3;
+}
+
+/* Focus state on the container */
+.isic-login-card .mdc-text-field--focused {
+    border-color: #2E86AB !important;
     box-shadow: 0 0 0 3px rgba(46, 134, 171, 0.15);
 }
 
 .isic-login-card .mdc-text-field--focused:not(.mdc-text-field--disabled) .mdc-floating-label {
     color: #1B3A5C;
+}
+
+/* Bottom text (forgot password + security notice) — smaller and muted */
+.isic-login-card p,
+.isic-login-card .forgot-password,
+.isic-login-card > p,
+.isic-login-card > div {
+    font-size: 0.8rem !important;
+    color: #64748b;
+    line-height: 1.4;
 }
 
 /* ---- CAS submit button override ---- */
@@ -806,53 +842,37 @@ footer,
     color: #1B3A5C;
 }
 
-/* ---- Password Toggle ---- */
-.isic-password-wrapper {
-    position: relative;
-}
-
-.isic-toggle-password {
-    position: absolute;
-    right: 0;
-    top: 0;
-    height: 100%;
-    width: 3rem;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: #1B3A5C;
-    border: none;
-    border-radius: 0 8px 8px 0;
+/* ---- Password Toggle (CAS native .reveal-password button) ---- */
+/* The button sits inside the <label.mdc-text-field> alongside the input */
+.isic-login-card .reveal-password {
+    background: #1B3A5C !important;
+    color: white !important;
+    border: none !important;
+    border-radius: 0 6px 6px 0 !important;
+    padding: 0 0.75rem !important;
+    margin: 0 !important;
     cursor: pointer;
-    color: white;
-    font-size: 1rem;
     transition: background 0.2s ease;
+    min-width: auto !important;
+    height: auto !important;
+    align-self: stretch !important;
 }
 
-.isic-toggle-password:hover {
-    background: #2E86AB;
+.isic-login-card .reveal-password:hover {
+    background: #2E86AB !important;
 }
 
 /* ---- Footer ---- */
 .isic-login-footer {
     text-align: center;
-    margin-top: 1.5rem;
-    color: rgba(255, 255, 255, 0.7);
-    font-size: 0.82rem;
-}
-
-.isic-login-footer strong {
-    color: rgba(255, 255, 255, 0.95);
-}
-
-.isic-footer-links {
-    margin-top: 0.5rem;
+    margin-top: 1.25rem;
+    font-size: 0.75rem;
 }
 
 .isic-footer-links a {
-    color: rgba(255, 255, 255, 0.8) !important;
+    color: rgba(255, 255, 255, 0.7) !important;
     text-decoration: none;
-    margin: 0 0.3rem;
+    margin: 0 0.25rem;
     transition: color 0.2s ease;
 }
 
@@ -861,7 +881,7 @@ footer,
 }
 
 .isic-footer-links span {
-    color: rgba(255, 255, 255, 0.4);
+    color: rgba(255, 255, 255, 0.3);
 }
 
 /* ---- Animation ---- */
@@ -895,10 +915,6 @@ footer,
 
     .isic-logo {
         max-width: 140px;
-    }
-
-    .isic-logo {
-        max-width: 180px;
     }
 }
 

@@ -154,7 +154,7 @@ function resourceLoadedSuccessfully() {
 /**
  * ISIC CAS Theme Loader
  * Restructure le DOM CAS en colonne unique centree,
- * charge Inter, supprime le footer Apereo, ajoute password toggle.
+ * charge Inter, supprime le footer Apereo.
  */
 (function() {
     'use strict';
@@ -209,33 +209,7 @@ function resourceLoadedSuccessfully() {
         observer.observe(document.body || document.documentElement, { childList: true, subtree: true });
     }
 
-    // 3. Password toggle
-    function addPasswordToggle() {
-        var passwordInput = document.getElementById('password');
-        if (!passwordInput || document.getElementById('isic-pwd-toggle')) return;
-        var wrapper = passwordInput.parentElement;
-        if (!wrapper) return;
-        wrapper.classList.add('isic-password-wrapper');
-        var toggleBtn = document.createElement('button');
-        toggleBtn.type = 'button';
-        toggleBtn.id = 'isic-pwd-toggle';
-        toggleBtn.className = 'isic-toggle-password';
-        toggleBtn.setAttribute('aria-label', 'Afficher/masquer le mot de passe');
-        toggleBtn.innerHTML = '\uD83D\uDC41';
-        toggleBtn.addEventListener('click', function(e) {
-            e.preventDefault();
-            if (passwordInput.type === 'password') {
-                passwordInput.type = 'text';
-                toggleBtn.innerHTML = '\uD83D\uDC41\u200D\uD83D\uDDE8';
-            } else {
-                passwordInput.type = 'password';
-                toggleBtn.innerHTML = '\uD83D\uDC41';
-            }
-        });
-        wrapper.appendChild(toggleBtn);
-    }
-
-    // 4. Restructurer le DOM : colonne unique centree
+    // 3. Restructurer le DOM : colonne unique centree
     function restructureDOM() {
         if (document.querySelector('.isic-login-wrapper')) return;
 
@@ -280,13 +254,13 @@ function resourceLoadedSuccessfully() {
         var footer = document.createElement('div');
         footer.id = 'isic-footer';
         footer.className = 'isic-login-footer';
-        footer.innerHTML = '<p><strong>ISIC</strong> \u00b7 isic.ac.ma</p>'
-            + '<div class="isic-footer-links">'
-            + '<a href="https://isic.ac.ma" target="_blank" rel="noopener">isic.ac.ma</a>'
+        var siteRoot = window.location.protocol + '//' + window.location.hostname.replace('auth.', 'staging.');
+        footer.innerHTML = '<div class="isic-footer-links">'
+            + '<a href="' + siteRoot + '/">isic.ac.ma</a>'
             + ' <span>|</span> '
-            + '<a href="https://isic.ac.ma/contact" target="_blank" rel="noopener">Contact</a>'
+            + '<a href="' + siteRoot + '/contact">Contact</a>'
             + ' <span>|</span> '
-            + '<a href="https://isic.ac.ma/faq" target="_blank" rel="noopener">Aide</a>'
+            + '<a href="' + siteRoot + '/contact">Aide</a>'
             + '</div>';
         wrapper.appendChild(footer);
     }
@@ -321,6 +295,15 @@ function resourceLoadedSuccessfully() {
                 a.textContent = 'Mot de passe oubli\u00e9 ?';
             }
         });
+        // Traduire les messages de validation
+        var usernameValidation = document.getElementById('usernameValidationMessage');
+        if (usernameValidation) {
+            usernameValidation.textContent = 'Vous devez entrer votre identifiant.';
+        }
+        var passwordValidation = document.getElementById('passwordValidationMessage');
+        if (passwordValidation) {
+            passwordValidation.textContent = 'Vous devez entrer votre mot de passe.';
+        }
     }
 
     // 6. Appliquer tout le branding
@@ -328,7 +311,6 @@ function resourceLoadedSuccessfully() {
         removeApereoFooter();
         restructureDOM();
         translateLabels();
-        addPasswordToggle();
         document.title = 'ISIC \u2014 Authentification';
     }
 
