@@ -113,7 +113,6 @@
 
     <template id="portal_my_demande_detail" name="Detail demande">
         <t t-call="portal.portal_layout">
-            <t t-set="breadcrumbs_searchbar" t-value="True"/>
 
             <!-- Detail card -->
             <div class="isic-detail-card">
@@ -125,9 +124,6 @@
                             <t t-out="dict(demande._fields['state'].selection).get(demande.state, demande.state)"/>
                         </span>
                     </div>
-                    <a href="/my/demandes" class="btn btn-outline-secondary btn-sm">
-                        <i class="fa fa-arrow-left" title="Retour"/> Retour aux demandes
-                    </a>
                 </div>
 
                 <div class="isic-detail-card__body">
@@ -278,7 +274,6 @@
 
     <template id="portal_my_demande_new" name="Nouvelle demande">
         <t t-call="portal.portal_layout">
-            <t t-set="breadcrumbs_searchbar" t-value="True"/>
 
             <div class="isic-detail-card">
                 <div class="isic-detail-card__header">

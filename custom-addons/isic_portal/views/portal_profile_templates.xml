@@ -7,13 +7,6 @@
 
     <template id="portal_my_profile" name="Mon profil">
         <t t-call="portal.portal_layout">
-            <t t-set="breadcrumbs_searchbar" t-value="True"/>
-
-            <div class="d-flex justify-content-end mb-2">
-                <a href="/my" class="btn btn-outline-secondary btn-sm">
-                    <i class="fa fa-arrow-left" title="Retour"/> Retour a l'accueil
-                </a>
-            </div>
 
             <div class="isic-profile isic-stagger-container">
                 <!-- Header: Avatar + nom + matricule -->
@@ -161,13 +154,9 @@
 
     <template id="portal_my_documents" name="Mes documents">
         <t t-call="portal.portal_layout">
-            <t t-set="breadcrumbs_searchbar" t-value="True"/>
 
-            <div class="d-flex justify-content-between align-items-center mb-3">
+            <div class="mb-3">
                 <h4 class="mb-0">Mes documents</h4>
-                <a href="/my" class="btn btn-outline-secondary btn-sm">
-                    <i class="fa fa-arrow-left" title="Retour"/> Retour a l'accueil
-                </a>
             </div>
 
             <!-- Filters bar -->
