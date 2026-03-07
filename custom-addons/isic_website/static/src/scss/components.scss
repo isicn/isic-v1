@@ -18,14 +18,22 @@
     &__value {
         font-size: 2.5rem;
         font-weight: 700;
-        color: #fff;
+        color: var(--isic-primary);
         line-height: 1;
+
+        .isic-section--dark & {
+            color: #fff;
+        }
     }
 
     &__label {
         font-size: 0.9rem;
-        color: rgba(255, 255, 255, 0.8);
+        color: var(--isic-text-light);
         margin-top: 0.25rem;
+
+        .isic-section--dark & {
+            color: rgba(255, 255, 255, 0.8);
+        }
     }
 }
 
