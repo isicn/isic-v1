@@ -234,9 +234,13 @@ class DmsFile(models.Model):
     # ==================================================================
 
     def _create_version(self, comment=""):
-        """Snapshot the current content as a new version before overwrite."""
+        """Snapshot the current content as a new version before overwrite.
+
+        Only operates on draft documents — validated/archived documents
+        do not participate in versioning.
+        """
         for rec in self:
-            if not rec.content:
+            if rec.ged_state != "draft" or not rec.content:
                 continue
             next_version = rec.current_version + 1
             self.env["isic.document.version"].sudo().create(
@@ -268,9 +272,18 @@ class DmsFile(models.Model):
     def action_restore_version(self):
         """Restore a previous version. Called from version list button.
 
-        Expects the version id in the context key 'active_id'.
+        Expects the version id in the context key 'restore_version_id'.
+        Blocked on validated/archived documents.
         """
         self.ensure_one()
+        if self.ged_state in ("validated", "archived"):
+            raise UserError(
+                _(
+                    "Impossible de restaurer une version sur le document « %s » car il est %s.",
+                    self.name,
+                    dict(self._fields["ged_state"].selection).get(self.ged_state, self.ged_state),
+                )
+            )
         version_id = self.env.context.get("restore_version_id")
         if not version_id:
             raise UserError(_("Aucune version sélectionnée pour la restauration."))
@@ -532,9 +545,9 @@ class DmsFile(models.Model):
                     if rec.locked_by and rec.locked_by.id != self.env.uid:
                         raise UserError(_("Le document « %s » est verrouillé par %s.", rec.name, rec.locked_by.name))
 
-        # Versionning: snapshot before content change
+        # Versionning: snapshot before content change (draft only)
         if "content" in vals and not self.env.context.get("_isic_skip_version"):
-            self._create_version()
+            self.filtered(lambda r: r.ged_state == "draft")._create_version()
 
         res = super().write(vals)
 

@@ -14,6 +14,7 @@
             </xpath>
             <xpath expr="//group[@name='content']//field[@name='content']" position="attributes">
                 <attribute name="readonly">ged_state != 'draft'</attribute>
+                <attribute name="widget">dms_binary</attribute>
             </xpath>
             <xpath expr="//group[@name='settings']//field[@name='directory_id']" position="attributes">
                 <attribute name="readonly">ged_state != 'draft'</attribute>
@@ -94,6 +95,7 @@
                                 icon="fa-undo"
                                 groups="isic_base.group_isic_scolarite"
                                 confirm="Restaurer cette version ? Le contenu actuel sera sauvegardé comme nouvelle version."
+                                column_invisible="parent.ged_state != 'draft'"
                             />
                         </list>
                     </field>

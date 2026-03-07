@@ -32,6 +32,7 @@
             "isic_ged/static/src/scss/preview.scss",
             "isic_ged/static/src/components/preview_field/preview_field.js",
             "isic_ged/static/src/components/preview_field/preview_field.xml",
+            "isic_ged/static/src/js/dms_binary_field.js",
         ],
     },
     "post_init_hook": "_post_init_hook",
