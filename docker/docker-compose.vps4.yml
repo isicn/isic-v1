@@ -269,6 +269,7 @@ services:
     depends_on:
       - odoo-prod
       - odoo-staging
+      - uptime-kuma
     volumes:
       - ./nginx/vps4.conf:/etc/nginx/nginx.conf:ro
       - ./nginx/ssl:/etc/nginx/ssl:ro
@@ -284,6 +285,23 @@ services:
       resources:
         limits:
           memory: 256M
+
+  uptime-kuma:
+    image: louislam/uptime-kuma:1
+    container_name: isic-uptime-kuma
+    restart: always
+    logging: *log-small
+    volumes:
+      - uptime-kuma-data:/app/data
+    networks:
+      - isic-internal
+      - isic-external
+    deploy:
+      resources:
+        limits:
+          memory: 256M
+        reservations:
+          memory: 128M
 
   backup:
     image: postgres:16-alpine
@@ -324,6 +342,8 @@ volumes:
     name: isic-odoo-data-staging-vps
   odoo-staging-logs:
     name: isic-odoo-logs-staging-vps
+  uptime-kuma-data:
+    name: isic-uptime-kuma-vps
   redis-data:
     name: isic-redis-vps
   nginx-cache:
