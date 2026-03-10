@@ -714,7 +714,8 @@ footer,
 .isic-login-wrapper {
     max-width: 440px;
     width: 100%;
-    margin: auto 0;
+    margin: auto;
+    padding: 1rem 0;
     animation: fadeInUp 0.6s ease-out;
 }
 
@@ -917,6 +918,28 @@ footer,
 
     .isic-logo {
         max-width: 140px;
+    }
+}
+
+/* ---- Short viewport (petits ecrans en hauteur) ---- */
+@media (max-height: 700px) {
+    body {
+        align-items: flex-start !important;
+        padding-top: 0.5rem;
+    }
+
+    .isic-login-header {
+        margin-bottom: 0.75rem;
+    }
+
+    .isic-logo {
+        max-width: 120px;
+        margin-bottom: 0.5rem;
+    }
+
+    .isic-service-label {
+        font-size: 0.95rem;
+        margin-top: 0.5rem;
     }
 }
 
