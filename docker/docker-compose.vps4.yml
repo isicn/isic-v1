@@ -273,6 +273,7 @@ services:
     volumes:
       - ./nginx/vps4.conf:/etc/nginx/nginx.conf:ro
       - ./nginx/ssl:/etc/nginx/ssl:ro
+      - ./nginx/.htpasswd_staging:/etc/nginx/.htpasswd_staging:ro
       - certbot-data:/var/www/certbot:ro
       - nginx-cache:/var/cache/nginx
     ports:
