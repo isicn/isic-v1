@@ -23,6 +23,59 @@ class TestCASLdapSync(CASTestCase):
         return self.env["res.users"].sudo().search([("login", "=", login)])
 
     # ------------------------------------------------------------------
+    # Name sync: cn, givenName, sn
+    # ------------------------------------------------------------------
+    def test_sync_name_from_givenname_sn(self):
+        """givenName + sn → partner.name (priority over cn)."""
+        user = self._signin_and_get_user(
+            {
+                "uid": "sync.name1",
+                "user": "sync.name1",
+                "mail": "name1@isic.ac.ma",
+                "cn": "Old Name",
+                "givenName": "Abdellatif",
+                "sn": "Bensfia",
+                "employeeType": "faculty",
+            }
+        )
+        self.assertEqual(user.partner_id.name, "Abdellatif Bensfia")
+
+    def test_sync_name_from_cn_fallback(self):
+        """cn → partner.name when givenName/sn not both present."""
+        user = self._signin_and_get_user(
+            {
+                "uid": "sync.name2",
+                "user": "sync.name2",
+                "mail": "name2@isic.ac.ma",
+                "cn": "Mohammed El Amrani",
+                "employeeType": "faculty",
+            }
+        )
+        self.assertEqual(user.partner_id.name, "Mohammed El Amrani")
+
+    def test_sync_name_update_on_relogin(self):
+        """Name is updated on subsequent CAS logins."""
+        validation = {
+            "uid": "sync.name3",
+            "user": "sync.name3",
+            "mail": "name3@isic.ac.ma",
+            "cn": "Initial Name",
+            "givenName": "Initial",
+            "sn": "Name",
+            "employeeType": "faculty",
+        }
+        user = self._signin_and_get_user(validation)
+        self.assertEqual(user.partner_id.name, "Initial Name")
+
+        # Simulate LDAP update + re-login
+        validation["givenName"] = "Updated"
+        validation["sn"] = "Surname"
+        validation["cn"] = "Updated Surname"
+        self.env["res.users"].sudo()._cas_signin(self.cas_provider, validation, {})
+        user.invalidate_recordset()
+        self.assertEqual(user.partner_id.name, "Updated Surname")
+
+    # ------------------------------------------------------------------
     # Basic sync: email, function, enseignant flag
     # ------------------------------------------------------------------
     def test_sync_email(self):
@@ -414,13 +467,15 @@ class TestCASLdapSync(CASTestCase):
     # Full payload (all 15 fields)
     # ------------------------------------------------------------------
     def test_sync_full_payload(self):
-        """All 15 LDAP attributes synced in a single signin."""
+        """All LDAP attributes synced in a single signin (name + 15 fields)."""
         morocco = self.env["res.country"].search([("code", "=", "MA")], limit=1)
         user = self._signin_and_get_user(
             {
                 "uid": "sync.full",
                 "user": "sync.full",
-                "cn": "Full Sync",
+                "cn": "Karim Benjelloun",
+                "givenName": "Karim",
+                "sn": "Benjelloun",
                 "mail": "full@isic.ac.ma",
                 "employeeType": "faculty",
                 "title": "Directeur adjoint",
@@ -439,6 +494,7 @@ class TestCASLdapSync(CASTestCase):
         )
         p = user.partner_id
         self.assertTrue(p.ldap_synced)
+        self.assertEqual(p.name, "Karim Benjelloun")
         self.assertEqual(p.email, "full@isic.ac.ma")
         self.assertEqual(p.function, "Directeur adjoint")
         self.assertTrue(p.is_enseignant)
