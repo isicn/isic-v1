@@ -183,11 +183,12 @@
                         <div class="isic-www-news-grid isic-www-stagger-container">
                             <t t-foreach="latest_posts" t-as="post">
                                 <div class="isic-www-blog-card isic-www-stagger">
+                                    <t t-set="post_img" t-value="post.website_meta_og_img or ('/web/image/blog.post/%s/image_1920' % post.id if post.image_1920 else '/isic_website/static/img/isic-about.jpg')"/>
                                     <div class="isic-www-blog-card__img"
-                                         t-attf-style="background-image: url({{ post.website_meta_og_img or '/web/image/blog.post/%s/image_1920' % post.id }}); background-size: cover; background-position: center;"/>
+                                         t-attf-style="background-image: url({{ post_img }}); background-size: cover; background-position: center;"/>
                                     <div class="isic-www-blog-card__body">
                                         <div class="isic-www-blog-card__meta">
-                                            <t t-out="post.published_date"/>
+                                            <t t-out="post.published_date" t-options='{"widget": "date", "format": "dd MMMM yyyy"}'/>
                                         </div>
                                         <h3 class="isic-www-blog-card__title">
                                             <a t-attf-href="/blog/{{ slug(post.blog_id) }}/{{ slug(post) }}">
